@@ -51,6 +51,12 @@
             <version>2.2.1</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Java Standart Tag Library 1.2 for JSP 2.2 -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
 
     </dependencies>
 
