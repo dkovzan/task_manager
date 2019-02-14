@@ -1,9 +1,11 @@
 package com.kovzan.task_manager.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Employee {
+public class Employee implements Entity, Serializable {
 
+    private Integer id;
     private String firstName;
     private String lastName;
     private String middleName;
@@ -14,6 +16,23 @@ public class Employee {
         this.lastName = lastName;
         this.middleName = middleName;
         this.position = position;
+    }
+
+    public Employee(Integer id, String firstName, String lastName, String middleName, String position) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.position = position;
+    }
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -51,6 +70,7 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
+                "id='" + id + '\'' +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", middleName='" + middleName + '\'' +
@@ -63,7 +83,8 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return firstName.equals(employee.firstName) &&
+        return id.equals(employee.id) &&
+                firstName.equals(employee.firstName) &&
                 lastName.equals(employee.lastName) &&
                 Objects.equals(middleName, employee.middleName) &&
                 position.equals(employee.position);
@@ -71,7 +92,7 @@ public class Employee {
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, middleName, position);
+        return Objects.hash(id, firstName, lastName, middleName, position);
     }
 
 
