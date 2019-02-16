@@ -1,6 +1,8 @@
 package com.kovzan.task_manager.servlets;
 
-import com.kovzan.task_manager.model.Model;
+import com.kovzan.task_manager.dao.impl.EmployeeDAOImpl;
+import com.kovzan.task_manager.entities.Employee;
+import com.kovzan.task_manager.exception.DAOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,17 +13,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/list")
+@WebServlet(urlPatterns = "/employees")
 public class ListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {
 
-        Model model = Model.getInstance();
-        List<String> names = model.list();
-        req.setAttribute("employeesFirstNames", names);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/views/list.jsp");
+        try {
+            List<Employee> employees = EmployeeDAOImpl.getInstance().findAll();
+            req.setAttribute("employees", employees);
+        } catch (DAOException e) {
+            System.out.println(e.getCause() + " " + e.getMessage());
+        }
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/views/employees.jsp");
         requestDispatcher.forward(req,resp);
     }
 }

@@ -12,6 +12,7 @@
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main/java" />
           <root url="file://$MODULE_DIR$/src/main/resources" />
+          <root url="file://$MODULE_DIR$/src/webapp" />
         </sourceRoots>
       </configuration>
     </facet>
@@ -32,5 +33,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:3.0.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet.jsp:javax.servlet.jsp-api:2.2.1" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: postgresql:postgresql:9.1-901-1.jdbc4" level="project" />
   </component>
 </module>

@@ -22,13 +22,13 @@
             <span onclick="this.parentElement.style.display='none'"
                   class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-green w3-border w3-border-green w3-hover-border-grey">
             </span>
-            <h5>User '<c:out value="${employeeName}"></c:out>' is added!</h5>
+            <h5>Employee with first name '<c:out value="${employeeName}"></c:out>' has been added!</h5>
         </div>
     </c:if>
 
     <div class="w3-card-4">
         <div class="w3-container w3-center w3-green">
-            <h2>Add employee</h2>
+            <h2>ADD EMPLOYEE</h2>
         </div>
         <form method="post" class="w3-selection w3-light-grey w3-padding">
             <label>First name:
@@ -44,6 +44,7 @@
                 <input required type="text" name="position" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
             </label><br>
             <button type="submit" class="w3-btn w3-green w3-round-large w3-margin-bottom">Add</button>
+            <button onclick="location.href='/employees'" class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</button>
         </form>
     </div>
 </div>

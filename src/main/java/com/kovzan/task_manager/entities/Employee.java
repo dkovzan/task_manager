@@ -71,7 +71,7 @@ public class Employee implements Entity, Serializable {
     public String toString() {
         return "Employee{" +
                 "id='" + id + '\'' +
-                "firstName='" + firstName + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", middleName='" + middleName + '\'' +
                 ", position='" + position + '\'' +
@@ -83,7 +83,7 @@ public class Employee implements Entity, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return id.equals(employee.id) &&
+        return Objects.equals(id, employee.id) &&
                 firstName.equals(employee.firstName) &&
                 lastName.equals(employee.lastName) &&
                 Objects.equals(middleName, employee.middleName) &&

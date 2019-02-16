@@ -1,7 +1,8 @@
 package com.kovzan.task_manager.servlets;
 
+import com.kovzan.task_manager.dao.impl.EmployeeDAOImpl;
 import com.kovzan.task_manager.entities.Employee;
-import com.kovzan.task_manager.model.Model;
+import com.kovzan.task_manager.exception.DAOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,13 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/add")
+@WebServlet(urlPatterns = "/add_employee")
 public class AddServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/views/add.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/views/add_employee.jsp");
         requestDispatcher.forward(req,resp);
     }
 
@@ -30,9 +31,12 @@ public class AddServlet extends HttpServlet {
         String position = req.getParameter("position");
 
         Employee employee = new Employee(firstName, lastName, middleName, position);
-        Model model = Model.getInstance();
-        model.add(employee);
 
+        try {
+            EmployeeDAOImpl.getInstance().add(employee);
+        } catch (DAOException e) {
+            System.out.println(e.getCause()+ " " + e.getMessage());
+        }
         req.setAttribute("employeeName", firstName);
         doGet(req,resp);
     }
