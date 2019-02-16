@@ -26,6 +26,10 @@ public class Employee implements Entity, Serializable {
         this.position = position;
     }
 
+    public Employee(Integer id) {
+        this.id = id;
+    }
+
 
     public Integer getId() {
         return id;

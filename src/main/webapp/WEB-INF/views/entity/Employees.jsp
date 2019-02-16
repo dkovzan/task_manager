@@ -7,25 +7,25 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page import="com.kovzan.task_manager.command.CommandEnum" %>
+<%@ page import="com.kovzan.task_manager.command.ParameterNameConstant" %>
 <html>
 <head>
-    <title>Task Manager</title>
+    <title>Employees</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body class="w3-light-grey">
-<div class="w3-container w3-blue-grey w3-opacity w3-right-align">
-    <h1>Task Manager</h1>
-</div>
+<jsp:include page="/WEB-INF/views/common/Header.jsp"></jsp:include>
 <div class="w3-container w3-center w3-margin-bottom w3-padding">
     <div class="w3-card-4">
         <div class="w3-container w3-light-blue">
             <h2>Employees</h2>
         </div>
         <div class="w3-bar w3-padding-large w3-padding-24">
-            <button class="w3-btn w3-hover-green w3-round-large w3-large" onclick="location.href='/add_employee'">Add employee</button>
+            <button class="w3-btn w3-hover-green w3-round-large w3-large" onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&employee_id=-1'">Add employee</button>
         </div>
         <c:choose>
-            <c:when test="${employees != null && !employees.isEmpty()}">
+            <c:when test="${ParameterNameConstant.PRINTED_EMPLOYEES != null && !ParameterNameConstant.PRINTED_EMPLOYEES.isEmpty()}">
                 <table class="w3-table w3-bordered w3-border">
                     <tr>
                         <th>Id</th>
@@ -33,18 +33,24 @@
                         <th>First Name</th>
                         <th>Middle Name</th>
                         <th>Position</th>
+                        <th colspan="2">Actions</th>
                     </tr>
-
-                    <c:forEach items="${employees}" var="employee">
+                    <c:forEach items="${requestScope.get(ParameterNameConstant.PRINTED_EMPLOYEES)}" var="employee">
                         <tr>
+                            <input type="hidden" name="${ParameterNameConstant.EMPLOYEE_ID}" value="${employee.id}">
                             <td>${employee.id}</td>
                             <td>${employee.lastName}</td>
                             <td>${employee.firstName}</td>
                             <td>${employee.middleName}</td>
                             <td>${employee.position}</td>
+                            <td>
+                                <button onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&employee_id=${employee.id}&is_add_form=0'" class="w3-button w3-round-large">Edit</button>
+                            </td>
+                            <td>
+                                <button onclick="location.href='controller?command=${CommandEnum.REMOVE_EMPLOYEE}&employee_id=${employee.id}'" class="w3-button w3-round-large">Delete</button>
+                            </td>
                         </tr>
                     </c:forEach>
-
                 </table>
             </c:when>
             <c:otherwise>

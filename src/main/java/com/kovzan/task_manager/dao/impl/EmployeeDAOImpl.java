@@ -11,7 +11,7 @@ import java.util.List;
 public class EmployeeDAOImpl implements EmployeeDAO {
 
     private static final String ADD_EMPLOYEE = "INSERT INTO EMPLOYEES (LASTNAME, FIRSTNAME, MIDDLENAME, POSITION) values (?,?,?,?)";
-    private static final String REMOVE_EMPLOYEE = "DELETE * FROM EMPLOYEES WHERE ID = ?";
+    private static final String REMOVE_EMPLOYEE = "DELETE FROM EMPLOYEES WHERE ID = ?";
     private static final String UPDATE_EMPLOYEE = "UPDATE EMPLOYEES SET LASTNAME = ?, FIRSTNAME = ?, MIDDLENAME = ?, POSITION = ? WHERE ID = ?";
     private static final String SELECT_ALL_EMPLOYEES = "SELECT * FROM EMPLOYEES";
     private static final String SELECT_EMPLOYEE_BY_ID = "SELECT * FROM EMPLOYEES WHERE ID = ?";
@@ -53,6 +53,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             statement.setString(3, element.getMiddleName());
             statement.setString(4, element.getPosition());
             statement.setInt(5, element.getId());
+            statement.executeUpdate();
             int result;
             ResultSet keys = statement.getGeneratedKeys();
             if(keys.next()) {
