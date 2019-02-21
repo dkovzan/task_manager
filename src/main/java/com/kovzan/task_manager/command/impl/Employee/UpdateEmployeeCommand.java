@@ -19,14 +19,14 @@ public class UpdateEmployeeCommand implements Command {
         try {
             employee = EmployeeCreator.createEmployeeWithIdFromRequest(request);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e);
         }
         try {
             EmployeeService.updateEmployee(employee);
             List<Employee> employees = EmployeeService.findAllEmployees();
             request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e);
             return PageConstant.ERROR_PAGE;
         }
         return PageConstant.EMPLOYEES_PAGE;

@@ -18,7 +18,7 @@ public class PrintEmployeesCommand implements Command{
         try {
             employees = EmployeeService.findAllEmployees();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e);
             return PageConstant.ERROR_PAGE;
         }
         request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);

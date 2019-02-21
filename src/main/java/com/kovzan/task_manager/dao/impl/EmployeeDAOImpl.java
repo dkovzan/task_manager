@@ -38,7 +38,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 return result;
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e);
         }
         return -1;
     }
@@ -62,7 +62,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e);
         }
         return -1;
     }
@@ -75,7 +75,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             statement.setInt(1, element.getId());
             statement.execute();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e);
         }
     }
 
@@ -88,7 +88,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             ResultSet resultSet = statement.executeQuery();
             employees = DAOCreator.createEmployees(resultSet);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e);
         }
         return employees;
     }
@@ -103,7 +103,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             ResultSet resultSet = statement.executeQuery();
             employee = DAOCreator.createEmployees(resultSet).get(0);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e);
         }
         return employee;
     }

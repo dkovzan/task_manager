@@ -24,7 +24,7 @@ public class DAOCreator {
                 employees.add(employee);
         }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e);
         }
         return employees;
     }

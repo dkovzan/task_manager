@@ -22,7 +22,7 @@ public class PrintEditEmployeeCommand implements Command {
             try {
                 employee = EmployeeService.findEmployeeById(employeeId);
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
                 return PageConstant.ERROR_PAGE;
             }
             request.setAttribute(ParameterNameConstant.PRINTED_EDIT_EMPLOYEE, employee);
