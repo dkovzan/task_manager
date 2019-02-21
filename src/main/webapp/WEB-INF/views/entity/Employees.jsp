@@ -25,7 +25,7 @@
             <button class="w3-btn w3-hover-green w3-round-large w3-large" onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&employee_id=-1'">Add employee</button>
         </div>
         <c:choose>
-            <c:when test="${ParameterNameConstant.PRINTED_EMPLOYEES != null && !ParameterNameConstant.PRINTED_EMPLOYEES.isEmpty()}">
+            <c:when test="${requestScope.get(ParameterNameConstant.PRINTED_EMPLOYEES) != null && !requestScope.get(ParameterNameConstant.PRINTED_EMPLOYEES).isEmpty()}">
                 <table class="w3-table w3-bordered w3-border">
                     <tr>
                         <th>Id</th>
