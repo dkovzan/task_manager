@@ -20,14 +20,6 @@
 </div>
 <div class="w3-container w3-padding">
     <div class="w3-card-4">
-    <%--<c:if test="${employeeName != null}">--%>
-        <%--<div class="w3-panel w3-green w3-display-container w3-card-4 w3-round\">--%>
-            <%--<span onclick="this.parentElement.style.display='none'"--%>
-                  <%--class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-green w3-border w3-border-green w3-hover-border-grey">--%>
-            <%--</span>--%>
-            <%--<h5>Employee with first name '<c:out value="${employeeName}"></c:out>' has been added!</h5>--%>
-        <%--</div>--%>
-    <%--</c:if>--%>
         <form action="controller" method="post" class="w3-selection w3-light-grey w3-padding">
                 <c:choose>
                     <c:when test="${is_add_form == '1'}">
