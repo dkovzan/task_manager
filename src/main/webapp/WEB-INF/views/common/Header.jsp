@@ -18,6 +18,7 @@
     <h1>Task Manager</h1>
 </div>
 <div class="w3-bar w3-border w3-light-grey w3-xlarge">
+    <button onclick="location.href='controller?command=${CommandEnum.PRINT_PROJECTS}'" class="w3-bar-item w3-button w3-hover-teal">Projects</button>
     <button onclick="location.href='controller?command=${CommandEnum.PRINT_EMPLOYEES}'" class="w3-bar-item w3-button w3-hover-teal">Employees</button>
 </div>
 </body>

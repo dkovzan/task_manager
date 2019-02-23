@@ -15,17 +15,13 @@ public class UpdateEmployeeCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        Employee employee = null;
+        Employee employee;
         try {
             employee = EmployeeCreator.createEmployeeWithIdFromRequest(request);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        try {
             EmployeeService.updateEmployee(employee);
             List<Employee> employees = EmployeeService.findAllEmployees();
             request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println(e);
             return PageConstant.ERROR_PAGE;
         }

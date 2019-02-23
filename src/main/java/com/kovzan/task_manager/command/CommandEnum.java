@@ -1,6 +1,7 @@
 package com.kovzan.task_manager.command;
 
 import com.kovzan.task_manager.command.impl.Employee.*;
+import com.kovzan.task_manager.command.impl.Project.*;
 
 public enum CommandEnum {
 

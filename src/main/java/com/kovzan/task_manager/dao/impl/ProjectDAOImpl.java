@@ -19,6 +19,12 @@ public class ProjectDAOImpl implements ProjectDAO {
     private static final String SELECT_ALL_PROJECTS = "SELECT * FROM PROJECTS";
     private static final String SELECT_PROJECT_BY_ID = "SELECT * FROM PROJECTS WHERE ID = ?";
 
+    private static ProjectDAOImpl instance = new ProjectDAOImpl();
+
+    public static ProjectDAOImpl getInstance() {
+        return instance;
+    }
+
     @Override
     public int add(Project element) throws DAOException {
         try {
@@ -47,7 +53,7 @@ public class ProjectDAOImpl implements ProjectDAO {
             PreparedStatement statement = connection.prepareStatement(UPDATE_PROJECT);
             statement.setString(1, element.getName());
             statement.setString(2, element.getShortName());
-            statement.setString(3, element.getDescription()));
+            statement.setString(3, element.getDescription());
             statement.setInt(4, element.getId());
             statement.executeUpdate();
             int result;
