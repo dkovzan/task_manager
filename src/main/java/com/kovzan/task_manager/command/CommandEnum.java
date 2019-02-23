@@ -4,6 +4,12 @@ import com.kovzan.task_manager.command.impl.Employee.*;
 
 public enum CommandEnum {
 
+    ADD_PROJECT(new AddProjectCommand()),
+    UPDATE_PROJECT(new UpdateProjectCommand()),
+    REMOVE_PROJECT(new RemoveProjectCommand()),
+    PRINT_PROJECTS(new PrintProjectsCommand()),
+    PRINT_EDIT_PROJECT(new PrintEditProjectCommand()),
+
     ADD_EMPLOYEE(new AddEmployeeCommand()),
     UPDATE_EMPLOYEE(new UpdateEmployeeCommand()),
     REMOVE_EMPLOYEE(new RemoveEmployeeCommand()),

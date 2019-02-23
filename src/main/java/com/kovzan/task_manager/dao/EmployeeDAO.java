@@ -6,5 +6,6 @@ import com.kovzan.task_manager.exception.DAOException;
 import java.util.List;
 
 public interface EmployeeDAO extends DAOBase<Employee> {
+
     Employee findEmployeeById(int id) throws DAOException;
 }

@@ -20,9 +20,8 @@ public class EmployeeCreator {
         try {
             int employeeId = Integer.parseInt(request.getParameter(ParameterNameConstant.EMPLOYEE_ID));
             employee.setId(employeeId);
-
         } catch(Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e);
         }
         return employee;
     }

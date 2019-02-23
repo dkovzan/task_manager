@@ -30,6 +30,33 @@ public class Employee implements Entity, Serializable {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", position='" + position + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return Objects.equals(id, employee.id) &&
+                firstName.equals(employee.firstName) &&
+                lastName.equals(employee.lastName) &&
+                Objects.equals(middleName, employee.middleName) &&
+                position.equals(employee.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getLastName(), getMiddleName(), getPosition());
+    }
 
     public Integer getId() {
         return id;
@@ -70,34 +97,5 @@ public class Employee implements Entity, Serializable {
     public void setPosition(String position) {
         this.position = position;
     }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id='" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", position='" + position + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return Objects.equals(id, employee.id) &&
-                firstName.equals(employee.firstName) &&
-                lastName.equals(employee.lastName) &&
-                Objects.equals(middleName, employee.middleName) &&
-                position.equals(employee.position);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, middleName, position);
-    }
-
 
 }

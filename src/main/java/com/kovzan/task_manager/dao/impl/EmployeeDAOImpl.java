@@ -15,6 +15,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     private static final String UPDATE_EMPLOYEE = "UPDATE EMPLOYEES SET LASTNAME = ?, FIRSTNAME = ?, MIDDLENAME = ?, POSITION = ? WHERE ID = ?";
     private static final String SELECT_ALL_EMPLOYEES = "SELECT * FROM EMPLOYEES";
     private static final String SELECT_EMPLOYEE_BY_ID = "SELECT * FROM EMPLOYEES WHERE ID = ?";
+
     private static EmployeeDAOImpl instance = new EmployeeDAOImpl();
 
     public static EmployeeDAOImpl getInstance() {
