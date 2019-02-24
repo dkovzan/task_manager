@@ -19,7 +19,7 @@
 <div class="w3-container w3-center w3-margin-bottom w3-padding">
     <div class="w3-card-4">
         <div class="w3-container w3-light-blue">
-            <h2>Employees</h2>
+            <h2>Employees overview</h2>
         </div>
         <div class="w3-bar w3-padding-large w3-padding-24">
             <button class="w3-button w3-hover-grey w3-round-large w3-large w3-green" onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&employee_id=-1'">Add employee</button>

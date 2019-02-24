@@ -10,6 +10,20 @@ public class ParameterNameConstant {
     public static final String PRINTED_PROJECTS = "printed_projects";
     public static final String PRINTED_EDIT_PROJECT = "printed_edit_project";
 
+    public static final String TASK_ID = "task_id";
+    public static final String TASK_NAME = "task_name";
+    public static final String TASK_ESTIMATE = "task_estimate";
+    public static final String TASK_CREATEDON = "task_createdOn";
+    public static final String TASK_FINISHEDON = "task_finishedOn";
+    public static final String TASK_PROJECT_ID = "task_project_id";
+    public static final String TASK_EMPLOYEE_ID = "task_employee_id";
+    public static final String TASK_STATUS_ID = "task_status_id";
+
+    public static final String PRINTED_STATUSES = "printed_statuses";
+
+    public static final String PRINTED_TASKS = "printed_tasks";
+    public static final String PRINTED_EDIT_TASK = "printed_edit_task";
+
     public static final String EMPLOYEE_ID = "employee_id";
     public static final String EMPLOYEE_FIRSTNAME = "employee_firstName";
     public static final String EMPLOYEE_LASTNAME = "employee_lastName";
