@@ -19,7 +19,7 @@ public class AddTaskCommand implements Command {
         Task task = TaskCreator.createTaskFromRequest(request);
         try {
             TaskService.addTask(task);
-            List<Task> tasks = TaskService.findAllTasks();
+            List<Task> tasks = TaskService.findAllTasksWithRefs();
             request.setAttribute(ParameterNameConstant.PRINTED_TASKS, tasks);
         } catch (SQLException e) {
             System.out.println(e);

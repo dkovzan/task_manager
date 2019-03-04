@@ -18,7 +18,7 @@ public class UpdateTaskCommand implements Command {
         Task task = TaskCreator.createTaskWithIdFromRequest(request);
         try {
             TaskService.updateTask(task);
-            List<Task> tasks = TaskService.findAllTasks();
+            List<Task> tasks = TaskService.findAllTasksWithRefs();
             request.setAttribute(ParameterNameConstant.PRINTED_TASKS, tasks);
         } catch (SQLException e) {
             System.out.println(e);

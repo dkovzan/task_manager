@@ -33,18 +33,18 @@
                         <th>Name</th>
                         <th>Start Date</th>
                         <th>Finish Date</th>
-                        <th>Asignee</th>
+                        <th>Assignee</th>
                         <th colspan="2">Actions</th>
                     </tr>
                     <c:forEach items="${requestScope.get(ParameterNameConstant.PRINTED_TASKS)}" var="task">
                         <tr>
                             <input type="hidden" name="${ParameterNameConstant.TASK_ID}" value="${task.id}">
                             <td>${task.id}</td>
-                            <td>${task.projectId}</td>
+                            <td>${task.projectShortName}</td>
                             <td>${task.name}</td>
                             <td>${task.createdOn}</td>
                             <td>${task.finishedOn}</td>
-                            <td>${task.employeeId}</td>
+                            <td>${task.employeeFullName}</td>
                             <td>
                                 <button onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_TASK}&task_id=${task.id}&is_add_form=0'" class="w3-button w3-indigo w3-round-large">Edit</button>
                             </td>

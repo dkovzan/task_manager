@@ -18,6 +18,16 @@ public class TaskService {
         return tasks;
     }
 
+    public static List<Task> findAllTasksWithRefs() throws SQLException {
+        List<Task> tasks = null;
+        try {
+            tasks = TaskDAOImpl.getInstance().findAllTasksWithRefs();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return tasks;
+    }
+
     public static Task findTaskById(int id) throws SQLException {
         Task project = null;
         try {

@@ -18,7 +18,7 @@ public class RemoveTaskCommand implements Command {
             int taskId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_ID));
             Task task = new Task(taskId);
             TaskService.removeTask(task);
-            List<Task> tasks = TaskService.findAllTasks();
+            List<Task> tasks = TaskService.findAllTasksWithRefs();
             request.setAttribute(ParameterNameConstant.PRINTED_TASKS, tasks);
         } catch (SQLException e) {
             System.out.println(e);

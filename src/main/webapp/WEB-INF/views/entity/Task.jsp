@@ -41,7 +41,14 @@
             <label>Project:</label><br>
             <select class="w3-select w3-margin-bottom" name="${ParameterNameConstant.TASK_PROJECT_ID}" style="width: 30%">
                 <c:forEach items="${requestScope.get(ParameterNameConstant.PRINTED_PROJECTS)}" var="project">
-                    <option value="${project.id}">${project.shortName}</option>
+                    <c:choose>
+                        <c:when test="${printed_edit_task.projectId == project.id}">
+                            <option selected value="${project.id}">${project.shortName}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${project.id}">${project.shortName}</option>
+                        </c:otherwise>
+                    </c:choose>
                 </c:forEach>
             </select><br>
 
@@ -64,14 +71,28 @@
             <label>Assignee:</label><br>
             <select class="w3-select w3-margin-bottom" name="${ParameterNameConstant.TASK_EMPLOYEE_ID}" style="width: 30%">
                 <c:forEach items="${requestScope.get(ParameterNameConstant.PRINTED_EMPLOYEES)}" var="employee">
-                    <option value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
+                    <c:choose>
+                        <c:when test="${printed_edit_task.employeeId == employee.id}">
+                            <option selected value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
+                        </c:otherwise>
+                    </c:choose>
                 </c:forEach>
             </select><br>
 
             <label>Status:</label><br>
             <select class="w3-select w3-margin-bottom" name="${ParameterNameConstant.TASK_STATUS_ID}" style="width: 30%">
                 <c:forEach items="${requestScope.get(ParameterNameConstant.PRINTED_STATUSES)}" var="status">
-                    <option value="${status.id}">${status.name}</option>
+                    <c:choose>
+                        <c:when test="${printed_edit_task.statusId == status.id}">
+                            <option selected value="${status.id}">${status.name}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${status.id}">${status.name}</option>
+                        </c:otherwise>
+                    </c:choose>
                 </c:forEach>
             </select><br>
 

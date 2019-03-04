@@ -15,7 +15,7 @@ public class PrintTasksCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         try {
-            List<Task> tasks = TaskService.findAllTasks();
+            List<Task> tasks = TaskService.findAllTasksWithRefs();
             request.setAttribute(ParameterNameConstant.PRINTED_TASKS, tasks);
         } catch (SQLException e) {
             System.out.println(e);

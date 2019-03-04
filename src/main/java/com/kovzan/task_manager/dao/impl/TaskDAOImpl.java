@@ -17,6 +17,10 @@ public class TaskDAOImpl implements TaskDAO {
     private static final String UPDATE_TASK = "UPDATE TASKS SET NAME = ?, ESTIMATE = ?, CREATEDON = ?, FINISHEDON = ?, PROJECTID = ?, EMPLOYEEID = ?, STATUSID = ? WHERE ID = ?";
     private static final String REMOVE_TASK = "DELETE FROM TASKS WHERE ID = ?";
     private static final String SELECT_ALL_TASKS = "SELECT * FROM TASKS";
+    private static final String SELECT_ALL_TASKS_WITH_REFS = "SELECT T.ID, T.NAME, T.CREATEDON, T.ESTIMATE, P.SHORTNAME, TS.VALUE AS STATUS, T.FINISHEDON, CONCAT(E.FIRSTNAME, ' ', E.LASTNAME) AS FULLNAME FROM TASKS T " +
+            "LEFT JOIN PROJECTS P ON P.ID = T.PROJECTID " +
+            "LEFT JOIN EMPLOYEES E ON E.ID = T.EMPLOYEEID " +
+            "LEFT JOIN TASKSTATUSES TS ON TS.ID = T.STATUSID";
     private static final String SELECT_TASK_BY_ID = "SELECT * FROM TASKS WHERE ID = ?";
 
     private static TaskDAOImpl instance = new TaskDAOImpl();
@@ -96,6 +100,20 @@ public class TaskDAOImpl implements TaskDAO {
             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_TASKS);
             ResultSet resultSet = statement.executeQuery();
             tasks = DAOCreator.createTasks(resultSet);
+        } catch (SQLException e) {
+            System.out.print(e);
+        }
+        return tasks;
+    }
+
+    @Override
+    public List<Task> findAllTasksWithRefs() throws DAOException {
+        List<Task> tasks = null;
+        try {
+            Connection connection = DBConnection.getDBConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_TASKS_WITH_REFS);
+            ResultSet resultSet = statement.executeQuery();
+            tasks = DAOCreator.createTasksWithRefs(resultSet);
         } catch (SQLException e) {
             System.out.print(e);
         }

@@ -52,6 +52,28 @@ public class DAOCreator {
         return tasks;
     }
 
+    public static List<Task> createTasksWithRefs(ResultSet resultSet) throws SQLException {
+
+        ArrayList<Task> tasks = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                String createdOn = resultSet.getString(3);
+                int estimate = resultSet.getInt(4);
+                String projectShortName = resultSet.getString(5);
+                String statusName = resultSet.getString(6);
+                String finishedOn = resultSet.getString(7);
+                String employeeFullName = resultSet.getString(8);
+                Task task = new Task(id, name, estimate, createdOn, finishedOn, projectShortName, employeeFullName, statusName);
+                tasks.add(task);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return tasks;
+    }
+
     public static List<Employee> createEmployees(ResultSet resultSet) throws SQLException {
 
         ArrayList<Employee> employees = new ArrayList<>();
