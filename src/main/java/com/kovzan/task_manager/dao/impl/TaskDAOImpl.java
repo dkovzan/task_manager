@@ -4,12 +4,16 @@ import com.kovzan.task_manager.connection.DBConnection;
 import com.kovzan.task_manager.dao.TaskDAO;
 import com.kovzan.task_manager.entities.Task;
 import com.kovzan.task_manager.exception.DAOException;
+import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+
+import static com.kovzan.task_manager.logger.Log.logger;
 
 public class TaskDAOImpl implements TaskDAO {
 
@@ -46,10 +50,11 @@ public class TaskDAOImpl implements TaskDAO {
             int result;
             if (keys.next()) {
                 result = keys.getInt(1);
+                logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
                 return result;
             }
             } catch (SQLException e) {
-                System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return -1;
     }
@@ -72,10 +77,11 @@ public class TaskDAOImpl implements TaskDAO {
             ResultSet keys = statement.getGeneratedKeys();
             if (keys.next()) {
                 result = keys.getInt(1);
+                logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
                 return result;
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return -1;
     }
@@ -87,8 +93,9 @@ public class TaskDAOImpl implements TaskDAO {
             PreparedStatement statement = connection.prepareStatement(REMOVE_TASK);
             statement.setInt(1, task.getId());
             statement.execute();
+            logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
     }
 
@@ -101,7 +108,7 @@ public class TaskDAOImpl implements TaskDAO {
             ResultSet resultSet = statement.executeQuery();
             tasks = DAOCreator.createTasks(resultSet);
         } catch (SQLException e) {
-            System.out.print(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return tasks;
     }
@@ -114,8 +121,9 @@ public class TaskDAOImpl implements TaskDAO {
             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_TASKS_WITH_REFS);
             ResultSet resultSet = statement.executeQuery();
             tasks = DAOCreator.createTasksWithRefs(resultSet);
+            logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
         } catch (SQLException e) {
-            System.out.print(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return tasks;
     }
@@ -129,8 +137,9 @@ public class TaskDAOImpl implements TaskDAO {
             statement.setInt(1, taskId);
             ResultSet resultSet = statement.executeQuery();
             task = DAOCreator.createTasks(resultSet).get(0);
+            logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return task;
     }

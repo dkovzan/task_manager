@@ -2,9 +2,13 @@ package com.kovzan.task_manager.service;
 
 import com.kovzan.task_manager.dao.impl.TaskDAOImpl;
 import com.kovzan.task_manager.entities.Task;
+import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+
+import static com.kovzan.task_manager.logger.Log.logger;
 
 public class TaskService {
 
@@ -13,7 +17,7 @@ public class TaskService {
         try {
             tasks = TaskDAOImpl.getInstance().findAll();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return tasks;
     }
@@ -23,7 +27,7 @@ public class TaskService {
         try {
             tasks = TaskDAOImpl.getInstance().findAllTasksWithRefs();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return tasks;
     }
@@ -33,7 +37,7 @@ public class TaskService {
         try {
             project = TaskDAOImpl.getInstance().findTaskById(id);
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return project;
     }
@@ -42,7 +46,7 @@ public class TaskService {
         try {
             TaskDAOImpl.getInstance().add(task);
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
     }
 
@@ -50,7 +54,7 @@ public class TaskService {
         try {
             TaskDAOImpl.getInstance().update(task);
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
     }
 
@@ -58,7 +62,7 @@ public class TaskService {
         try {
             TaskDAOImpl.getInstance().remove(task);
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
     }
 }

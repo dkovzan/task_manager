@@ -4,12 +4,16 @@ import com.kovzan.task_manager.connection.DBConnection;
 import com.kovzan.task_manager.dao.StatusDAO;
 import com.kovzan.task_manager.entities.Status;
 import com.kovzan.task_manager.exception.DAOException;
+import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+
+import static com.kovzan.task_manager.logger.Log.logger;
 
 public class StatusDAOImpl implements StatusDAO {
 
@@ -31,8 +35,9 @@ public class StatusDAOImpl implements StatusDAO {
             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_STATUSES);
             ResultSet resultSet = statement.executeQuery();
             statuses = DAOCreator.createStatuses(resultSet);
+            logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return statuses;
     }
@@ -46,8 +51,9 @@ public class StatusDAOImpl implements StatusDAO {
             statement.setInt(1, statusId);
             ResultSet resultSet = statement.executeQuery();
             status = DAOCreator.createStatuses(resultSet).get(0);
+            logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return status;
     }

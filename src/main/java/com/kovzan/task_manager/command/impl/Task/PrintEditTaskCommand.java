@@ -7,6 +7,7 @@ import com.kovzan.task_manager.entities.Employee;
 import com.kovzan.task_manager.entities.Project;
 import com.kovzan.task_manager.entities.Status;
 import com.kovzan.task_manager.entities.Task;
+import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.EmployeeService;
 import com.kovzan.task_manager.service.ProjectService;
 import com.kovzan.task_manager.service.StatusService;
@@ -15,6 +16,9 @@ import com.kovzan.task_manager.service.TaskService;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+
+import static com.kovzan.task_manager.logger.Log.logger;
 
 public class PrintEditTaskCommand implements Command {
 
@@ -32,7 +36,7 @@ public class PrintEditTaskCommand implements Command {
                 List<Status> statuses = StatusService.findAllStatuses();
                 request.setAttribute(ParameterNameConstant.PRINTED_STATUSES, statuses);
             } catch (SQLException e) {
-                System.out.println(e);
+                logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
                 return PageConstant.ERROR_PAGE;
             }
         } else {
@@ -48,10 +52,11 @@ public class PrintEditTaskCommand implements Command {
                 List<Status> statuses = StatusService.findAllStatuses();
                 request.setAttribute(ParameterNameConstant.PRINTED_STATUSES, statuses);
             } catch (SQLException e) {
-                System.out.println(e);
+                logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
                 return PageConstant.ERROR_PAGE;
             }
         }
+        logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
         return PageConstant.EDIT_TASK_PAGE;
     }
 }

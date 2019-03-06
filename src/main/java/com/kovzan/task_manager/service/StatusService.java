@@ -2,9 +2,13 @@ package com.kovzan.task_manager.service;
 
 import com.kovzan.task_manager.dao.impl.StatusDAOImpl;
 import com.kovzan.task_manager.entities.Status;
+import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+
+import static com.kovzan.task_manager.logger.Log.logger;
 
 public class StatusService {
 
@@ -13,7 +17,7 @@ public class StatusService {
         try {
             statuses = StatusDAOImpl.getInstance().findAll();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return statuses;
     }
@@ -23,7 +27,7 @@ public class StatusService {
         try {
             status = StatusDAOImpl.getInstance().findStatusById(id);
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return status;
     }

@@ -4,11 +4,15 @@ import com.kovzan.task_manager.entities.Employee;
 import com.kovzan.task_manager.entities.Project;
 import com.kovzan.task_manager.entities.Status;
 import com.kovzan.task_manager.entities.Task;
+import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+
+import static com.kovzan.task_manager.logger.Log.logger;
 
 public class DAOCreator {
 
@@ -25,7 +29,7 @@ public class DAOCreator {
                 projects.add(project);
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return projects;
     }
@@ -47,7 +51,7 @@ public class DAOCreator {
                 tasks.add(task);
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return tasks;
     }
@@ -69,7 +73,7 @@ public class DAOCreator {
                 tasks.add(task);
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return tasks;
     }
@@ -88,7 +92,7 @@ public class DAOCreator {
                 employees.add(employee);
         }
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return employees;
     }
@@ -104,7 +108,7 @@ public class DAOCreator {
                 statuses.add(status);
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return statuses;
     }

@@ -4,12 +4,16 @@ import com.kovzan.task_manager.connection.DBConnection;
 import com.kovzan.task_manager.dao.ProjectDAO;
 import com.kovzan.task_manager.entities.Project;
 import com.kovzan.task_manager.exception.DAOException;
+import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+
+import static com.kovzan.task_manager.logger.Log.logger;
 
 public class ProjectDAOImpl implements ProjectDAO {
 
@@ -38,10 +42,11 @@ public class ProjectDAOImpl implements ProjectDAO {
             int result;
             if(keys.next()) {
                 result = keys.getInt(1);
+                logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
                 return result;
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return -1;
     }
@@ -60,10 +65,11 @@ public class ProjectDAOImpl implements ProjectDAO {
             ResultSet keys = statement.getGeneratedKeys();
             if(keys.next()) {
                 result = keys.getInt(1);
+                logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
                 return result;
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return -1;
     }
@@ -75,8 +81,9 @@ public class ProjectDAOImpl implements ProjectDAO {
             PreparedStatement statement = connection.prepareStatement(REMOVE_PROJECT);
             statement.setInt(1, element.getId());
             statement.execute();
+            logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
     }
 
@@ -88,8 +95,9 @@ public class ProjectDAOImpl implements ProjectDAO {
             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_PROJECTS);
             ResultSet resultSet = statement.executeQuery();
             projects = DAOCreator.createProjects(resultSet);
+            logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return projects;
     }
@@ -103,8 +111,9 @@ public class ProjectDAOImpl implements ProjectDAO {
             statement.setInt(1, projectId);
             ResultSet resultSet = statement.executeQuery();
             project = DAOCreator.createProjects(resultSet).get(0);
+            logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return project;
     }

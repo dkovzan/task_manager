@@ -4,9 +4,13 @@ import com.kovzan.task_manager.connection.DBConnection;
 import com.kovzan.task_manager.dao.EmployeeDAO;
 import com.kovzan.task_manager.entities.Employee;
 import com.kovzan.task_manager.exception.DAOException;
+import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.*;
 import java.util.List;
+import java.util.logging.Level;
+
+import static com.kovzan.task_manager.logger.Log.logger;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 
@@ -36,10 +40,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             ResultSet keys = statement.getGeneratedKeys();
             if(keys.next()) {
                 result = keys.getInt(1);
+                logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
                 return result;
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return -1;
     }
@@ -59,11 +64,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             ResultSet keys = statement.getGeneratedKeys();
             if(keys.next()) {
                 result = keys.getInt(1);
+                logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
                 return result;
             }
 
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return -1;
     }
@@ -76,7 +82,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             statement.setInt(1, element.getId());
             statement.execute();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
     }
 
@@ -88,8 +94,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_EMPLOYEES);
             ResultSet resultSet = statement.executeQuery();
             employees = DAOCreator.createEmployees(resultSet);
+            logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return employees;
     }
@@ -103,8 +110,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             statement.setInt(1, employeeId);
             ResultSet resultSet = statement.executeQuery();
             employee = DAOCreator.createEmployees(resultSet).get(0);
+            logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
         }
         return employee;
     }
