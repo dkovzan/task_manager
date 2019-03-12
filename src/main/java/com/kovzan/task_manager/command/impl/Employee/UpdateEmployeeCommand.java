@@ -16,19 +16,19 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class UpdateEmployeeCommand implements Command {
 
-    @Override
-    public String execute(HttpServletRequest request) {
-        Employee employee;
-        try {
-            employee = EmployeeCreator.createEmployeeWithIdFromRequest(request);
-            EmployeeService.updateEmployee(employee);
-            List<Employee> employees = EmployeeService.findAllEmployees();
-            request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-            return PageConstant.ERROR_PAGE;
-        }
-        logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-        return PageConstant.EMPLOYEES_PAGE;
-    }
+	@Override
+	public String execute(HttpServletRequest request) {
+		Employee employee;
+		try {
+			employee = EmployeeCreator.createEmployeeWithIdFromRequest(request);
+			EmployeeService.updateEmployee(employee);
+			List<Employee> employees = EmployeeService.findAllEmployees();
+			request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			return PageConstant.ERROR_PAGE;
+		}
+		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+		return PageConstant.EMPLOYEES_PAGE;
+	}
 }

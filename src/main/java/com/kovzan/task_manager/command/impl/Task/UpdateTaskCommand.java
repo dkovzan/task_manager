@@ -17,18 +17,18 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class UpdateTaskCommand implements Command {
 
-    @Override
-    public String execute(HttpServletRequest request) {
-        Task task = TaskCreator.createTaskWithIdFromRequest(request);
-        try {
-            TaskService.updateTask(task);
-            List<Task> tasks = TaskService.findAllTasksWithRefs();
-            request.setAttribute(ParameterNameConstant.PRINTED_TASKS, tasks);
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-            return PageConstant.ERROR_PAGE;
-        }
-        logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-        return PageConstant.TASKS_PAGE;
-    }
+	@Override
+	public String execute(HttpServletRequest request) {
+		Task task = TaskCreator.createTaskWithIdFromRequest(request);
+		try {
+			TaskService.updateTask(task);
+			List<Task> tasks = TaskService.findAllTasksWithRefs();
+			request.setAttribute(ParameterNameConstant.PRINTED_TASKS, tasks);
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			return PageConstant.ERROR_PAGE;
+		}
+		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+		return PageConstant.TASKS_PAGE;
+	}
 }

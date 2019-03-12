@@ -13,22 +13,22 @@ import java.io.IOException;
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
 
-    public static final String COMMAND = "command";
+	public static final String COMMAND = "command";
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        processRequest(req, resp);
-    }
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		processRequest(req, resp);
+	}
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        processRequest(req, resp);
-    }
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		processRequest(req, resp);
+	}
 
-    private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException{
-        String command = req.getParameter(COMMAND);
-        Command commandType = CommandEnum.valueOf(command.toUpperCase()).getCommand();
-        String page = commandType.execute(req);
-        req.getRequestDispatcher(page).forward(req,resp);
-    }
+	private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException{
+		String command = req.getParameter(COMMAND);
+		Command commandType = CommandEnum.valueOf(command.toUpperCase()).getCommand();
+		String page = commandType.execute(req);
+		req.getRequestDispatcher(page).forward(req,resp);
+	}
 }

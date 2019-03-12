@@ -16,25 +16,25 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class RemoveEmployeeCommand implements Command {
 
-    @Override
-    public String execute(HttpServletRequest request) {
-        try {
-            int employeeId = Integer.parseInt(request.getParameter(ParameterNameConstant.EMPLOYEE_ID));
-            Employee employee = new Employee(employeeId);
-            EmployeeService.removeEmployee(employee);
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-            return PageConstant.ERROR_PAGE;
-        }
-        List<Employee> employees;
-        try {
-            employees = EmployeeService.findAllEmployees();
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-            return PageConstant.ERROR_PAGE;
-        }
-        request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
-        logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-        return PageConstant.EMPLOYEES_PAGE;
-    }
+	@Override
+	public String execute(HttpServletRequest request) {
+		try {
+			int employeeId = Integer.parseInt(request.getParameter(ParameterNameConstant.EMPLOYEE_ID));
+			Employee employee = new Employee(employeeId);
+			EmployeeService.removeEmployee(employee);
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			return PageConstant.ERROR_PAGE;
+		}
+		List<Employee> employees;
+		try {
+			employees = EmployeeService.findAllEmployees();
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			return PageConstant.ERROR_PAGE;
+		}
+		request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
+		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+		return PageConstant.EMPLOYEES_PAGE;
+	}
 }

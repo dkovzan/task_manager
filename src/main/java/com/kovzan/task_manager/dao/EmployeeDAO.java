@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface EmployeeDAO extends DAOBase<Employee> {
 
-    Employee findEmployeeById(int id) throws DAOException;
+	Employee findEmployeeById(int id) throws DAOException;
 }

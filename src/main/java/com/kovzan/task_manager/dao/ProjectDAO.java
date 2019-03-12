@@ -5,5 +5,5 @@ import com.kovzan.task_manager.exception.DAOException;
 
 public interface ProjectDAO extends DAOBase<Project>{
 
-    Project findProjectById(int id) throws DAOException;
+	Project findProjectById(int id) throws DAOException;
 }

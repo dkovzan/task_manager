@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface TaskDAO extends DAOBase<Task> {
 
-    Task findTaskById(int id) throws DAOException;
-    List<Task> findAllTasksWithRefs() throws DAOException;
+	Task findTaskById(int id) throws DAOException;
+	List<Task> findAllTasksWithRefs() throws DAOException;
 }

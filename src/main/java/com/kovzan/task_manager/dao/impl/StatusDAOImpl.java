@@ -19,44 +19,44 @@ public class StatusDAOImpl implements StatusDAO {
 
 //    private static final String ADD_STATUS = "INSERT INTO TASKSTATUSES(VALUE) VALUES(?)";
 //    private static final String UPDATE_STATUS = "UPDATE TASKSTATUSES SET VALUE = ? WHERE ID = ?";
-    private static final String SELECT_ALL_STATUSES = "SELECT * FROM TASKSTATUSES";
-    private static final String SELECT_STATUS_BY_ID = "SELECT * FROM TASKSTATUSES WHERE ID = ?";
+	private static final String SELECT_ALL_STATUSES = "SELECT * FROM TASKSTATUSES";
+	private static final String SELECT_STATUS_BY_ID = "SELECT * FROM TASKSTATUSES WHERE ID = ?";
 
-    private static StatusDAOImpl instance = new StatusDAOImpl();
+	private static StatusDAOImpl instance = new StatusDAOImpl();
 
-    public static StatusDAOImpl getInstance() {
-        return instance;
-    }
+	public static StatusDAOImpl getInstance() {
+		return instance;
+	}
 
-    public List<Status> findAll() throws DAOException {
-        List<Status> statuses = null;
-        try {
-            Connection connection = DBConnection.getDBConnection();
-            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_STATUSES);
-            ResultSet resultSet = statement.executeQuery();
-            statuses = DAOCreator.createStatuses(resultSet);
-            logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-        }
-        return statuses;
-    }
+	public List<Status> findAll() throws DAOException {
+		List<Status> statuses = null;
+		try {
+			Connection connection = DBConnection.getDBConnection();
+			PreparedStatement statement = connection.prepareStatement(SELECT_ALL_STATUSES);
+			ResultSet resultSet = statement.executeQuery();
+			statuses = DAOCreator.createStatuses(resultSet);
+			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+		}
+		return statuses;
+	}
 
-    @Override
-    public Status findStatusById(int statusId) throws DAOException {
-        Status status = null;
-        try {
-            Connection connection = DBConnection.getDBConnection();
-            PreparedStatement statement = connection.prepareStatement(SELECT_STATUS_BY_ID);
-            statement.setInt(1, statusId);
-            ResultSet resultSet = statement.executeQuery();
-            status = DAOCreator.createStatuses(resultSet).get(0);
-            logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-        }
-        return status;
-    }
+	@Override
+	public Status findStatusById(int statusId) throws DAOException {
+		Status status = null;
+		try {
+			Connection connection = DBConnection.getDBConnection();
+			PreparedStatement statement = connection.prepareStatement(SELECT_STATUS_BY_ID);
+			statement.setInt(1, statusId);
+			ResultSet resultSet = statement.executeQuery();
+			status = DAOCreator.createStatuses(resultSet).get(0);
+			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+		}
+		return status;
+	}
 
 //    @Override
 //    public int add(Status status) throws DAOException {

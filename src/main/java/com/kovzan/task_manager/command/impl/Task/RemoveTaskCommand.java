@@ -16,19 +16,19 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class RemoveTaskCommand implements Command {
 
-    @Override
-    public String execute(HttpServletRequest request) {
-        try {
-            int taskId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_ID));
-            Task task = new Task(taskId);
-            TaskService.removeTask(task);
-            List<Task> tasks = TaskService.findAllTasksWithRefs();
-            request.setAttribute(ParameterNameConstant.PRINTED_TASKS, tasks);
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-            return PageConstant.ERROR_PAGE;
-        }
-        logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-        return PageConstant.TASKS_PAGE;
-    }
+	@Override
+	public String execute(HttpServletRequest request) {
+		try {
+			int taskId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_ID));
+			Task task = new Task(taskId);
+			TaskService.removeTask(task);
+			List<Task> tasks = TaskService.findAllTasksWithRefs();
+			request.setAttribute(ParameterNameConstant.PRINTED_TASKS, tasks);
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			return PageConstant.ERROR_PAGE;
+		}
+		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+		return PageConstant.TASKS_PAGE;
+	}
 }

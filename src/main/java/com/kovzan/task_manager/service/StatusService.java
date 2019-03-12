@@ -12,23 +12,23 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class StatusService {
 
-    public static List<Status> findAllStatuses() throws SQLException {
-        List<Status> statuses = null;
-        try {
-            statuses = StatusDAOImpl.getInstance().findAll();
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-        }
-        return statuses;
-    }
+	public static List<Status> findAllStatuses() throws SQLException {
+		List<Status> statuses = null;
+		try {
+			statuses = StatusDAOImpl.getInstance().findAll();
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+		}
+		return statuses;
+	}
 
-    public static Status findStatusById(int id) throws SQLException {
-        Status status = null;
-        try {
-            status = StatusDAOImpl.getInstance().findStatusById(id);
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-        }
-        return status;
-    }
+	public static Status findStatusById(int id) throws SQLException {
+		Status status = null;
+		try {
+			status = StatusDAOImpl.getInstance().findStatusById(id);
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+		}
+		return status;
+	}
 }

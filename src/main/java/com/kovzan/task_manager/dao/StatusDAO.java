@@ -5,5 +5,5 @@ import com.kovzan.task_manager.exception.DAOException;
 
 public interface StatusDAO {
 
-    Status findStatusById(int id) throws DAOException;
+	Status findStatusById(int id) throws DAOException;
 }

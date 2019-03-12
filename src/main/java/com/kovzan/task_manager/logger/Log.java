@@ -4,13 +4,13 @@ import java.util.logging.Logger;
 
 public class Log {
 
-    public static final Logger logger;
+	public static final Logger logger;
 
-    private Log() {}
+	private Log() {}
 
-    static {
-        logger = Logger.getLogger(Log.class.getName());
-    }
+	static {
+		logger = Logger.getLogger(Log.class.getName());
+	}
 
 
 }
