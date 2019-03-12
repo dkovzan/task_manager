@@ -24,7 +24,7 @@ public class PrintEditEmployeeCommand implements Command {
 		} else {
 			Employee employee;
 			try {
-				employee = EmployeeService.findEmployeeById(employeeId);
+				employee = EmployeeService.getInstance().findEmployeeById(employeeId);
 				request.setAttribute(ParameterNameConstant.PRINTED_EDIT_EMPLOYEE, employee);
 				request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 0);
 			} catch (SQLException e) {

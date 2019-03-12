@@ -20,7 +20,7 @@ public class PrintEmployeesCommand implements Command{
 	public String execute(HttpServletRequest request) {
 		List<Employee> employees;
 		try {
-			employees = EmployeeService.findAllEmployees();
+			employees = EmployeeService.getInstance().findAllEmployees();
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 			return PageConstant.ERROR_PAGE;

@@ -24,7 +24,7 @@ public class PrintEditProjectCommand implements Command {
 		} else {
 			Project project;
 			try {
-				project = ProjectService.findProjectById(projectId);
+				project = ProjectService.getInstance().findProjectById(projectId);
 				request.setAttribute(ParameterNameConstant.PRINTED_EDIT_PROJECT, project);
 				request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 0);
 			} catch (SQLException e) {

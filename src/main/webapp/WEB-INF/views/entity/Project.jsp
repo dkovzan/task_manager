@@ -39,13 +39,13 @@
 				</c:otherwise>
 			</c:choose>
 			<label>Name:
-				<input required type="text" name="${ParameterNameConstant.PROJECT_NAME}" value="${printed_edit_project.name}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
+				<input placeholder="Write name" required type="text" name="${ParameterNameConstant.PROJECT_NAME}" value="${printed_edit_project.name}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
 			</label><br>
 			<label>Short name:
-				<input required type="text" name="${ParameterNameConstant.PROJECT_SHORTNAME}" value="${printed_edit_project.shortName}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
+				<input placeholder="Write short name" required type="text" name="${ParameterNameConstant.PROJECT_SHORTNAME}" value="${printed_edit_project.shortName}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
 			</label><br>
 			<label>Description:
-				<textarea name="${ParameterNameConstant.PROJECT_DESCRIPTION}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%; resize: none">${printed_edit_project.description}</textarea>
+				<textarea placeholder="Write description" name="${ParameterNameConstant.PROJECT_DESCRIPTION}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%; resize: none">${printed_edit_project.description}</textarea>
 			</label><br>
 			<button type="submit" class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
 			<button onclick="location.href='/controller?command=${CommandEnum.PRINT_PROJECTS}'" class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</button>

@@ -38,6 +38,7 @@
 					</label><br>
 				</c:otherwise>
 			</c:choose>
+
 			<label>Project:</label><br>
 			<select class="w3-select w3-margin-bottom" name="${ParameterNameConstant.TASK_PROJECT_ID}" style="width: 30%">
 				<c:forEach items="${requestScope.get(ParameterNameConstant.PRINTED_PROJECTS)}" var="project">
@@ -53,11 +54,11 @@
 			</select><br>
 
 			<label>Name:
-				<input required type="text" name="${ParameterNameConstant.TASK_NAME}" value="${printed_edit_task.name}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
+				<input placeholder="Write name" required type="text" name="${ParameterNameConstant.TASK_NAME}" value="${printed_edit_task.name}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
 			</label><br>
 
 			<label>Estimate:
-				<input required type="text" name="${ParameterNameConstant.TASK_ESTIMATE}" value="${printed_edit_task.estimate}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
+				<input placeholder="Write estimate" required type="text" name="${ParameterNameConstant.TASK_ESTIMATE}" value="${printed_edit_task.estimate}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
 			</label><br>
 
 			<label>Start Date:
@@ -95,6 +96,18 @@
 					</c:choose>
 				</c:forEach>
 			</select><br>
+
+			<c:choose>
+				<c:when test="${requestScope.get(ParameterNameConstant.ERROR) != null}">
+					<div class="w3-panel w3-red w3-display-container w3-card-4 w3-round">
+							<span onclick="this.parentElement.style.display='none'"
+								  class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border w3-border-red w3-hover-border-grey">X
+							</span>
+						<h5>${requestScope.get(ParameterNameConstant.ERROR)}</h5>
+					</div>
+					</br>
+				</c:when>
+			</c:choose>
 
 			<button type="submit" class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
 			<button onclick="location.href='/controller?command=${CommandEnum.PRINT_TASKS}'" class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</button>

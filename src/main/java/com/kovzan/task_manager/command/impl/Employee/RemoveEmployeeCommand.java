@@ -21,14 +21,14 @@ public class RemoveEmployeeCommand implements Command {
 		try {
 			int employeeId = Integer.parseInt(request.getParameter(ParameterNameConstant.EMPLOYEE_ID));
 			Employee employee = new Employee(employeeId);
-			EmployeeService.removeEmployee(employee);
+			EmployeeService.getInstance().removeEmployee(employee);
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 			return PageConstant.ERROR_PAGE;
 		}
 		List<Employee> employees;
 		try {
-			employees = EmployeeService.findAllEmployees();
+			employees = EmployeeService.getInstance().findAllEmployees();
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 			return PageConstant.ERROR_PAGE;

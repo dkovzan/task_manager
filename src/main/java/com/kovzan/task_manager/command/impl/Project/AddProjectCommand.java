@@ -22,7 +22,7 @@ public class AddProjectCommand implements Command {
 
 		Project project = ProjectCreator.createProjectFromRequest(request);
 		try {
-			ProjectService.addProject(project);
+			ProjectService.getInstance().addProject(project);
 			List<Project> projects = ProjectService.findAllProjects();
 			request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 		} catch (SQLException e) {

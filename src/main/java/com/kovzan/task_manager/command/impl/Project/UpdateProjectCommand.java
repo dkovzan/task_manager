@@ -23,8 +23,8 @@ public class UpdateProjectCommand implements Command {
 		Project project;
 		try {
 			project = ProjectCreator.createProjectWithIdFromRequest(request);
-			ProjectService.updateProject(project);
-			List<Project> projects = ProjectService.findAllProjects();
+			ProjectService.getInstance().updateProject(project);
+			List<Project> projects = ProjectService.getInstance().findAllProjects();
 			request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);

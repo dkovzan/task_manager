@@ -5,6 +5,7 @@ import com.kovzan.task_manager.entities.Task;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.util.logging.Level;
 
 import static com.kovzan.task_manager.logger.Log.logger;
@@ -15,8 +16,8 @@ public class TaskCreator {
 
 		String taskName = request.getParameter(ParameterNameConstant.TASK_NAME);
 		Integer taskEstimation = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_ESTIMATE));
-		String taskCreatedOn = request.getParameter(ParameterNameConstant.TASK_CREATEDON);
-		String taskFinishedOn = request.getParameter(ParameterNameConstant.TASK_FINISHEDON);
+		LocalDate taskCreatedOn = LocalDate.parse(request.getParameter(ParameterNameConstant.TASK_CREATEDON));
+		LocalDate taskFinishedOn = LocalDate.parse(request.getParameter(ParameterNameConstant.TASK_FINISHEDON));
 		Integer taskProjectId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_PROJECT_ID));
 		Integer taskEmployeeId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_EMPLOYEE_ID));
 		Integer taskStatusId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_STATUS_ID));

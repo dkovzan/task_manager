@@ -12,6 +12,14 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class ProjectService {
 
+	public static final ProjectService instance = new ProjectService();
+
+	private ProjectService() {}
+
+	public static ProjectService getInstance() {
+		return instance;
+	}
+
 	public static List<Project> findAllProjects() throws SQLException {
 		List<Project> projects = null;
 		try {

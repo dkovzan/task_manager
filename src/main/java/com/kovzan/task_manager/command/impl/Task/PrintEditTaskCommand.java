@@ -29,11 +29,12 @@ public class PrintEditTaskCommand implements Command {
 		if (taskId == -1) {
 			request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 1);
 			try {
-				List<Project> projects = ProjectService.findAllProjects();
+				List<Project> projects = ProjectService.getInstance().findAllProjects();
+				List<Employee> employees = EmployeeService.getInstance().findAllEmployees();
+				List<Status> statuses = StatusService.getInstance().findAllStatuses();
+
 				request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
-				List<Employee> employees = EmployeeService.findAllEmployees();
 				request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
-				List<Status> statuses = StatusService.findAllStatuses();
 				request.setAttribute(ParameterNameConstant.PRINTED_STATUSES, statuses);
 			} catch (SQLException e) {
 				logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
@@ -45,11 +46,13 @@ public class PrintEditTaskCommand implements Command {
 				task = TaskService.findTaskById(taskId);
 				request.setAttribute(ParameterNameConstant.PRINTED_EDIT_TASK, task);
 				request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 0);
+
 				List<Project> projects = ProjectService.findAllProjects();
-				request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 				List<Employee> employees = EmployeeService.findAllEmployees();
-				request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
 				List<Status> statuses = StatusService.findAllStatuses();
+
+				request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
+				request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
 				request.setAttribute(ParameterNameConstant.PRINTED_STATUSES, statuses);
 			} catch (SQLException e) {
 				logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);

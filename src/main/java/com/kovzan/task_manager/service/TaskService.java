@@ -3,6 +3,7 @@ package com.kovzan.task_manager.service;
 import com.kovzan.task_manager.dao.impl.TaskDAOImpl;
 import com.kovzan.task_manager.entities.Task;
 import com.kovzan.task_manager.logger.LogConstant;
+import com.kovzan.task_manager.validator.TaskValidator;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,6 +12,14 @@ import java.util.logging.Level;
 import static com.kovzan.task_manager.logger.Log.logger;
 
 public class TaskService {
+
+	public static final TaskService instance = new TaskService();
+
+	private TaskService() {}
+
+	public static TaskService getInstance() {
+		return instance;
+	}
 
 	public static List<Task> findAllTasks() throws SQLException {
 		List<Task> tasks = null;
@@ -64,5 +73,13 @@ public class TaskService {
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 		}
+	}
+
+	public static boolean validateTask(Task task) {
+		return TaskValidator.validateTask(task);
+	}
+
+	public static Task getTaskWithValidFields(Task task) {
+		return TaskValidator.getTaskWithValidFields(task);
 	}
 }

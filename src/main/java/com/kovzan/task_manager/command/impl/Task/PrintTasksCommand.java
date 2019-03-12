@@ -19,7 +19,7 @@ public class PrintTasksCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request) {
 		try {
-			List<Task> tasks = TaskService.findAllTasksWithRefs();
+			List<Task> tasks = TaskService.getInstance().findAllTasksWithRefs();
 			request.setAttribute(ParameterNameConstant.PRINTED_TASKS, tasks);
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);

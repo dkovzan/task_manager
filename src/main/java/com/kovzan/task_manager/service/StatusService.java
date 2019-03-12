@@ -12,6 +12,14 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class StatusService {
 
+	public static final StatusService instance = new StatusService();
+
+	private StatusService() {}
+
+	public static StatusService getInstance() {
+		return instance;
+	}
+
 	public static List<Status> findAllStatuses() throws SQLException {
 		List<Status> statuses = null;
 		try {

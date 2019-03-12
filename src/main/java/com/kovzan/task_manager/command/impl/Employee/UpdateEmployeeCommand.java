@@ -22,7 +22,7 @@ public class UpdateEmployeeCommand implements Command {
 		try {
 			employee = EmployeeCreator.createEmployeeWithIdFromRequest(request);
 			EmployeeService.updateEmployee(employee);
-			List<Employee> employees = EmployeeService.findAllEmployees();
+			List<Employee> employees = EmployeeService.getInstance().findAllEmployees();
 			request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);

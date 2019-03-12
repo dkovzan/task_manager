@@ -21,7 +21,7 @@ public class PrintProjectsCommand implements Command {
 
 		List<Project> projects;
 		try {
-			projects = ProjectService.findAllProjects();
+			projects = ProjectService.getInstance().findAllProjects();
 			request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);

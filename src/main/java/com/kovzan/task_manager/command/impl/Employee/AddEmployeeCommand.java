@@ -23,7 +23,7 @@ public class AddEmployeeCommand implements Command {
 		Employee employee = EmployeeCreator.createEmployeeFromRequest(request);
 		try {
 			EmployeeService.addEmployee(employee);
-			List<Employee> employees = EmployeeService.findAllEmployees();
+			List<Employee> employees = EmployeeService.getInstance().findAllEmployees();
 			request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);

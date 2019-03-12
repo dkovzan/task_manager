@@ -39,16 +39,16 @@
 					</c:otherwise>
 				</c:choose>
 			<label>First name:
-				<input required type="text" name="${ParameterNameConstant.EMPLOYEE_FIRSTNAME}" value="${printed_edit_employee.firstName}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
+				<input placeholder="Write first name" required type="text" name="${ParameterNameConstant.EMPLOYEE_FIRSTNAME}" value="${printed_edit_employee.firstName}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
 			</label><br>
 			<label>Last name:
-				<input required type="text" name="${ParameterNameConstant.EMPLOYEE_LASTNAME}" value="${printed_edit_employee.lastName}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
+				<input placeholder="Write last name" required type="text" name="${ParameterNameConstant.EMPLOYEE_LASTNAME}" value="${printed_edit_employee.lastName}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
 			</label><br>
 			<label>Middle name:
-				<input type="text" name="${ParameterNameConstant.EMPLOYEE_MIDDLENAME}" value="${printed_edit_employee.middleName}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
+				<input placeholder="Write middle name (optional)" type="text" name="${ParameterNameConstant.EMPLOYEE_MIDDLENAME}" value="${printed_edit_employee.middleName}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
 			</label><br>
 			<label>Position:
-				<input required type="text" name="${ParameterNameConstant.EMPLOYEE_POSITION}" value="${printed_edit_employee.position}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
+				<input placeholder="Write position" required type="text" name="${ParameterNameConstant.EMPLOYEE_POSITION}" value="${printed_edit_employee.position}" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%">
 			</label><br>
 			<button type="submit" class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
 			<button onclick="location.href='/controller?command=${CommandEnum.PRINT_EMPLOYEES}'" class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</button>

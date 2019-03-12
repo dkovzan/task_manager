@@ -23,7 +23,7 @@ public class RemoveProjectCommand implements Command {
 			int projectId = Integer.parseInt(request.getParameter(ParameterNameConstant.PROJECT_ID));
 			Project project = new Project(projectId);
 			ProjectService.removeProject(project);
-			List<Project> projects = ProjectService.findAllProjects();
+			List<Project> projects = ProjectService.getInstance().findAllProjects();
 			request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);

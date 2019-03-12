@@ -40,8 +40,8 @@ public class TaskDAOImpl implements TaskDAO {
 			PreparedStatement statement = connection.prepareStatement(ADD_TASK);
 			statement.setString(1, task.getName());
 			statement.setInt(2, task.getEstimate());
-			statement.setString(3, task.getCreatedOn());
-			statement.setString(4, task.getFinishedOn());
+			statement.setString(3, task.getCreatedOn().toString());
+			statement.setString(4, task.getFinishedOn().toString());
 			statement.setInt(5, task.getProjectId());
 			statement.setInt(6, task.getEmployeeId());
 			statement.setInt(7, task.getStatusId());
@@ -66,8 +66,8 @@ public class TaskDAOImpl implements TaskDAO {
 			PreparedStatement statement = connection.prepareStatement(UPDATE_TASK);
 			statement.setString(1, task.getName());
 			statement.setInt(2, task.getEstimate());
-			statement.setString(3, task.getCreatedOn());
-			statement.setString(4, task.getFinishedOn());
+			statement.setString(3, task.getCreatedOn().toString());
+			statement.setString(4, task.getFinishedOn().toString());
 			statement.setInt(5, task.getProjectId());
 			statement.setInt(6, task.getEmployeeId());
 			statement.setInt(7, task.getStatusId());

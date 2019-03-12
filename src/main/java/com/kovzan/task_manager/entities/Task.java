@@ -1,5 +1,6 @@
 package com.kovzan.task_manager.entities;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Task implements Entity {
@@ -7,8 +8,8 @@ public class Task implements Entity {
 	private Integer id;
 	private String name;
 	private Integer estimate;
-	private String createdOn;
-	private String finishedOn;
+	private LocalDate createdOn;
+	private LocalDate finishedOn;
 	private Integer projectId;
 	private String projectShortName;
 	private Integer employeeId;
@@ -20,7 +21,7 @@ public class Task implements Entity {
 		this.id = id;
 	}
 
-	public Task(String name, Integer estimate, String createdOn, String finishedOn, Integer projectId, Integer employeeId, Integer statusId) {
+	public Task(String name, Integer estimate, LocalDate createdOn, LocalDate finishedOn, Integer projectId, Integer employeeId, Integer statusId) {
 		this.name = name;
 		this.estimate = estimate;
 		this.createdOn = createdOn;
@@ -30,7 +31,7 @@ public class Task implements Entity {
 		this.statusId = statusId;
 	}
 
-	public Task(Integer id, String name, Integer estimate, String createdOn, String finishedOn, Integer projectId, Integer employeeId, Integer statusId) {
+	public Task(Integer id, String name, Integer estimate, LocalDate createdOn, LocalDate finishedOn, Integer projectId, Integer employeeId, Integer statusId) {
 		this.id = id;
 		this.name = name;
 		this.estimate = estimate;
@@ -41,7 +42,7 @@ public class Task implements Entity {
 		this.statusId = statusId;
 	}
 
-	public Task(Integer id, String name, Integer estimate, String createdOn, String finishedOn, String projectShortName, String employeeFullName, String statusName) {
+	public Task(Integer id, String name, Integer estimate, LocalDate createdOn, LocalDate finishedOn, String projectShortName, String employeeFullName, String statusName) {
 		this.id = id;
 		this.name = name;
 		this.estimate = estimate;
@@ -120,19 +121,19 @@ public class Task implements Entity {
 		this.estimate = estimate;
 	}
 
-	public String getCreatedOn() {
+	public LocalDate getCreatedOn() {
 		return createdOn;
 	}
 
-	public void setCreatedOn(String createdOn) {
+	public void setCreatedOn(LocalDate createdOn) {
 		this.createdOn = createdOn;
 	}
 
-	public String getFinishedOn() {
+	public LocalDate getFinishedOn() {
 		return finishedOn;
 	}
 
-	public void setFinishedOn(String finishedOn) {
+	public void setFinishedOn(LocalDate finishedOn) {
 		this.finishedOn = finishedOn;
 	}
 
