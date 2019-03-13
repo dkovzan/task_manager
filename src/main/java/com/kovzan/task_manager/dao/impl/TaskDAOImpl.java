@@ -1,7 +1,7 @@
 package com.kovzan.task_manager.dao.impl;
 
 import com.kovzan.task_manager.connection.DBConnection;
-import com.kovzan.task_manager.dao.TaskDAO;
+import com.kovzan.task_manager.dao.DAOBase;
 import com.kovzan.task_manager.entities.Task;
 import com.kovzan.task_manager.exception.DAOException;
 import com.kovzan.task_manager.logger.LogConstant;
@@ -15,12 +15,11 @@ import java.util.logging.Level;
 
 import static com.kovzan.task_manager.logger.Log.logger;
 
-public class TaskDAOImpl implements TaskDAO {
+public class TaskDAOImpl implements DAOBase<Task> {
 
 	private static final String ADD_TASK = "INSERT INTO TASKS(NAME, ESTIMATE, CREATEDON, FINISHEDON, PROJECTID, EMPLOYEEID, STATUSID) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_TASK = "UPDATE TASKS SET NAME = ?, ESTIMATE = ?, CREATEDON = ?, FINISHEDON = ?, PROJECTID = ?, EMPLOYEEID = ?, STATUSID = ? WHERE ID = ?";
 	private static final String REMOVE_TASK = "DELETE FROM TASKS WHERE ID = ?";
-	private static final String SELECT_ALL_TASKS = "SELECT * FROM TASKS";
 	private static final String SELECT_ALL_TASKS_WITH_REFS = "SELECT T.ID, T.NAME, T.CREATEDON, T.ESTIMATE, P.SHORTNAME, TS.VALUE AS STATUS, T.FINISHEDON, CONCAT(E.FIRSTNAME, ' ', E.LASTNAME) AS FULLNAME FROM TASKS T " +
 			"LEFT JOIN PROJECTS P ON P.ID = T.PROJECTID " +
 			"LEFT JOIN EMPLOYEES E ON E.ID = T.EMPLOYEEID " +
@@ -79,7 +78,7 @@ public class TaskDAOImpl implements TaskDAO {
 				result = keys.getInt(1);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 				return result;
-			}
+				}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 		}
@@ -94,6 +93,7 @@ public class TaskDAOImpl implements TaskDAO {
 			statement.setInt(1, task.getId());
 			statement.execute();
 			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 		}
@@ -101,20 +101,6 @@ public class TaskDAOImpl implements TaskDAO {
 
 	@Override
 	public List<Task> findAll() throws DAOException {
-		List<Task> tasks = null;
-		try {
-			Connection connection = DBConnection.getDBConnection();
-			PreparedStatement statement = connection.prepareStatement(SELECT_ALL_TASKS);
-			ResultSet resultSet = statement.executeQuery();
-			tasks = DAOCreator.createTasks(resultSet);
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-		}
-		return tasks;
-	}
-
-	@Override
-	public List<Task> findAllTasksWithRefs() throws DAOException {
 		List<Task> tasks = null;
 		try {
 			Connection connection = DBConnection.getDBConnection();
@@ -129,15 +115,19 @@ public class TaskDAOImpl implements TaskDAO {
 	}
 
 	@Override
-	public Task findTaskById(int taskId) throws DAOException {
+	public Task findById(int taskId) throws DAOException {
 		Task task = null;
 		try {
 			Connection connection = DBConnection.getDBConnection();
 			PreparedStatement statement = connection.prepareStatement(SELECT_TASK_BY_ID);
 			statement.setInt(1, taskId);
 			ResultSet resultSet = statement.executeQuery();
-			task = DAOCreator.createTasks(resultSet).get(0);
-			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+			if (resultSet.next()) {
+				task = DAOCreator.createTasks(resultSet).get(0);
+				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+			} else {
+				return task;
+			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 		}

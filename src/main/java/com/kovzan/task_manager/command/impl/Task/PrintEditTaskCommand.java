@@ -7,6 +7,7 @@ import com.kovzan.task_manager.entities.Employee;
 import com.kovzan.task_manager.entities.Project;
 import com.kovzan.task_manager.entities.Status;
 import com.kovzan.task_manager.entities.Task;
+import com.kovzan.task_manager.exception.DAOException;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.EmployeeService;
 import com.kovzan.task_manager.service.ProjectService;
@@ -25,7 +26,7 @@ public class PrintEditTaskCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request) {
 
-		int taskId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_ID));
+		Integer taskId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_ID));
 		if (taskId == -1) {
 			request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 1);
 			try {
@@ -47,14 +48,14 @@ public class PrintEditTaskCommand implements Command {
 				request.setAttribute(ParameterNameConstant.PRINTED_EDIT_TASK, task);
 				request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 0);
 
-				List<Project> projects = ProjectService.findAllProjects();
+				List<Project> projects = ProjectService.getInstance().findAllProjects();
 				List<Employee> employees = EmployeeService.findAllEmployees();
 				List<Status> statuses = StatusService.findAllStatuses();
 
 				request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 				request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
 				request.setAttribute(ParameterNameConstant.PRINTED_STATUSES, statuses);
-			} catch (SQLException e) {
+			} catch (DAOException e) {
 				logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 				return PageConstant.ERROR_PAGE;
 			}

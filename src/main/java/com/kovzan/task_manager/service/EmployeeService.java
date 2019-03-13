@@ -2,6 +2,7 @@ package com.kovzan.task_manager.service;
 
 import com.kovzan.task_manager.dao.impl.EmployeeDAOImpl;
 import com.kovzan.task_manager.entities.Employee;
+import com.kovzan.task_manager.exception.DAOException;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.SQLException;
@@ -20,53 +21,29 @@ public class EmployeeService {
 		return instance;
 	}
 
-	public static List<Employee> findAllEmployees() throws SQLException {
-		List<Employee> employees;
-		try {
-			employees = EmployeeDAOImpl.getInstance().findAll();
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-			throw new SQLException(e);
-		}
-		return employees;
+	public static List<Employee> findAllEmployees() throws DAOException {
+		return EmployeeDAOImpl.getInstance().findAll();
 	}
 
-	public static Employee findEmployeeById(int id) throws SQLException {
-		Employee employee;
-		try {
-			employee = EmployeeDAOImpl.getInstance().findEmployeeById(id);
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-			throw new SQLException(e);
+	public static Employee findEmployeeById(int id) throws DAOException {
+		Employee employee = EmployeeDAOImpl.getInstance().findById(id);
+		if (employee == null) {
+			String paramName = "Id";
+			throw new DAOException(String.format(LogConstant.EMPLOYEE_NOT_FOUND, paramName, id));
 		}
 		return employee;
 	}
 
-	public static void addEmployee(Employee employee) throws SQLException {
-		try {
-			EmployeeDAOImpl.getInstance().add(employee);
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-			throw new SQLException(e);
-		}
+	public static void addEmployee(Employee employee) throws DAOException {
+		EmployeeDAOImpl.getInstance().add(employee);
 	}
 
-	public static void updateEmployee(Employee employee) throws SQLException {
-		try{
-			EmployeeDAOImpl.getInstance().update(employee);
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-			throw new SQLException(e);
-		}
+	public static void updateEmployee(Employee employee) throws DAOException {
+		EmployeeDAOImpl.getInstance().update(employee);
 	}
 
-	public static void removeEmployee(Employee employee) throws SQLException {
-		try {
-			EmployeeDAOImpl.getInstance().remove(employee);
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-			throw new SQLException(e);
-		}
+	public static void removeEmployee(Employee employee) throws DAOException {
+		EmployeeDAOImpl.getInstance().remove(employee);
 	}
 
 }

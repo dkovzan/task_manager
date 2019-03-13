@@ -29,7 +29,7 @@ public class UpdateTaskCommand implements Command {
 			Task taskWithIdFromRequest = TaskCreator.createTaskWithIdFromRequest(request);
 			if(TaskService.getInstance().validateTask(taskWithIdFromRequest)) {
 				TaskService.updateTask(taskWithIdFromRequest);
-				List<Task> tasks = TaskService.getInstance().findAllTasksWithRefs();
+				List<Task> tasks = TaskService.getInstance().findAllTasks();
 				request.setAttribute(ParameterNameConstant.PRINTED_TASKS, tasks);
 			} else {
 				Task taskWithValidFields = TaskService.getInstance().getTaskWithValidFields(taskWithIdFromRequest);

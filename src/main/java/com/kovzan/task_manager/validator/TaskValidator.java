@@ -6,17 +6,19 @@ import java.time.LocalDate;
 
 public class TaskValidator {
 
-	public static boolean validateDates(LocalDate earlierDate, LocalDate laterDate) {
+	public static boolean validateTaskDates(LocalDate earlierDate, LocalDate laterDate) {
 		return !laterDate.isBefore(earlierDate);
 	}
 
 	public static boolean validateTask(Task task) {
-		return validateDates(task.getCreatedOn(), task.getFinishedOn()) && task.getName() != null && task.getEstimate() != 0;
+		return validateTaskDates(task.getCreatedOn(), task.getFinishedOn())
+				&& !task.getName().equals("") && task.getName() != null
+				&& task.getEstimate().equals(0) && task.getEstimate() != null;
 	}
 
 	public static Task getTaskWithValidFields(Task task) {
 		Task taskWithValidFields = task;
-		if(!validateDates(task.getCreatedOn(), task.getFinishedOn())) {
+		if(!validateTaskDates(task.getCreatedOn(), task.getFinishedOn())) {
 			taskWithValidFields.setCreatedOn(null);
 			taskWithValidFields.setFinishedOn(null);
 		}

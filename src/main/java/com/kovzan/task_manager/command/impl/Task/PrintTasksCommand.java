@@ -4,6 +4,7 @@ import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.ParameterNameConstant;
 import com.kovzan.task_manager.entities.Task;
+import com.kovzan.task_manager.exception.DAOException;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.TaskService;
 
@@ -19,9 +20,9 @@ public class PrintTasksCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request) {
 		try {
-			List<Task> tasks = TaskService.getInstance().findAllTasksWithRefs();
+			List<Task> tasks = TaskService.getInstance().findAllTasks();
 			request.setAttribute(ParameterNameConstant.PRINTED_TASKS, tasks);
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 			return PageConstant.ERROR_PAGE;
 		}

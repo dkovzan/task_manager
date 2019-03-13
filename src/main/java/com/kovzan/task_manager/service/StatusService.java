@@ -2,6 +2,7 @@ package com.kovzan.task_manager.service;
 
 import com.kovzan.task_manager.dao.impl.StatusDAOImpl;
 import com.kovzan.task_manager.entities.Status;
+import com.kovzan.task_manager.exception.DAOException;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.SQLException;
@@ -20,23 +21,7 @@ public class StatusService {
 		return instance;
 	}
 
-	public static List<Status> findAllStatuses() throws SQLException {
-		List<Status> statuses = null;
-		try {
-			statuses = StatusDAOImpl.getInstance().findAll();
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-		}
-		return statuses;
-	}
-
-	public static Status findStatusById(int id) throws SQLException {
-		Status status = null;
-		try {
-			status = StatusDAOImpl.getInstance().findStatusById(id);
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-		}
-		return status;
+	public static List<Status> findAllStatuses() throws DAOException {
+		return StatusDAOImpl.getInstance().findAll();
 	}
 }

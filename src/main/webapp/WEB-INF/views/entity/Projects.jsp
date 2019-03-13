@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: denis
-  Date: 2/24/19
-  Time: 12:10 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="com.kovzan.task_manager.command.CommandEnum" %>

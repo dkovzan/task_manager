@@ -10,5 +10,6 @@ public interface DAOBase <T extends Entity> {
 	void remove(T element) throws DAOException;
 	int update(T element) throws DAOException;
 	List<T> findAll() throws DAOException;
+	T findById(int id) throws DAOException;
 
 }

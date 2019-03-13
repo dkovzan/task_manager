@@ -26,12 +26,11 @@ public class AddTaskCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request) {
 
-
 		try {
 			Task taskFromRequest = TaskCreator.createTaskFromRequest(request);
 			if(TaskService.getInstance().validateTask(taskFromRequest)) {
 				TaskService.addTask(taskFromRequest);
-				List<Task> tasks = TaskService.getInstance().findAllTasksWithRefs();
+				List<Task> tasks = TaskService.getInstance().findAllTasks();
 				request.setAttribute(ParameterNameConstant.PRINTED_TASKS, tasks);
 			} else {
 				Task taskWithValidFields = TaskService.getInstance().getTaskWithValidFields(taskFromRequest);

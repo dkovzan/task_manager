@@ -1,7 +1,7 @@
 package com.kovzan.task_manager.dao.impl;
 
 import com.kovzan.task_manager.connection.DBConnection;
-import com.kovzan.task_manager.dao.ProjectDAO;
+import com.kovzan.task_manager.dao.DAOBase;
 import com.kovzan.task_manager.entities.Project;
 import com.kovzan.task_manager.exception.DAOException;
 import com.kovzan.task_manager.logger.LogConstant;
@@ -15,7 +15,7 @@ import java.util.logging.Level;
 
 import static com.kovzan.task_manager.logger.Log.logger;
 
-public class ProjectDAOImpl implements ProjectDAO {
+public class ProjectDAOImpl implements DAOBase<Project> {
 
 	private static final String ADD_PROJECT = "INSERT INTO PROJECTS (NAME, SHORTNAME, DESCRIPTION) VALUES (?, ?, ?)";
 	private static final String UPDATE_PROJECT = "UPDATE PROJECTS SET NAME = ?, SHORTNAME = ?, DESCRIPTION = ? WHERE ID = ?";
@@ -103,15 +103,19 @@ public class ProjectDAOImpl implements ProjectDAO {
 	}
 
 	@Override
-	public Project findProjectById(int projectId) throws DAOException {
+	public Project findById(int projectId) throws DAOException {
 		Project project = null;
 		try {
 			Connection connection = DBConnection.getDBConnection();
 			PreparedStatement statement = connection.prepareStatement(SELECT_PROJECT_BY_ID);
 			statement.setInt(1, projectId);
 			ResultSet resultSet = statement.executeQuery();
-			project = DAOCreator.createProjects(resultSet).get(0);
-			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+			if (resultSet.next()) {
+				project = DAOCreator.createProjects(resultSet).get(0);
+				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+			} else {
+				return project;
+			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 		}
