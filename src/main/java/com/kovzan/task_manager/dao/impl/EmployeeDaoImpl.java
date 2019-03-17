@@ -14,11 +14,21 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class EmployeeDaoImpl implements DaoBase<Employee> {
 
-	private static final String ADD_EMPLOYEE = "INSERT INTO EMPLOYEES (LASTNAME, FIRSTNAME, MIDDLENAME, POSITION) values (?,?,?,?)";
-	private static final String REMOVE_EMPLOYEE = "DELETE FROM EMPLOYEES WHERE ID = ?";
-	private static final String UPDATE_EMPLOYEE = "UPDATE EMPLOYEES SET LASTNAME = ?, FIRSTNAME = ?, MIDDLENAME = ?, POSITION = ? WHERE ID = ?";
-	private static final String SELECT_ALL_EMPLOYEES = "SELECT * FROM EMPLOYEES";
-	private static final String SELECT_EMPLOYEE_BY_ID = "SELECT * FROM EMPLOYEES WHERE ID = ?";
+	private static final String ADD_EMPLOYEE =
+			"INSERT INTO EMPLOYEES (LASTNAME, FIRSTNAME, MIDDLENAME, POSITION) " +
+			"VALUES (?,?,?,?)";
+	private static final String REMOVE_EMPLOYEE =
+			"DELETE FROM EMPLOYEES " +
+			"WHERE ID = ?";
+	private static final String UPDATE_EMPLOYEE =
+			"UPDATE EMPLOYEES " +
+			"SET LASTNAME = ?, FIRSTNAME = ?, MIDDLENAME = ?, POSITION = ? " +
+			"WHERE ID = ?";
+	private static final String SELECT_ALL_EMPLOYEES =
+			"SELECT * FROM EMPLOYEES";
+	private static final String SELECT_EMPLOYEE_BY_ID =
+			"SELECT * FROM EMPLOYEES " +
+			"WHERE ID = ?";
 
 	private static EmployeeDaoImpl instance = new EmployeeDaoImpl();
 
@@ -43,7 +53,7 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 				return result;
 			}
 		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			throw new DaoException(e);
 		}
 		return -1;
 	}
@@ -67,7 +77,7 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 			}
 
 		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			throw new DaoException(e);
 		}
 		return -1;
 	}
@@ -79,7 +89,7 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 			statement.setInt(1, element.getId());
 			statement.execute();
 		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			throw new DaoException(e);
 		}
 	}
 
@@ -98,7 +108,7 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 			}
 		}
 		catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			throw new DaoException(e);
 		}
 		return employees;
 	}
@@ -118,7 +128,7 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 			}
 		}
 		catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			throw new DaoException(e);
 		}
 		return employee;
 	}

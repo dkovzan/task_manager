@@ -17,13 +17,21 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class TaskDaoImpl implements DaoBase<Task> {
 
-	private static final String ADD_TASK = "INSERT INTO TASKS(NAME, ESTIMATE, CREATEDON, FINISHEDON, PROJECTID, EMPLOYEEID, STATUSID) VALUES (?, ?, ?, ?, ?, ?, ?)";
-	private static final String UPDATE_TASK = "UPDATE TASKS SET NAME = ?, ESTIMATE = ?, CREATEDON = ?, FINISHEDON = ?, PROJECTID = ?, EMPLOYEEID = ?, STATUSID = ? WHERE ID = ?";
-	private static final String REMOVE_TASK = "DELETE FROM TASKS WHERE ID = ?";
-	private static final String SELECT_ALL_TASKS_WITH_REFS = "SELECT T.ID, T.NAME, T.CREATEDON, T.ESTIMATE, P.SHORTNAME, TS.VALUE AS STATUS, T.FINISHEDON, CONCAT(E.FIRSTNAME, ' ', E.LASTNAME) AS FULLNAME FROM TASKS T " +
+	private static final String ADD_TASK =
+			"INSERT INTO TASKS " +
+			"(NAME, ESTIMATE, CREATEDON, FINISHEDON, PROJECTID, EMPLOYEEID, STATUSID) " +
+			"VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String UPDATE_TASK =
+			"UPDATE TASKS " +
+			"SET NAME = ?, ESTIMATE = ?, CREATEDON = ?, FINISHEDON = ?, PROJECTID = ?, EMPLOYEEID = ?, STATUSID = ? " +
+			"WHERE ID = ?";
+	private static final String REMOVE_TASK =
+			"DELETE FROM TASKS " +
+			"WHERE ID = ?";
+	private static final String SELECT_ALL_TASKS_WITH_REFS =
+			"SELECT T.ID, T.NAME, T.CREATEDON, T.ESTIMATE, P.SHORTNAME, T.STATUSID, T.FINISHEDON, CONCAT(E.FIRSTNAME, ' ', E.LASTNAME) AS FULLNAME FROM TASKS T " +
 			"LEFT JOIN PROJECTS P ON P.ID = T.PROJECTID " +
-			"LEFT JOIN EMPLOYEES E ON E.ID = T.EMPLOYEEID " +
-			"LEFT JOIN TASKSTATUSES TS ON TS.ID = T.STATUSID";
+			"LEFT JOIN EMPLOYEES E ON E.ID = T.EMPLOYEEID ";
 	private static final String SELECT_TASK_BY_ID = "SELECT * FROM TASKS WHERE ID = ?";
 
 	private static TaskDaoImpl instance = new TaskDaoImpl();
@@ -52,8 +60,8 @@ public class TaskDaoImpl implements DaoBase<Task> {
 				return result;
 			}
 			} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-		}
+				throw new DaoException(e);
+			}
 		return -1;
 	}
 
@@ -78,7 +86,7 @@ public class TaskDaoImpl implements DaoBase<Task> {
 				return result;
 				}
 		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			throw new DaoException(e);
 		}
 		return -1;
 	}
@@ -92,7 +100,7 @@ public class TaskDaoImpl implements DaoBase<Task> {
 			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 
 		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			throw new DaoException(e);
 		}
 	}
 
@@ -110,7 +118,7 @@ public class TaskDaoImpl implements DaoBase<Task> {
 				return tasks;
 			}
 		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			throw new DaoException(e);
 		}
 		return tasks;
 	}
@@ -129,7 +137,7 @@ public class TaskDaoImpl implements DaoBase<Task> {
 				return task;
 			}
 		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			throw new DaoException(e);
 		}
 		return task;
 	}

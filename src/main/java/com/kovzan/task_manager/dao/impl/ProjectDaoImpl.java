@@ -17,11 +17,20 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class ProjectDaoImpl implements DaoBase<Project> {
 
-	private static final String ADD_PROJECT = "INSERT INTO PROJECTS (NAME, SHORTNAME, DESCRIPTION) VALUES (?, ?, ?)";
-	private static final String UPDATE_PROJECT = "UPDATE PROJECTS SET NAME = ?, SHORTNAME = ?, DESCRIPTION = ? WHERE ID = ?";
-	private static final String REMOVE_PROJECT = "DELETE FROM PROJECTS WHERE ID = ?";
-	private static final String SELECT_ALL_PROJECTS = "SELECT * FROM PROJECTS";
-	private static final String SELECT_PROJECT_BY_ID = "SELECT * FROM PROJECTS WHERE ID = ?";
+	private static final String ADD_PROJECT =
+			"INSERT INTO PROJECTS (NAME, SHORTNAME, DESCRIPTION) " +
+			"VALUES (?, ?, ?)";
+	private static final String UPDATE_PROJECT =
+			"UPDATE PROJECTS SET NAME = ?, SHORTNAME = ?, DESCRIPTION = ? " +
+			"WHERE ID = ?";
+	private static final String REMOVE_PROJECT =
+			"DELETE FROM PROJECTS " +
+			"WHERE ID = ?";
+	private static final String SELECT_ALL_PROJECTS =
+			"SELECT * FROM PROJECTS";
+	private static final String SELECT_PROJECT_BY_ID =
+			"SELECT * FROM PROJECTS " +
+			"WHERE ID = ?";
 
 	private static ProjectDaoImpl instance = new ProjectDaoImpl();
 
@@ -45,7 +54,7 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 				return result;
 			}
 		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			throw new DaoException(e);
 		}
 		return -1;
 	}
@@ -68,7 +77,7 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 			}
 		}
 		catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			throw new DaoException(e);
 		}
 		return -1;
 	}
@@ -82,7 +91,7 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		}
 		catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			throw new DaoException(e);
 		}
 	}
 
@@ -102,7 +111,7 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 
 		}
 		catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			throw new DaoException(e);
 		}
 		return projects;
 	}
@@ -123,7 +132,7 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 			}
 		}
 		catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			throw new DaoException(e);
 		}
 		return project;
 	}

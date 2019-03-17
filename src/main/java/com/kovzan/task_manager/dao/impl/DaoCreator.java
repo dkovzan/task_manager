@@ -1,10 +1,10 @@
 package com.kovzan.task_manager.dao.impl;
 
+import com.kovzan.task_manager.dao.DaoException;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.entity.Project;
-import com.kovzan.task_manager.entity.Status;
 import com.kovzan.task_manager.entity.Task;
-import com.kovzan.task_manager.logger.LogConstant;
+import com.kovzan.task_manager.service.StatusService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +17,7 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class DaoCreator {
 
-	public static List<Project> createProjects(ResultSet resultSet) throws SQLException {
+	public static List<Project> createProjects(ResultSet resultSet) throws DaoException {
 
 		ArrayList<Project> projects = new ArrayList<>();
 		try {
@@ -32,12 +32,12 @@ public class DaoCreator {
 			while(resultSet.next());
 		}
 		catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION + e.getMessage(), e);
+			throw new DaoException(e);
 		}
 		return projects;
 	}
 
-	public static List<Task> createTasks(ResultSet resultSet) throws SQLException {
+	public static List<Task> createTasks(ResultSet resultSet) throws DaoException {
 
 		ArrayList<Task> tasks = new ArrayList<>();
 		try {
@@ -54,12 +54,12 @@ public class DaoCreator {
 				tasks.add(task);}
 			while (resultSet.next());
 		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION + e.getMessage(), e);
+			throw new DaoException(e);
 		}
 		return tasks;
 	}
 
-	public static List<Task> createTasksWithRefs(ResultSet resultSet) throws SQLException {
+	public static List<Task> createTasksWithRefs(ResultSet resultSet) throws DaoException {
 
 		ArrayList<Task> tasks = new ArrayList<>();
 		try {
@@ -69,7 +69,8 @@ public class DaoCreator {
 				LocalDate createdOn = LocalDate.parse(resultSet.getString(3));
 				Integer estimate = resultSet.getInt(4);
 				String projectShortName = resultSet.getString(5);
-				String statusName = resultSet.getString(6);
+				Integer statusId = resultSet.getInt(6);
+				String statusName = StatusService.getInstance().findAllStatuses().get(statusId).getName();
 				LocalDate finishedOn = LocalDate.parse(resultSet.getString(7));
 				String employeeFullName = resultSet.getString(8);
 				Task task = new Task(id, name, estimate, createdOn, finishedOn, projectShortName, employeeFullName, statusName);
@@ -78,12 +79,12 @@ public class DaoCreator {
 			while (resultSet.next());
 		}
 		catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION + e.getMessage(), e);
+			throw new DaoException(e);
 		}
 		return tasks;
 	}
 
-	public static List<Employee> createEmployees(ResultSet resultSet) throws SQLException {
+	public static List<Employee> createEmployees(ResultSet resultSet) throws DaoException {
 
 		ArrayList<Employee> employees = new ArrayList<>();
 		try {
@@ -99,26 +100,8 @@ public class DaoCreator {
 			while (resultSet.next());
 		}
 		catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION + e.getMessage(), e);
+			throw new DaoException(e);
 		}
 		return employees;
-	}
-
-	public static List<Status> createStatuses(ResultSet resultSet) throws SQLException {
-
-		ArrayList<Status> statuses = new ArrayList<>();
-		try {
-			do {
-				Integer id = resultSet.getInt(1);
-				String name = resultSet.getString(2);
-				Status status = new Status(id, name);
-				statuses.add(status);
-			}
-			while (resultSet.next());
-		}
-		catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION + e.getMessage(), e);
-		}
-		return statuses;
 	}
 }
