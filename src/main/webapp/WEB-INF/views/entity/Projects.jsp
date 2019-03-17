@@ -15,7 +15,7 @@
 			<h2>Projects overview</h2>
 		</div>
 		<div class="w3-bar w3-padding-large w3-padding-24">
-			<button class="w3-button w3-hover-grey w3-round-large w3-large w3-green" onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&project_id=-1'">Add project</button>
+			<button class="w3-button w3-hover-grey w3-round-large w3-large w3-green" onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ParameterNameConstant.IS_ADD_FORM}=1'">Add project</button>
 		</div>
 		<c:choose>
 			<c:when test="${requestScope.get(ParameterNameConstant.PRINTED_PROJECTS) != null && !requestScope.get(ParameterNameConstant.PRINTED_PROJECTS).isEmpty()}">
@@ -35,7 +35,7 @@
 							<td>${project.shortName}</td>
 							<td>${project.description}</td>
 							<td>
-								<button onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&project_id=${project.id}&is_add_form=0'" class="w3-button w3-indigo w3-round-large">Edit</button>
+								<button onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&project_id=${project.id}&${ParameterNameConstant.IS_ADD_FORM}=0'" class="w3-button w3-indigo w3-round-large">Edit</button>
 							</td>
 							<td>
 								<button onclick="location.href='controller?command=${CommandEnum.REMOVE_PROJECT}&project_id=${project.id}'" class="w3-button w3-red w3-round-large">Delete</button>

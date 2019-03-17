@@ -11,13 +11,6 @@ public class Employee implements Entity, Serializable {
 	private String middleName;
 	private String position;
 
-	public Employee(String firstName, String lastName, String middleName, String position) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.middleName = middleName;
-		this.position = position;
-	}
-
 	public Employee(Integer id, String firstName, String lastName, String middleName, String position) {
 		this.id = id;
 		this.firstName = firstName;
@@ -32,7 +25,7 @@ public class Employee implements Entity, Serializable {
 
 	@Override
 	public String toString() {
-		return "Employee{" +
+		return "employee{" +
 				"id='" + id + '\'' +
 				", firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +

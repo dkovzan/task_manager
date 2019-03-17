@@ -1,8 +1,9 @@
-package com.kovzan.task_manager.command.impl.Employee;
+package com.kovzan.task_manager.command.impl.employee;
 
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.ParameterNameConstant;
+import com.kovzan.task_manager.command.service.EntityCreatorFromRequest;
 import com.kovzan.task_manager.entities.Employee;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.EmployeeService;
@@ -14,18 +15,20 @@ import java.util.logging.Level;
 
 import static com.kovzan.task_manager.logger.Log.logger;
 
-public class PrintEmployeesCommand implements Command{
+public class AddEmployeeCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request) {
-		List<Employee> employees;
+
+		Employee employee = EntityCreatorFromRequest.createEmployeeFromRequest(request);
 		try {
-			employees = EmployeeService.getInstance().findAllEmployees();
+			EmployeeService.addEmployee(employee);
+			List<Employee> employees = EmployeeService.getInstance().findAllEmployees();
+			request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 			return PageConstant.ERROR_PAGE;
 		}
-		request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.EMPLOYEES_PAGE;
 	}

@@ -17,19 +17,13 @@ public class Project implements Entity, Serializable {
 		this.description = description;
 	}
 
-	public Project(String name, String shortName, String description) {
-		this.name = name;
-		this.shortName = shortName;
-		this.description = description;
-	}
-
 	public Project(Integer id) {
 		this.id = id;
 	}
 
 	@Override
 	public String toString() {
-		return "Project{" +
+		return "project{" +
 				"id=" + id +
 				", name='" + name + '\'' +
 				", shortName='" + shortName + '\'' +

@@ -1,9 +1,8 @@
-package com.kovzan.task_manager.command.impl.Project;
+package com.kovzan.task_manager.command.impl.project;
 
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.ParameterNameConstant;
-import com.kovzan.task_manager.command.impl.Project.Creator.ProjectCreator;
 import com.kovzan.task_manager.entities.Project;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.ProjectService;
@@ -15,15 +14,15 @@ import java.util.logging.Level;
 
 import static com.kovzan.task_manager.logger.Log.logger;
 
-public class UpdateProjectCommand implements Command {
+public class RemoveProjectCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request) {
 
-		Project project;
 		try {
-			project = ProjectCreator.createProjectWithIdFromRequest(request);
-			ProjectService.getInstance().updateProject(project);
+			int projectId = Integer.parseInt(request.getParameter(ParameterNameConstant.PROJECT_ID));
+			Project project = new Project(projectId);
+			ProjectService.removeProject(project);
 			List<Project> projects = ProjectService.getInstance().findAllProjects();
 			request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 		} catch (SQLException e) {

@@ -1,4 +1,4 @@
-package com.kovzan.task_manager.command.impl.Task;
+package com.kovzan.task_manager.command.impl.task;
 
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
@@ -18,6 +18,7 @@ public class RemoveTaskCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request) {
+
 		try {
 			Integer taskId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_ID));
 			Task task = new Task(taskId);

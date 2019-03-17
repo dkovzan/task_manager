@@ -15,7 +15,7 @@
 			<h2>Tasks overview</h2>
 		</div>
 		<div class="w3-bar w3-padding-large w3-padding-24">
-			<button class="w3-button w3-hover-grey w3-round-large w3-large w3-green" onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_TASK}&task_id=-1'">Add task</button>
+			<button class="w3-button w3-hover-grey w3-round-large w3-large w3-green" onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_TASK}&${ParameterNameConstant.IS_ADD_FORM}=1'">Add task</button>
 		</div>
 		<c:choose>
 			<c:when test="${requestScope.get(ParameterNameConstant.PRINTED_TASKS) != null && !requestScope.get(ParameterNameConstant.PRINTED_TASKS).isEmpty()}">
@@ -39,7 +39,7 @@
 							<td>${task.finishedOn}</td>
 							<td>${task.employeeFullName}</td>
 							<td>
-								<button onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_TASK}&task_id=${task.id}&is_add_form=0'" class="w3-button w3-indigo w3-round-large">Edit</button>
+								<button onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_TASK}&task_id=${task.id}&${ParameterNameConstant.IS_ADD_FORM}=0'" class="w3-button w3-indigo w3-round-large">Edit</button>
 							</td>
 							<td>
 								<button onclick="location.href='controller?command=${CommandEnum.REMOVE_TASK}&task_id=${task.id}'" class="w3-button w3-red w3-round-large">Delete</button>

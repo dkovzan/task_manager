@@ -1,7 +1,4 @@
-package com.kovzan.task_manager.servlets;
-
-import com.kovzan.task_manager.command.Command;
-import com.kovzan.task_manager.command.CommandEnum;
+package com.kovzan.task_manager.command;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

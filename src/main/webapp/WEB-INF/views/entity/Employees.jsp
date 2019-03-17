@@ -15,7 +15,7 @@
 			<h2>Employees overview</h2>
 		</div>
 		<div class="w3-bar w3-padding-large w3-padding-24">
-			<button class="w3-button w3-hover-grey w3-round-large w3-large w3-green" onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&employee_id=-1'">Add employee</button>
+			<button class="w3-button w3-hover-grey w3-round-large w3-large w3-green" onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&${ParameterNameConstant.IS_ADD_FORM}=1'">Add employee</button>
 		</div>
 		<c:choose>
 			<c:when test="${requestScope.get(ParameterNameConstant.PRINTED_EMPLOYEES) != null && !requestScope.get(ParameterNameConstant.PRINTED_EMPLOYEES).isEmpty()}">
@@ -37,7 +37,7 @@
 							<td>${employee.middleName}</td>
 							<td>${employee.position}</td>
 							<td>
-								<button onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&employee_id=${employee.id}&is_add_form=0'" class="w3-button w3-indigo w3-round-large">Edit</button>
+								<button onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&employee_id=${employee.id}&${ParameterNameConstant.IS_ADD_FORM}=0'" class="w3-button w3-indigo w3-round-large">Edit</button>
 							</td>
 							<td>
 								<button onclick="location.href='controller?command=${CommandEnum.REMOVE_EMPLOYEE}&employee_id=${employee.id}'" class="w3-button w3-red w3-round-large">Delete</button>

@@ -1,9 +1,9 @@
-package com.kovzan.task_manager.command.impl.Project;
+package com.kovzan.task_manager.command.impl.project;
 
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.ParameterNameConstant;
-import com.kovzan.task_manager.command.impl.Project.Creator.ProjectCreator;
+import com.kovzan.task_manager.command.service.EntityCreatorFromRequest;
 import com.kovzan.task_manager.entities.Project;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.ProjectService;
@@ -20,7 +20,7 @@ public class AddProjectCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request) {
 
-		Project project = ProjectCreator.createProjectFromRequest(request);
+		Project project = EntityCreatorFromRequest.createProjectFromRequest(request);
 		try {
 			ProjectService.getInstance().addProject(project);
 			List<Project> projects = ProjectService.findAllProjects();

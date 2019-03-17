@@ -15,7 +15,7 @@
 	<div class="w3-card-4">
 		<form action="controller" method="post" class="w3-selection w3-light-grey w3-padding">
 			<c:choose>
-				<c:when test="${is_add_form == '1'}">
+				<c:when test="${requestScope.get(ParameterNameConstant.IS_ADD_FORM) == 1}">
 					<input type="hidden" value="${CommandEnum.ADD_PROJECT}" name="command">
 					<div class="w3-container w3-center w3-green">
 						<h2>ADD PROJECT</h2>

@@ -21,16 +21,6 @@ public class Task implements Entity {
 		this.id = id;
 	}
 
-	public Task(String name, Integer estimate, LocalDate createdOn, LocalDate finishedOn, Integer projectId, Integer employeeId, Integer statusId) {
-		this.name = name;
-		this.estimate = estimate;
-		this.createdOn = createdOn;
-		this.finishedOn = finishedOn;
-		this.projectId = projectId;
-		this.employeeId = employeeId;
-		this.statusId = statusId;
-	}
-
 	public Task(Integer id, String name, Integer estimate, LocalDate createdOn, LocalDate finishedOn, Integer projectId, Integer employeeId, Integer statusId) {
 		this.id = id;
 		this.name = name;
@@ -55,7 +45,7 @@ public class Task implements Entity {
 
 	@Override
 	public String toString() {
-		return "Task{" +
+		return "task{" +
 				"id=" + id +
 				", name='" + name + '\'' +
 				", estimate=" + estimate +

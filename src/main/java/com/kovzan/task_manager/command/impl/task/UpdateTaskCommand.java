@@ -1,9 +1,9 @@
-package com.kovzan.task_manager.command.impl.Task;
+package com.kovzan.task_manager.command.impl.task;
 
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.ParameterNameConstant;
-import com.kovzan.task_manager.command.impl.Task.Creator.TaskCreator;
+import com.kovzan.task_manager.command.service.EntityCreatorFromRequest;
 import com.kovzan.task_manager.entities.Employee;
 import com.kovzan.task_manager.entities.Project;
 import com.kovzan.task_manager.entities.Status;
@@ -25,8 +25,9 @@ public class UpdateTaskCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request) {
+
 		try {
-			Task taskWithIdFromRequest = TaskCreator.createTaskWithIdFromRequest(request);
+			Task taskWithIdFromRequest = EntityCreatorFromRequest.createTaskFromRequest(request);
 			if(TaskService.getInstance().validateTask(taskWithIdFromRequest)) {
 				TaskService.updateTask(taskWithIdFromRequest);
 				List<Task> tasks = TaskService.getInstance().findAllTasks();

@@ -1,12 +1,12 @@
-package com.kovzan.task_manager.command.impl.Employee;
+package com.kovzan.task_manager.command.impl.project;
 
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.ParameterNameConstant;
-import com.kovzan.task_manager.command.impl.Employee.Creator.EmployeeCreator;
-import com.kovzan.task_manager.entities.Employee;
+import com.kovzan.task_manager.command.service.EntityCreatorFromRequest;
+import com.kovzan.task_manager.entities.Project;
 import com.kovzan.task_manager.logger.LogConstant;
-import com.kovzan.task_manager.service.EmployeeService;
+import com.kovzan.task_manager.service.ProjectService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -15,21 +15,22 @@ import java.util.logging.Level;
 
 import static com.kovzan.task_manager.logger.Log.logger;
 
-public class AddEmployeeCommand implements Command {
+public class UpdateProjectCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request) {
 
-		Employee employee = EmployeeCreator.createEmployeeFromRequest(request);
+		Project project;
 		try {
-			EmployeeService.addEmployee(employee);
-			List<Employee> employees = EmployeeService.getInstance().findAllEmployees();
-			request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
+			project = EntityCreatorFromRequest.createProjectFromRequest(request);
+			ProjectService.getInstance().updateProject(project);
+			List<Project> projects = ProjectService.getInstance().findAllProjects();
+			request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 			return PageConstant.ERROR_PAGE;
 		}
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-		return PageConstant.EMPLOYEES_PAGE;
+		return PageConstant.PROJECTS_PAGE;
 	}
 }
