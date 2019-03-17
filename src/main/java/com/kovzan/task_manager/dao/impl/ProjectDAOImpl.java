@@ -31,8 +31,7 @@ public class ProjectDAOImpl implements DAOBase<Project> {
 
 	@Override
 	public int add(Project element) throws DAOException {
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(ADD_PROJECT);
 			statement.setString(1, element.getName());
 			statement.setString(2, element.getShortName());
@@ -53,8 +52,7 @@ public class ProjectDAOImpl implements DAOBase<Project> {
 
 	@Override
 	public int update(Project element) throws DAOException {
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(UPDATE_PROJECT);
 			statement.setString(1, element.getName());
 			statement.setString(2, element.getShortName());
@@ -68,7 +66,8 @@ public class ProjectDAOImpl implements DAOBase<Project> {
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 				return result;
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 		}
 		return -1;
@@ -76,13 +75,13 @@ public class ProjectDAOImpl implements DAOBase<Project> {
 
 	@Override
 	public void remove(Project element) throws DAOException {
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(REMOVE_PROJECT);
 			statement.setInt(1, element.getId());
 			statement.execute();
 			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 		}
 	}
@@ -90,13 +89,19 @@ public class ProjectDAOImpl implements DAOBase<Project> {
 	@Override
 	public List<Project> findAll() throws DAOException {
 		List<Project> projects = null;
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(SELECT_ALL_PROJECTS);
 			ResultSet resultSet = statement.executeQuery();
-			projects = DAOCreator.createProjects(resultSet);
-			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-		} catch (SQLException e) {
+			if (resultSet.next()) {
+				projects = DAOCreator.createProjects(resultSet);
+				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+			}
+			else {
+				return projects;
+			}
+
+		}
+		catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 		}
 		return projects;
@@ -105,18 +110,19 @@ public class ProjectDAOImpl implements DAOBase<Project> {
 	@Override
 	public Project findById(int projectId) throws DAOException {
 		Project project = null;
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(SELECT_PROJECT_BY_ID);
 			statement.setInt(1, projectId);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				project = DAOCreator.createProjects(resultSet).get(0);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-			} else {
+			}
+			else {
 				return project;
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 		}
 		return project;

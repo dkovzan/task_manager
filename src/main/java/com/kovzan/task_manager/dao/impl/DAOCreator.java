@@ -21,7 +21,7 @@ public class DAOCreator {
 
 		ArrayList<Project> projects = new ArrayList<>();
 		try {
-			while(resultSet.next()) {
+			do {
 				Integer id = resultSet.getInt(1);
 				String name = resultSet.getString(2);
 				String shortName = resultSet.getString(3);
@@ -29,8 +29,10 @@ public class DAOCreator {
 				Project project = new Project(id, name, shortName, description);
 				projects.add(project);
 			}
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			while(resultSet.next());
+		}
+		catch (SQLException e) {
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION + e.getMessage(), e);
 		}
 		return projects;
 	}
@@ -39,7 +41,7 @@ public class DAOCreator {
 
 		ArrayList<Task> tasks = new ArrayList<>();
 		try {
-			while (resultSet.next()) {
+			do {
 				Integer id = resultSet.getInt(1);
 				String name = resultSet.getString(2);
 				LocalDate createdOn = LocalDate.parse(resultSet.getString(3));
@@ -49,10 +51,10 @@ public class DAOCreator {
 				LocalDate finishedOn = LocalDate.parse(resultSet.getString(7));
 				Integer employeeId = resultSet.getInt(8);
 				Task task = new Task(id, name, estimate, createdOn, finishedOn, projectId, employeeId, taskStatusId);
-				tasks.add(task);
-			}
+				tasks.add(task);}
+			while (resultSet.next());
 		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION + e.getMessage(), e);
 		}
 		return tasks;
 	}
@@ -61,7 +63,7 @@ public class DAOCreator {
 
 		ArrayList<Task> tasks = new ArrayList<>();
 		try {
-			while (resultSet.next()) {
+			do {
 				Integer id = resultSet.getInt(1);
 				String name = resultSet.getString(2);
 				LocalDate createdOn = LocalDate.parse(resultSet.getString(3));
@@ -73,8 +75,10 @@ public class DAOCreator {
 				Task task = new Task(id, name, estimate, createdOn, finishedOn, projectShortName, employeeFullName, statusName);
 				tasks.add(task);
 			}
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			while (resultSet.next());
+		}
+		catch (SQLException e) {
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION + e.getMessage(), e);
 		}
 		return tasks;
 	}
@@ -83,7 +87,7 @@ public class DAOCreator {
 
 		ArrayList<Employee> employees = new ArrayList<>();
 		try {
-			while (resultSet.next()) {
+			do {
 				Integer id = resultSet.getInt(1);
 				String lastName = resultSet.getString(2);
 				String firstName = resultSet.getString(3);
@@ -91,9 +95,11 @@ public class DAOCreator {
 				String position = resultSet.getString(5);
 				Employee employee = new Employee(id, firstName, lastName, middleName, position);
 				employees.add(employee);
+			}
+			while (resultSet.next());
 		}
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+		catch (SQLException e) {
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION + e.getMessage(), e);
 		}
 		return employees;
 	}
@@ -102,14 +108,16 @@ public class DAOCreator {
 
 		ArrayList<Status> statuses = new ArrayList<>();
 		try {
-			while (resultSet.next()) {
+			do {
 				Integer id = resultSet.getInt(1);
 				String name = resultSet.getString(2);
 				Status status = new Status(id, name);
 				statuses.add(status);
 			}
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			while (resultSet.next());
+		}
+		catch (SQLException e) {
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION + e.getMessage(), e);
 		}
 		return statuses;
 	}

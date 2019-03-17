@@ -26,13 +26,18 @@ public class StatusDAOImpl {
 
 	public List<Status> findAll() throws DAOException {
 		List<Status> statuses = null;
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(SELECT_ALL_STATUSES);
 			ResultSet resultSet = statement.executeQuery();
-			statuses = DAOCreator.createStatuses(resultSet);
-			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-		} catch (SQLException e) {
+			if (resultSet.next()) {
+				statuses = DAOCreator.createStatuses(resultSet);
+				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+			}
+			else {
+				return statuses;
+			}
+		}
+		catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 		}
 		return statuses;

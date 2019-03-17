@@ -27,7 +27,7 @@ public class PrintEditTaskCommand implements Command {
 	public String execute(HttpServletRequest request) {
 
 		Integer taskId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_ID));
-		if (taskId == -1) {
+		if (taskId.equals(-1)) {
 			request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 1);
 			try {
 				List<Project> projects = ProjectService.getInstance().findAllProjects();

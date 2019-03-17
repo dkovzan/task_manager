@@ -34,8 +34,7 @@ public class TaskDAOImpl implements DAOBase<Task> {
 
 	@Override
 	public int add(Task task) throws DAOException {
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(ADD_TASK);
 			statement.setString(1, task.getName());
 			statement.setInt(2, task.getEstimate());
@@ -60,8 +59,7 @@ public class TaskDAOImpl implements DAOBase<Task> {
 
 	@Override
 	public int update(Task task) throws DAOException {
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(UPDATE_TASK);
 			statement.setString(1, task.getName());
 			statement.setInt(2, task.getEstimate());
@@ -87,8 +85,7 @@ public class TaskDAOImpl implements DAOBase<Task> {
 
 	@Override
 	public void remove(Task task) throws DAOException {
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(REMOVE_TASK);
 			statement.setInt(1, task.getId());
 			statement.execute();
@@ -102,12 +99,16 @@ public class TaskDAOImpl implements DAOBase<Task> {
 	@Override
 	public List<Task> findAll() throws DAOException {
 		List<Task> tasks = null;
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(SELECT_ALL_TASKS_WITH_REFS);
 			ResultSet resultSet = statement.executeQuery();
-			tasks = DAOCreator.createTasksWithRefs(resultSet);
-			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+			if (resultSet.next()) {
+				tasks = DAOCreator.createTasksWithRefs(resultSet);
+				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+			}
+			else {
+				return tasks;
+			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 		}
@@ -117,8 +118,7 @@ public class TaskDAOImpl implements DAOBase<Task> {
 	@Override
 	public Task findById(int taskId) throws DAOException {
 		Task task = null;
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(SELECT_TASK_BY_ID);
 			statement.setInt(1, taskId);
 			ResultSet resultSet = statement.executeQuery();

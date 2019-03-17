@@ -28,8 +28,7 @@ public class EmployeeDAOImpl implements DAOBase<Employee> {
 
 	@Override
 	public int add(Employee element) throws DAOException {
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(ADD_EMPLOYEE);
 			statement.setString(1, element.getLastName());
 			statement.setString(2, element.getFirstName());
@@ -51,8 +50,7 @@ public class EmployeeDAOImpl implements DAOBase<Employee> {
 
 	@Override
 	public int update(Employee element) throws DAOException {
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(UPDATE_EMPLOYEE);
 			statement.setString(1, element.getLastName());
 			statement.setString(2, element.getFirstName());
@@ -76,8 +74,7 @@ public class EmployeeDAOImpl implements DAOBase<Employee> {
 
 	@Override
 	public void remove(Employee element) throws DAOException {
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(REMOVE_EMPLOYEE);
 			statement.setInt(1, element.getId());
 			statement.execute();
@@ -89,13 +86,18 @@ public class EmployeeDAOImpl implements DAOBase<Employee> {
 	@Override
 	public List<Employee> findAll() throws DAOException {
 		List<Employee> employees = null;
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(SELECT_ALL_EMPLOYEES);
 			ResultSet resultSet = statement.executeQuery();
-			employees = DAOCreator.createEmployees(resultSet);
-			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-		} catch (SQLException e) {
+			if (resultSet.next()) {
+				employees = DAOCreator.createEmployees(resultSet);
+				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+			}
+			else {
+				return employees;
+			}
+		}
+		catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 		}
 		return employees;
@@ -104,8 +106,7 @@ public class EmployeeDAOImpl implements DAOBase<Employee> {
 	@Override
 	public Employee findById(int employeeId) throws DAOException {
 		Employee employee = null;
-		try {
-			Connection connection = DBConnection.getDBConnection();
+		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(SELECT_EMPLOYEE_BY_ID);
 			statement.setInt(1, employeeId);
 			ResultSet resultSet = statement.executeQuery();
@@ -115,7 +116,8 @@ public class EmployeeDAOImpl implements DAOBase<Employee> {
 			} else {
 				return employee;
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 		}
 		return employee;
