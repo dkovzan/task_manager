@@ -7,7 +7,7 @@ import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.entity.Status;
 import com.kovzan.task_manager.entity.Task;
-import com.kovzan.task_manager.exception.DAOException;
+import com.kovzan.task_manager.dao.DaoException;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.EmployeeService;
 import com.kovzan.task_manager.service.ProjectService;
@@ -56,7 +56,7 @@ public class PrintEditTaskCommand implements Command {
 				request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 				request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
 				request.setAttribute(ParameterNameConstant.PRINTED_STATUSES, statuses);
-			} catch (DAOException e) {
+			} catch (DaoException e) {
 				logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 				return PageConstant.ERROR_PAGE;
 			}

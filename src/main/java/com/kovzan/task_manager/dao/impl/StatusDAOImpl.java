@@ -2,7 +2,7 @@ package com.kovzan.task_manager.dao.impl;
 
 import com.kovzan.task_manager.connection.DBConnection;
 import com.kovzan.task_manager.entity.Status;
-import com.kovzan.task_manager.exception.DAOException;
+import com.kovzan.task_manager.dao.DaoException;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.Connection;
@@ -24,13 +24,13 @@ public class StatusDAOImpl {
 		return instance;
 	}
 
-	public List<Status> findAll() throws DAOException {
+	public List<Status> findAll() throws DaoException {
 		List<Status> statuses = null;
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(SELECT_ALL_STATUSES);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
-				statuses = DAOCreator.createStatuses(resultSet);
+				statuses = DaoCreator.createStatuses(resultSet);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 			}
 			else {

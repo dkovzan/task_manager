@@ -15,7 +15,7 @@ import java.util.logging.Level;
 
 import static com.kovzan.task_manager.logger.Log.logger;
 
-public class DAOCreator {
+public class DaoCreator {
 
 	public static List<Project> createProjects(ResultSet resultSet) throws SQLException {
 
