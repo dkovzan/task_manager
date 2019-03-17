@@ -1,9 +1,9 @@
 package com.kovzan.task_manager.dao.impl;
 
-import com.kovzan.task_manager.entities.Employee;
-import com.kovzan.task_manager.entities.Project;
-import com.kovzan.task_manager.entities.Status;
-import com.kovzan.task_manager.entities.Task;
+import com.kovzan.task_manager.entity.Employee;
+import com.kovzan.task_manager.entity.Project;
+import com.kovzan.task_manager.entity.Status;
+import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.ResultSet;

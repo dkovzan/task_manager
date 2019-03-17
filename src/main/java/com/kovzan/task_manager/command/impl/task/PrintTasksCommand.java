@@ -3,7 +3,7 @@ package com.kovzan.task_manager.command.impl.task;
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.ParameterNameConstant;
-import com.kovzan.task_manager.entities.Task;
+import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.exception.DAOException;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.TaskService;

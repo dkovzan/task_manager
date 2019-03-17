@@ -1,7 +1,7 @@
 package com.kovzan.task_manager.dao.impl;
 
 import com.kovzan.task_manager.connection.DBConnection;
-import com.kovzan.task_manager.entities.Status;
+import com.kovzan.task_manager.entity.Status;
 import com.kovzan.task_manager.exception.DAOException;
 import com.kovzan.task_manager.logger.LogConstant;
 

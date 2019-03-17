@@ -2,7 +2,7 @@ package com.kovzan.task_manager.dao.impl;
 
 import com.kovzan.task_manager.connection.DBConnection;
 import com.kovzan.task_manager.dao.DAOBase;
-import com.kovzan.task_manager.entities.Employee;
+import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.exception.DAOException;
 import com.kovzan.task_manager.logger.LogConstant;
 

@@ -1,6 +1,6 @@
 package com.kovzan.task_manager.dao;
 
-import com.kovzan.task_manager.entities.Entity;
+import com.kovzan.task_manager.entity.Entity;
 import com.kovzan.task_manager.exception.DAOException;
 
 import java.util.List;

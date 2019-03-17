@@ -1,9 +1,9 @@
 package com.kovzan.task_manager.command.service;
 
 import com.kovzan.task_manager.command.ParameterNameConstant;
-import com.kovzan.task_manager.entities.Employee;
-import com.kovzan.task_manager.entities.Project;
-import com.kovzan.task_manager.entities.Task;
+import com.kovzan.task_manager.entity.Employee;
+import com.kovzan.task_manager.entity.Project;
+import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import javax.servlet.http.HttpServletRequest;

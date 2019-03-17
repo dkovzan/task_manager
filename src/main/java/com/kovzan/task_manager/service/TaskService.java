@@ -1,7 +1,7 @@
 package com.kovzan.task_manager.service;
 
 import com.kovzan.task_manager.dao.impl.TaskDAOImpl;
-import com.kovzan.task_manager.entities.Task;
+import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.exception.DAOException;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.validator.TaskValidator;

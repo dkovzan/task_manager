@@ -1,11 +1,10 @@
 package com.kovzan.task_manager.service;
 
 import com.kovzan.task_manager.dao.impl.ProjectDAOImpl;
-import com.kovzan.task_manager.entities.Project;
+import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.exception.DAOException;
 import com.kovzan.task_manager.logger.LogConstant;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 

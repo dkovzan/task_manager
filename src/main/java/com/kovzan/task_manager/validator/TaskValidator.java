@@ -1,6 +1,6 @@
 package com.kovzan.task_manager.validator;
 
-import com.kovzan.task_manager.entities.Task;
+import com.kovzan.task_manager.entity.Task;
 
 import java.time.LocalDate;
 

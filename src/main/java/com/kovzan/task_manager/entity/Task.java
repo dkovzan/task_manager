@@ -1,4 +1,4 @@
-package com.kovzan.task_manager.entities;
+package com.kovzan.task_manager.entity;
 
 import java.time.LocalDate;
 import java.util.Objects;
