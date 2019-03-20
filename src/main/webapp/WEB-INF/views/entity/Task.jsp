@@ -77,14 +77,14 @@
 			</select><br>
 
 			<label>Status:</label><br>
-			<select class="w3-select w3-margin-bottom" name="${ParameterNameConstant.TASK_STATUS_ID}" style="width: 30%">
+			<select class="w3-select w3-margin-bottom" name="${ParameterNameConstant.TASK_STATUS}" style="width: 30%">
 				<c:forEach items="${requestScope.get(ParameterNameConstant.PRINTED_STATUSES)}" var="status">
 					<c:choose>
-						<c:when test="${printed_edit_task.statusId == status.id}">
-							<option selected value="${status.id}">${status.name}</option>
+						<c:when test="${printed_edit_task.getStatusName().equals(status)}">
+							<option selected value="${status}">${status.statusName}</option>
 						</c:when>
 						<c:otherwise>
-							<option value="${status.id}">${status.name}</option>
+							<option value="${status}">${status.statusName}</option>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>

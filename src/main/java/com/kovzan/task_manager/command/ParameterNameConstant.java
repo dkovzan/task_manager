@@ -17,7 +17,7 @@ public class ParameterNameConstant {
 	public static final String TASK_FINISHEDON = "task_finishedOn";
 	public static final String TASK_PROJECT_ID = "task_project_id";
 	public static final String TASK_EMPLOYEE_ID = "task_employee_id";
-	public static final String TASK_STATUS_ID = "task_status_id";
+	public static final String TASK_STATUS = "task_status";
 
 	public static final String PRINTED_STATUSES = "printed_statuses";
 

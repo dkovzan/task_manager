@@ -4,6 +4,7 @@ import com.kovzan.task_manager.command.ParameterNameConstant;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.entity.Task;
+import com.kovzan.task_manager.entity.TaskStatusesEnum;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +26,8 @@ public class EntityCreatorFromRequest {
 		LocalDate taskFinishedOn = LocalDate.parse(request.getParameter(ParameterNameConstant.TASK_FINISHEDON));
 		Integer taskProjectId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_PROJECT_ID));
 		Integer taskEmployeeId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_EMPLOYEE_ID));
-		Integer taskStatusId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_STATUS_ID));
-		Task task = new Task(taskId, taskName, taskEstimation, taskCreatedOn, taskFinishedOn, taskProjectId, taskEmployeeId, taskStatusId);
+		TaskStatusesEnum taskStatus = TaskStatusesEnum.valueOf(request.getParameter(ParameterNameConstant.TASK_STATUS));
+		Task task = new Task(taskId, taskName, taskEstimation, taskCreatedOn, taskFinishedOn, taskProjectId, taskEmployeeId, taskStatus);
 		logger.log(Level.INFO, LogConstant.OBJECT_CREATED + task.toString());
 		return task;
 	}

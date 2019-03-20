@@ -6,16 +6,16 @@ import com.kovzan.task_manager.command.ParameterNameConstant;
 import com.kovzan.task_manager.command.service.EntityCreatorFromRequest;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.entity.Project;
-import com.kovzan.task_manager.entity.Status;
+import com.kovzan.task_manager.entity.TaskStatusesEnum;
 import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.EmployeeService;
 import com.kovzan.task_manager.service.ProjectService;
-import com.kovzan.task_manager.service.StatusService;
 import com.kovzan.task_manager.service.TaskService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -38,13 +38,13 @@ public class AddTaskCommand implements Command {
 
 				List<Project> projects = ProjectService.getInstance().findAllProjects();
 				List<Employee> employees = EmployeeService.getInstance().findAllEmployees();
-				List<Status> statuses = StatusService.getInstance().findAllStatuses();
+				List<TaskStatusesEnum> statuses = Arrays.asList(TaskStatusesEnum.values());
 
 				request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 				request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
 				request.setAttribute(ParameterNameConstant.PRINTED_STATUSES, statuses);
 
-				request.setAttribute(ParameterNameConstant.ERROR, "Incorrect dates are set.");
+				request.setAttribute(ParameterNameConstant.ERROR, "Incorrect data are entered.");
 
 				request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 1);
 				return PageConstant.EDIT_TASK_PAGE;

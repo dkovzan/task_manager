@@ -5,17 +5,17 @@ import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.ParameterNameConstant;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.entity.Project;
-import com.kovzan.task_manager.entity.Status;
+import com.kovzan.task_manager.entity.TaskStatusesEnum;
 import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.dao.DaoException;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.EmployeeService;
 import com.kovzan.task_manager.service.ProjectService;
-import com.kovzan.task_manager.service.StatusService;
 import com.kovzan.task_manager.service.TaskService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -32,7 +32,7 @@ public class PrintEditTaskCommand implements Command {
 			try {
 				List<Project> projects = ProjectService.getInstance().findAllProjects();
 				List<Employee> employees = EmployeeService.getInstance().findAllEmployees();
-				List<Status> statuses = StatusService.getInstance().findAllStatuses();
+				List<TaskStatusesEnum> statuses = Arrays.asList(TaskStatusesEnum.values());
 
 				request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 				request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
@@ -51,7 +51,7 @@ public class PrintEditTaskCommand implements Command {
 
 				List<Project> projects = ProjectService.getInstance().findAllProjects();
 				List<Employee> employees = EmployeeService.findAllEmployees();
-				List<Status> statuses = StatusService.findAllStatuses();
+				List<TaskStatusesEnum> statuses = Arrays.asList(TaskStatusesEnum.values());
 
 				request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 				request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);

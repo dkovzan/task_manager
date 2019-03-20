@@ -25,7 +25,7 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 			"SET LASTNAME = ?, FIRSTNAME = ?, MIDDLENAME = ?, POSITION = ? " +
 			"WHERE ID = ?";
 	private static final String SELECT_ALL_EMPLOYEES =
-			"SELECT * FROM EMPLOYEES";
+			"SELECT * FROM EMPLOYEES ORDER BY ID";
 	private static final String SELECT_EMPLOYEE_BY_ID =
 			"SELECT * FROM EMPLOYEES " +
 			"WHERE ID = ?";

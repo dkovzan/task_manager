@@ -19,20 +19,22 @@ public class TaskDaoImpl implements DaoBase<Task> {
 
 	private static final String ADD_TASK =
 			"INSERT INTO TASKS " +
-			"(NAME, ESTIMATE, CREATEDON, FINISHEDON, PROJECTID, EMPLOYEEID, STATUSID) " +
+			"(NAME, ESTIMATE, CREATEDON, FINISHEDON, PROJECTID, EMPLOYEEID, STATUS) " +
 			"VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_TASK =
 			"UPDATE TASKS " +
-			"SET NAME = ?, ESTIMATE = ?, CREATEDON = ?, FINISHEDON = ?, PROJECTID = ?, EMPLOYEEID = ?, STATUSID = ? " +
+			"SET NAME = ?, ESTIMATE = ?, CREATEDON = ?, FINISHEDON = ?, PROJECTID = ?, EMPLOYEEID = ?, STATUS = ? " +
 			"WHERE ID = ?";
 	private static final String REMOVE_TASK =
 			"DELETE FROM TASKS " +
 			"WHERE ID = ?";
 	private static final String SELECT_ALL_TASKS_WITH_REFS =
-			"SELECT T.ID, T.NAME, T.CREATEDON, T.ESTIMATE, P.SHORTNAME, T.STATUSID, T.FINISHEDON, CONCAT(E.FIRSTNAME, ' ', E.LASTNAME) AS FULLNAME FROM TASKS T " +
+			"SELECT T.ID, T.NAME, T.CREATEDON, T.ESTIMATE, P.SHORTNAME, T.STATUS, T.FINISHEDON, CONCAT(E.FIRSTNAME, ' ', E.LASTNAME) AS FULLNAME FROM TASKS T " +
 			"LEFT JOIN PROJECTS P ON P.ID = T.PROJECTID " +
-			"LEFT JOIN EMPLOYEES E ON E.ID = T.EMPLOYEEID ";
-	private static final String SELECT_TASK_BY_ID = "SELECT * FROM TASKS WHERE ID = ?";
+			"LEFT JOIN EMPLOYEES E ON E.ID = T.EMPLOYEEID ORDER BY T.ID";
+	private static final String SELECT_TASK_BY_ID =
+			"SELECT ID, NAME, CREATEDON, ESTIMATE, PROJECTID, STATUS, FINISHEDON, EMPLOYEEID " +
+			"FROM TASKS WHERE ID = ?";
 
 	private static TaskDaoImpl instance = new TaskDaoImpl();
 
@@ -50,7 +52,7 @@ public class TaskDaoImpl implements DaoBase<Task> {
 			statement.setString(4, task.getFinishedOn().toString());
 			statement.setInt(5, task.getProjectId());
 			statement.setInt(6, task.getEmployeeId());
-			statement.setInt(7, task.getStatusId());
+			statement.setString(7, task.getStatusName().toString());
 			statement.executeUpdate();
 			ResultSet keys = statement.getGeneratedKeys();
 			int result;
@@ -75,7 +77,7 @@ public class TaskDaoImpl implements DaoBase<Task> {
 			statement.setString(4, task.getFinishedOn().toString());
 			statement.setInt(5, task.getProjectId());
 			statement.setInt(6, task.getEmployeeId());
-			statement.setInt(7, task.getStatusId());
+			statement.setString(7, task.getStatusName().toString());
 			statement.setInt(8, task.getId());
 			statement.executeUpdate();
 			int result;

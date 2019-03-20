@@ -14,14 +14,13 @@ public class Task implements Entity {
 	private String projectShortName;
 	private Integer employeeId;
 	private String employeeFullName;
-	private Integer statusId;
-	private String statusName;
+	private TaskStatusesEnum statusName;
 
 	public Task(Integer id) {
 		this.id = id;
 	}
 
-	public Task(Integer id, String name, Integer estimate, LocalDate createdOn, LocalDate finishedOn, Integer projectId, Integer employeeId, Integer statusId) {
+	public Task(Integer id, String name, Integer estimate, LocalDate createdOn, LocalDate finishedOn, Integer projectId, Integer employeeId, TaskStatusesEnum statusName) {
 		this.id = id;
 		this.name = name;
 		this.estimate = estimate;
@@ -29,10 +28,10 @@ public class Task implements Entity {
 		this.finishedOn = finishedOn;
 		this.projectId = projectId;
 		this.employeeId = employeeId;
-		this.statusId = statusId;
+		this.statusName = statusName;
 	}
 
-	public Task(Integer id, String name, Integer estimate, LocalDate createdOn, LocalDate finishedOn, String projectShortName, String employeeFullName, String statusName) {
+	public Task(Integer id, String name, Integer estimate, LocalDate createdOn, LocalDate finishedOn, String projectShortName, String employeeFullName, TaskStatusesEnum statusName) {
 		this.id = id;
 		this.name = name;
 		this.estimate = estimate;
@@ -55,7 +54,6 @@ public class Task implements Entity {
 				", projectShortName='" + projectShortName + '\'' +
 				", employeeId=" + employeeId +
 				", employeeFullName='" + employeeFullName + '\'' +
-				", statusId=" + statusId +
 				", statusName='" + statusName + '\'' +
 				'}';
 	}
@@ -78,13 +76,12 @@ public class Task implements Entity {
 		if (employeeId != null ? !employeeId.equals(task.employeeId) : task.employeeId != null) return false;
 		if (employeeFullName != null ? !employeeFullName.equals(task.employeeFullName) : task.employeeFullName != null)
 			return false;
-		if (statusId != null ? !statusId.equals(task.statusId) : task.statusId != null) return false;
 		return statusName != null ? statusName.equals(task.statusName) : task.statusName == null;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getName(), getEstimate(), getCreatedOn(), getFinishedOn(), getProjectId(), getEmployeeId(), getStatusId());
+		return Objects.hash(getId(), getName(), getEstimate(), getCreatedOn(), getFinishedOn(), getProjectId(), getEmployeeId(), getStatusName());
 	}
 
 	public Integer getId() {
@@ -143,14 +140,6 @@ public class Task implements Entity {
 		this.employeeId = employeeId;
 	}
 
-	public Integer getStatusId() {
-		return statusId;
-	}
-
-	public void setStatusId(Integer statusId) {
-		this.statusId = statusId;
-	}
-
 	public String getProjectShortName() {
 		return projectShortName;
 	}
@@ -167,11 +156,11 @@ public class Task implements Entity {
 		this.employeeFullName = employeeFullName;
 	}
 
-	public String getStatusName() {
+	public TaskStatusesEnum getStatusName() {
 		return statusName;
 	}
 
-	public void setStatusName(String statusName) {
+	public void setStatusName(TaskStatusesEnum statusName) {
 		this.statusName = statusName;
 	}
 

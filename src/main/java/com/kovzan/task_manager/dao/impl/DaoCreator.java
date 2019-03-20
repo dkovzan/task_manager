@@ -4,16 +4,13 @@ import com.kovzan.task_manager.dao.DaoException;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.entity.Task;
-import com.kovzan.task_manager.service.StatusService;
+import com.kovzan.task_manager.entity.TaskStatusesEnum;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-
-import static com.kovzan.task_manager.logger.Log.logger;
 
 public class DaoCreator {
 
@@ -47,10 +44,10 @@ public class DaoCreator {
 				LocalDate createdOn = LocalDate.parse(resultSet.getString(3));
 				Integer estimate = resultSet.getInt(4);
 				Integer projectId = resultSet.getInt(5);
-				Integer taskStatusId = resultSet.getInt(6);
+				TaskStatusesEnum status = TaskStatusesEnum.valueOf(resultSet.getString(6));
 				LocalDate finishedOn = LocalDate.parse(resultSet.getString(7));
 				Integer employeeId = resultSet.getInt(8);
-				Task task = new Task(id, name, estimate, createdOn, finishedOn, projectId, employeeId, taskStatusId);
+				Task task = new Task(id, name, estimate, createdOn, finishedOn, projectId, employeeId, status);
 				tasks.add(task);}
 			while (resultSet.next());
 		} catch (SQLException e) {
@@ -69,11 +66,10 @@ public class DaoCreator {
 				LocalDate createdOn = LocalDate.parse(resultSet.getString(3));
 				Integer estimate = resultSet.getInt(4);
 				String projectShortName = resultSet.getString(5);
-				Integer statusId = resultSet.getInt(6);
-				String statusName = StatusService.getInstance().findAllStatuses().get(statusId).getName();
+				TaskStatusesEnum status = TaskStatusesEnum.valueOf(resultSet.getString(6));
 				LocalDate finishedOn = LocalDate.parse(resultSet.getString(7));
 				String employeeFullName = resultSet.getString(8);
-				Task task = new Task(id, name, estimate, createdOn, finishedOn, projectShortName, employeeFullName, statusName);
+				Task task = new Task(id, name, estimate, createdOn, finishedOn, projectShortName, employeeFullName, status);
 				tasks.add(task);
 			}
 			while (resultSet.next());

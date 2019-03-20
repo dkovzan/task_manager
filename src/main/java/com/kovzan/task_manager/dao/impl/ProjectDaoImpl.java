@@ -27,7 +27,7 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 			"DELETE FROM PROJECTS " +
 			"WHERE ID = ?";
 	private static final String SELECT_ALL_PROJECTS =
-			"SELECT * FROM PROJECTS";
+			"SELECT * FROM PROJECTS ORDER BY ID";
 	private static final String SELECT_PROJECT_BY_ID =
 			"SELECT * FROM PROJECTS " +
 			"WHERE ID = ?";
