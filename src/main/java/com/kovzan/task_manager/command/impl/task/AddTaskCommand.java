@@ -52,6 +52,9 @@ public class AddTaskCommand implements Command {
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 			return PageConstant.ERROR_PAGE;
+		} catch (NumberFormatException e) {
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			return PageConstant.ERROR_PAGE;
 		}
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.TASKS_PAGE;
