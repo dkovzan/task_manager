@@ -4,7 +4,7 @@ import com.kovzan.task_manager.dao.DaoException;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.entity.Task;
-import com.kovzan.task_manager.entity.TaskStatusesEnum;
+import com.kovzan.task_manager.entity.TaskStatus;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,11 +19,11 @@ public class DaoCreator {
 		ArrayList<Project> projects = new ArrayList<>();
 		try {
 			do {
-				Integer id = resultSet.getInt(1);
-				String name = resultSet.getString(2);
-				String shortName = resultSet.getString(3);
-				String description = resultSet.getString(4);
-				Project project = new Project(id, name, shortName, description);
+				Project project = new Project();
+				project.setId(resultSet.getInt(1));
+				project.setName(resultSet.getString(2));
+				project.setShortName(resultSet.getString(3));
+				project.setDescription(resultSet.getString(4));
 				projects.add(project);
 			}
 			while(resultSet.next());
@@ -39,15 +39,15 @@ public class DaoCreator {
 		ArrayList<Task> tasks = new ArrayList<>();
 		try {
 			do {
-				Integer id = resultSet.getInt(1);
-				String name = resultSet.getString(2);
-				LocalDate createdOn = LocalDate.parse(resultSet.getString(3));
-				Integer estimate = resultSet.getInt(4);
-				Integer projectId = resultSet.getInt(5);
-				TaskStatusesEnum status = TaskStatusesEnum.valueOf(resultSet.getString(6));
-				LocalDate finishedOn = LocalDate.parse(resultSet.getString(7));
-				Integer employeeId = resultSet.getInt(8);
-				Task task = new Task(id, name, estimate, createdOn, finishedOn, projectId, employeeId, status);
+				Task task = new Task();
+				task.setId(resultSet.getInt(1));
+				task.setName(resultSet.getString(2));
+				task.setCreatedOn(LocalDate.parse(resultSet.getString(3)));
+				task.setFinishedOn(LocalDate.parse(resultSet.getString(7)));
+				task.setEstimate(resultSet.getInt(4));
+				task.setProjectId(resultSet.getInt(5));
+				task.setStatus(TaskStatus.valueOf(resultSet.getString(6)));
+				task.setEmployeeId(resultSet.getInt(8));
 				tasks.add(task);}
 			while (resultSet.next());
 		} catch (SQLException e) {
@@ -61,15 +61,15 @@ public class DaoCreator {
 		ArrayList<Task> tasks = new ArrayList<>();
 		try {
 			do {
-				Integer id = resultSet.getInt(1);
-				String name = resultSet.getString(2);
-				LocalDate createdOn = LocalDate.parse(resultSet.getString(3));
-				Integer estimate = resultSet.getInt(4);
-				String projectShortName = resultSet.getString(5);
-				TaskStatusesEnum status = TaskStatusesEnum.valueOf(resultSet.getString(6));
-				LocalDate finishedOn = LocalDate.parse(resultSet.getString(7));
-				String employeeFullName = resultSet.getString(8);
-				Task task = new Task(id, name, estimate, createdOn, finishedOn, projectShortName, employeeFullName, status);
+				Task task = new Task();
+				task.setId(resultSet.getInt(1));
+				task.setName(resultSet.getString(2));
+				task.setCreatedOn(LocalDate.parse(resultSet.getString(3)));
+				task.setFinishedOn(LocalDate.parse(resultSet.getString(7)));
+				task.setEstimate(resultSet.getInt(4));
+				task.setProjectShortName(resultSet.getString(5));
+				task.setStatus(TaskStatus.valueOf(resultSet.getString(6)));
+				task.setEmployeeFullName(resultSet.getString(8));
 				tasks.add(task);
 			}
 			while (resultSet.next());
@@ -85,12 +85,12 @@ public class DaoCreator {
 		ArrayList<Employee> employees = new ArrayList<>();
 		try {
 			do {
-				Integer id = resultSet.getInt(1);
-				String lastName = resultSet.getString(2);
-				String firstName = resultSet.getString(3);
-				String middleName = resultSet.getString(4);
-				String position = resultSet.getString(5);
-				Employee employee = new Employee(id, firstName, lastName, middleName, position);
+				Employee employee = new Employee();
+				employee.setId(resultSet.getInt(1));
+				employee.setLastName(resultSet.getString(2));
+				employee.setFirstName(resultSet.getString(3));
+				employee.setMiddleName(resultSet.getString(4));
+				employee.setPosition(resultSet.getString(5));
 				employees.add(employee);
 			}
 			while (resultSet.next());

@@ -4,7 +4,7 @@ import com.kovzan.task_manager.command.ParameterNameConstant;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.entity.Task;
-import com.kovzan.task_manager.entity.TaskStatusesEnum;
+import com.kovzan.task_manager.entity.TaskStatus;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,13 +21,21 @@ public class EntityCreatorFromRequest {
 			taskId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_ID));
 		}
 		String taskName = request.getParameter(ParameterNameConstant.TASK_NAME);
-		Integer taskEstimation = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_ESTIMATE));
+		Integer taskEstimate = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_ESTIMATE));
 		LocalDate taskCreatedOn = LocalDate.parse(request.getParameter(ParameterNameConstant.TASK_CREATEDON));
 		LocalDate taskFinishedOn = LocalDate.parse(request.getParameter(ParameterNameConstant.TASK_FINISHEDON));
 		Integer taskProjectId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_PROJECT_ID));
 		Integer taskEmployeeId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_EMPLOYEE_ID));
-		TaskStatusesEnum taskStatus = TaskStatusesEnum.valueOf(request.getParameter(ParameterNameConstant.TASK_STATUS));
-		Task task = new Task(taskId, taskName, taskEstimation, taskCreatedOn, taskFinishedOn, taskProjectId, taskEmployeeId, taskStatus);
+		TaskStatus taskStatus = TaskStatus.valueOf(request.getParameter(ParameterNameConstant.TASK_STATUS));
+		Task task = new Task();
+		task.setId(taskId);
+		task.setName(taskName);
+		task.setEstimate(taskEstimate);
+		task.setCreatedOn(taskCreatedOn);
+		task.setFinishedOn(taskFinishedOn);
+		task.setProjectId(taskProjectId);
+		task.setEmployeeId(taskEmployeeId);
+		task.setStatus(taskStatus);
 		logger.log(Level.INFO, LogConstant.OBJECT_CREATED + task.toString());
 		return task;
 	}
@@ -40,7 +48,11 @@ public class EntityCreatorFromRequest {
 		String projectName = request.getParameter(ParameterNameConstant.PROJECT_NAME);
 		String projectShortName = request.getParameter(ParameterNameConstant.PROJECT_SHORTNAME);
 		String projectDescription = request.getParameter(ParameterNameConstant.PROJECT_DESCRIPTION);
-		Project project = new Project(projectId, projectName, projectShortName, projectDescription);
+		Project project = new Project();
+		project.setId(projectId);
+		project.setName(projectName);
+		project.setShortName(projectShortName);
+		project.setDescription(projectDescription);
 		logger.log(Level.INFO, LogConstant.OBJECT_CREATED + project.toString());
 		return project;
 	}
@@ -54,7 +66,12 @@ public class EntityCreatorFromRequest {
 		String employeeLastName = request.getParameter(ParameterNameConstant.EMPLOYEE_LASTNAME);
 		String employeeMiddleName = request.getParameter(ParameterNameConstant.EMPLOYEE_MIDDLENAME);
 		String employeePosition = request.getParameter(ParameterNameConstant.EMPLOYEE_POSITION);
-		Employee employee = new Employee(employeeId, employeeFirstName, employeeLastName, employeeMiddleName, employeePosition);
+		Employee employee = new Employee();
+		employee.setId(employeeId);
+		employee.setLastName(employeeLastName);
+		employee.setFirstName(employeeFirstName);
+		employee.setMiddleName(employeeMiddleName);
+		employee.setPosition(employeePosition);
 		logger.log(Level.INFO, LogConstant.OBJECT_CREATED + employee.toString());
 		return employee;
 	}

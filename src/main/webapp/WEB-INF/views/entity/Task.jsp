@@ -80,11 +80,11 @@
 			<select class="w3-select w3-margin-bottom" name="${ParameterNameConstant.TASK_STATUS}" style="width: 30%">
 				<c:forEach items="${requestScope.get(ParameterNameConstant.PRINTED_STATUSES)}" var="status">
 					<c:choose>
-						<c:when test="${printed_edit_task.getStatusName().equals(status)}">
-							<option selected value="${status}">${status.statusName}</option>
+						<c:when test="${printed_edit_task.getStatus().equals(status)}">
+							<option selected value="${status}">${status.getStatusName()}</option>
 						</c:when>
 						<c:otherwise>
-							<option value="${status}">${status.statusName}</option>
+							<option value="${status}">${status.getStatusName()}</option>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>

@@ -21,7 +21,8 @@ public class RemoveProjectCommand implements Command {
 
 		try {
 			int projectId = Integer.parseInt(request.getParameter(ParameterNameConstant.PROJECT_ID));
-			Project project = new Project(projectId);
+			Project project = new Project();
+			project.setId(projectId);
 			ProjectService.removeProject(project);
 			List<Project> projects = ProjectService.getInstance().findAllProjects();
 			request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);

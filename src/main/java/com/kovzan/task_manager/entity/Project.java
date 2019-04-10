@@ -3,31 +3,19 @@ package com.kovzan.task_manager.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Project implements Entity, Serializable {
+public class Project extends Entity implements Serializable {
 
-	private Integer id;
 	private String name;
 	private String shortName;
 	private String description;
 
-	public Project(Integer id, String name, String shortName, String description) {
-		this.id = id;
-		this.name = name;
-		this.shortName = shortName;
-		this.description = description;
-	}
-
-	public Project(Integer id) {
-		this.id = id;
-	}
-
 	@Override
 	public String toString() {
-		return "project{" +
-				"id=" + id +
-				", name='" + name + '\'' +
+		return "Project{" +
+				"name='" + name + '\'' +
 				", shortName='" + shortName + '\'' +
 				", description='" + description + '\'' +
+				", id=" + id +
 				'}';
 	}
 
@@ -35,24 +23,20 @@ public class Project implements Entity, Serializable {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
+
 		Project project = (Project) o;
-		return Objects.equals(getId(), project.getId()) &&
-				getName().equals(project.getName()) &&
-				getShortName().equals(project.getShortName()) &&
-				Objects.equals(getDescription(), project.getDescription());
+
+		if (!name.equals(project.name)) return false;
+		if (!shortName.equals(project.shortName)) return false;
+		return description != null ? description.equals(project.description) : project.description == null;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getName(), getShortName(), getDescription());
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
+		int result = name.hashCode();
+		result = 31 * result + shortName.hashCode();
+		result = 31 * result + (description != null ? description.hashCode() : 0);
+		return result;
 	}
 
 	public String getName() {
@@ -78,5 +62,4 @@ public class Project implements Entity, Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 }

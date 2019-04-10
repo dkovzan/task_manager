@@ -6,7 +6,7 @@ import com.kovzan.task_manager.command.ParameterNameConstant;
 import com.kovzan.task_manager.command.service.EntityCreatorFromRequest;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.entity.Project;
-import com.kovzan.task_manager.entity.TaskStatusesEnum;
+import com.kovzan.task_manager.entity.TaskStatus;
 import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.EmployeeService;
@@ -38,7 +38,7 @@ public class AddTaskCommand implements Command {
 
 				List<Project> projects = ProjectService.getInstance().findAllProjects();
 				List<Employee> employees = EmployeeService.getInstance().findAllEmployees();
-				List<TaskStatusesEnum> statuses = Arrays.asList(TaskStatusesEnum.values());
+				List<TaskStatus> statuses = Arrays.asList(TaskStatus.values());
 
 				request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 				request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);

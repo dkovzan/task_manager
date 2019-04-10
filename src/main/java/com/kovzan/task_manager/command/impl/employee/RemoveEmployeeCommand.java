@@ -20,7 +20,8 @@ public class RemoveEmployeeCommand implements Command {
 	public String execute(HttpServletRequest request) {
 		try {
 			int employeeId = Integer.parseInt(request.getParameter(ParameterNameConstant.EMPLOYEE_ID));
-			Employee employee = new Employee(employeeId);
+			Employee employee = new Employee();
+			employee.setId(employeeId);
 			EmployeeService.getInstance().removeEmployee(employee);
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);

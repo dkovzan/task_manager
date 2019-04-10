@@ -5,7 +5,7 @@ import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.ParameterNameConstant;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.entity.Project;
-import com.kovzan.task_manager.entity.TaskStatusesEnum;
+import com.kovzan.task_manager.entity.TaskStatus;
 import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.dao.DaoException;
 import com.kovzan.task_manager.logger.LogConstant;
@@ -32,7 +32,7 @@ public class PrintEditTaskCommand implements Command {
 			try {
 				List<Project> projects = ProjectService.getInstance().findAllProjects();
 				List<Employee> employees = EmployeeService.getInstance().findAllEmployees();
-				List<TaskStatusesEnum> statuses = Arrays.asList(TaskStatusesEnum.values());
+				List<TaskStatus> statuses = Arrays.asList(TaskStatus.values());
 
 				request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 				request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
@@ -51,7 +51,7 @@ public class PrintEditTaskCommand implements Command {
 
 				List<Project> projects = ProjectService.getInstance().findAllProjects();
 				List<Employee> employees = EmployeeService.findAllEmployees();
-				List<TaskStatusesEnum> statuses = Arrays.asList(TaskStatusesEnum.values());
+				List<TaskStatus> statuses = Arrays.asList(TaskStatus.values());
 
 				request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 				request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);

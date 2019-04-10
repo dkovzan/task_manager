@@ -3,34 +3,21 @@ package com.kovzan.task_manager.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Employee implements Entity, Serializable {
+public class Employee extends Entity implements Serializable {
 
-	private Integer id;
 	private String firstName;
 	private String lastName;
 	private String middleName;
 	private String position;
 
-	public Employee(Integer id, String firstName, String lastName, String middleName, String position) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.middleName = middleName;
-		this.position = position;
-	}
-
-	public Employee(Integer id) {
-		this.id = id;
-	}
-
 	@Override
 	public String toString() {
-		return "employee{" +
-				"id='" + id + '\'' +
-				", firstName='" + firstName + '\'' +
+		return "Employee{" +
+				"firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
 				", middleName='" + middleName + '\'' +
 				", position='" + position + '\'' +
+				", id=" + id +
 				'}';
 	}
 
@@ -38,25 +25,22 @@ public class Employee implements Entity, Serializable {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
+
 		Employee employee = (Employee) o;
-		return Objects.equals(id, employee.id) &&
-				firstName.equals(employee.firstName) &&
-				lastName.equals(employee.lastName) &&
-				Objects.equals(middleName, employee.middleName) &&
-				position.equals(employee.position);
+
+		if (!firstName.equals(employee.firstName)) return false;
+		if (!lastName.equals(employee.lastName)) return false;
+		if (middleName != null ? !middleName.equals(employee.middleName) : employee.middleName != null) return false;
+		return position.equals(employee.position);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getFirstName(), getLastName(), getMiddleName(), getPosition());
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
+		int result = firstName.hashCode();
+		result = 31 * result + lastName.hashCode();
+		result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
+		result = 31 * result + position.hashCode();
+		return result;
 	}
 
 	public String getFirstName() {
@@ -90,5 +74,4 @@ public class Employee implements Entity, Serializable {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-
 }

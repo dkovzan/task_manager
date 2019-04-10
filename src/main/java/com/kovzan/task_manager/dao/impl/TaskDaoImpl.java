@@ -52,7 +52,7 @@ public class TaskDaoImpl implements DaoBase<Task> {
 			statement.setString(4, task.getFinishedOn().toString());
 			statement.setInt(5, task.getProjectId());
 			statement.setInt(6, task.getEmployeeId());
-			statement.setString(7, task.getStatusName().toString());
+			statement.setString(7, task.getStatus().toString());
 			statement.executeUpdate();
 			ResultSet keys = statement.getGeneratedKeys();
 			int result;
@@ -77,7 +77,7 @@ public class TaskDaoImpl implements DaoBase<Task> {
 			statement.setString(4, task.getFinishedOn().toString());
 			statement.setInt(5, task.getProjectId());
 			statement.setInt(6, task.getEmployeeId());
-			statement.setString(7, task.getStatusName().toString());
+			statement.setString(7, task.getStatus().toString());
 			statement.setInt(8, task.getId());
 			statement.executeUpdate();
 			int result;

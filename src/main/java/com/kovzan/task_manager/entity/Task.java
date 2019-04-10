@@ -1,11 +1,10 @@
 package com.kovzan.task_manager.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 
-public class Task implements Entity {
+public class Task extends Entity implements Serializable {
 
-	private Integer id;
 	private String name;
 	private Integer estimate;
 	private LocalDate createdOn;
@@ -14,47 +13,21 @@ public class Task implements Entity {
 	private String projectShortName;
 	private Integer employeeId;
 	private String employeeFullName;
-	private TaskStatusesEnum statusName;
-
-	public Task(Integer id) {
-		this.id = id;
-	}
-
-	public Task(Integer id, String name, Integer estimate, LocalDate createdOn, LocalDate finishedOn, Integer projectId, Integer employeeId, TaskStatusesEnum statusName) {
-		this.id = id;
-		this.name = name;
-		this.estimate = estimate;
-		this.createdOn = createdOn;
-		this.finishedOn = finishedOn;
-		this.projectId = projectId;
-		this.employeeId = employeeId;
-		this.statusName = statusName;
-	}
-
-	public Task(Integer id, String name, Integer estimate, LocalDate createdOn, LocalDate finishedOn, String projectShortName, String employeeFullName, TaskStatusesEnum statusName) {
-		this.id = id;
-		this.name = name;
-		this.estimate = estimate;
-		this.createdOn = createdOn;
-		this.finishedOn = finishedOn;
-		this.projectShortName = projectShortName;
-		this.employeeFullName = employeeFullName;
-		this.statusName = statusName;
-	}
+	private TaskStatus status;
 
 	@Override
 	public String toString() {
-		return "task{" +
-				"id=" + id +
-				", name='" + name + '\'' +
+		return "Task{" +
+				"name='" + name + '\'' +
 				", estimate=" + estimate +
-				", createdOn='" + createdOn + '\'' +
-				", finishedOn='" + finishedOn + '\'' +
+				", createdOn=" + createdOn +
+				", finishedOn=" + finishedOn +
 				", projectId=" + projectId +
 				", projectShortName='" + projectShortName + '\'' +
 				", employeeId=" + employeeId +
 				", employeeFullName='" + employeeFullName + '\'' +
-				", statusName='" + statusName + '\'' +
+				", status=" + status +
+				", id=" + id +
 				'}';
 	}
 
@@ -65,7 +38,6 @@ public class Task implements Entity {
 
 		Task task = (Task) o;
 
-		if (!id.equals(task.id)) return false;
 		if (!name.equals(task.name)) return false;
 		if (!estimate.equals(task.estimate)) return false;
 		if (!createdOn.equals(task.createdOn)) return false;
@@ -76,20 +48,21 @@ public class Task implements Entity {
 		if (employeeId != null ? !employeeId.equals(task.employeeId) : task.employeeId != null) return false;
 		if (employeeFullName != null ? !employeeFullName.equals(task.employeeFullName) : task.employeeFullName != null)
 			return false;
-		return statusName != null ? statusName.equals(task.statusName) : task.statusName == null;
+		return status == task.status;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getName(), getEstimate(), getCreatedOn(), getFinishedOn(), getProjectId(), getEmployeeId(), getStatusName());
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
+		int result = name.hashCode();
+		result = 31 * result + estimate.hashCode();
+		result = 31 * result + createdOn.hashCode();
+		result = 31 * result + finishedOn.hashCode();
+		result = 31 * result + (projectId != null ? projectId.hashCode() : 0);
+		result = 31 * result + (projectShortName != null ? projectShortName.hashCode() : 0);
+		result = 31 * result + (employeeId != null ? employeeId.hashCode() : 0);
+		result = 31 * result + (employeeFullName != null ? employeeFullName.hashCode() : 0);
+		result = 31 * result + status.hashCode();
+		return result;
 	}
 
 	public String getName() {
@@ -132,20 +105,20 @@ public class Task implements Entity {
 		this.projectId = projectId;
 	}
 
-	public Integer getEmployeeId() {
-		return employeeId;
-	}
-
-	public void setEmployeeId(Integer employeeId) {
-		this.employeeId = employeeId;
-	}
-
 	public String getProjectShortName() {
 		return projectShortName;
 	}
 
 	public void setProjectShortName(String projectShortName) {
 		this.projectShortName = projectShortName;
+	}
+
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
 	}
 
 	public String getEmployeeFullName() {
@@ -156,13 +129,11 @@ public class Task implements Entity {
 		this.employeeFullName = employeeFullName;
 	}
 
-	public TaskStatusesEnum getStatusName() {
-		return statusName;
+	public TaskStatus getStatus() {
+		return status;
 	}
 
-	public void setStatusName(TaskStatusesEnum statusName) {
-		this.statusName = statusName;
+	public void setStatus(TaskStatus status) {
+		this.status = status;
 	}
-
-
 }

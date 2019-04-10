@@ -1,6 +1,6 @@
 package com.kovzan.task_manager.entity;
 
-public enum TaskStatusesEnum {
+public enum TaskStatus {
 
 	NEW,
 	IN_PROGRESS,
