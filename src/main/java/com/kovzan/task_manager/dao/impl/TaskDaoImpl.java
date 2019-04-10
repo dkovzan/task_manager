@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -17,24 +18,29 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class TaskDaoImpl implements DaoBase<Task> {
 
-	private static final String ADD_TASK =
-			"INSERT INTO TASKS " +
-			"(NAME, ESTIMATE, CREATEDON, FINISHEDON, PROJECTID, EMPLOYEEID, STATUS) " +
+	private static final String addTask =
+			"INSERT INTO tasks " +
+			"(name, estimate, createdon, finishedon, projectid, employeeid, status) " +
 			"VALUES (?, ?, ?, ?, ?, ?, ?)";
-	private static final String UPDATE_TASK =
-			"UPDATE TASKS " +
-			"SET NAME = ?, ESTIMATE = ?, CREATEDON = ?, FINISHEDON = ?, PROJECTID = ?, EMPLOYEEID = ?, STATUS = ? " +
-			"WHERE ID = ?";
-	private static final String REMOVE_TASK =
-			"DELETE FROM TASKS " +
-			"WHERE ID = ?";
-	private static final String SELECT_ALL_TASKS_WITH_REFS =
-			"SELECT T.ID, T.NAME, T.CREATEDON, T.ESTIMATE, P.SHORTNAME, T.STATUS, T.FINISHEDON, CONCAT(E.FIRSTNAME, ' ', E.LASTNAME) AS FULLNAME FROM TASKS T " +
-			"LEFT JOIN PROJECTS P ON P.ID = T.PROJECTID " +
-			"LEFT JOIN EMPLOYEES E ON E.ID = T.EMPLOYEEID ORDER BY T.ID";
-	private static final String SELECT_TASK_BY_ID =
-			"SELECT ID, NAME, CREATEDON, ESTIMATE, PROJECTID, STATUS, FINISHEDON, EMPLOYEEID " +
-			"FROM TASKS WHERE ID = ?";
+	private static final String updateTask =
+			"UPDATE tasks " +
+			"SET name = ?, estimate = ?, createdon = ?, finishedon = ?, projectid = ?, employeeid = ?, status = ? " +
+			"WHERE id = ?";
+	private static final String removeTask =
+			"DELETE FROM tasks " +
+			"WHERE id = ?";
+	private static final String selectAllTasksWithRefs =
+			"SELECT t.id, t.name, t.createdon, t.estimate, p.shortname, t.status, t.finishedon, CONCAT(e.firstname, ' ', e.lastname) AS fullname FROM tasks t " +
+			"LEFT JOIN projects p ON p.id = t.projectid " +
+			"LEFT JOIN employees e ON e.id = t.employeeid ORDER BY t.id";
+	private static final String selectTaskById =
+			"SELECT id, name, createdon, estimate, projectid, status, finishedon, employeeid " +
+			"FROM tasks WHERE id = ?";
+	private static final String selectTasksByEmployeeId =
+			"SELECT t.id, t.name, t.createdon, t.estimate, p.shortname, t.status, t.finishedon, CONCAT(e.firstname, ' ', e.lastname) AS fullname FROM tasks t " +
+			"LEFT JOIN projects p ON p.id = t.projectid " +
+			"LEFT JOIN employees e ON e.id = t.employeeid " +
+			"WHERE t.employeeid = ? ORDER BY t.id";
 
 	private static TaskDaoImpl instance = new TaskDaoImpl();
 
@@ -45,7 +51,7 @@ public class TaskDaoImpl implements DaoBase<Task> {
 	@Override
 	public int add(Task task) throws DaoException {
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(ADD_TASK);
+			PreparedStatement statement = connection.prepareStatement(addTask);
 			statement.setString(1, task.getName());
 			statement.setInt(2, task.getEstimate());
 			statement.setString(3, task.getCreatedOn().toString());
@@ -70,7 +76,7 @@ public class TaskDaoImpl implements DaoBase<Task> {
 	@Override
 	public int update(Task task) throws DaoException {
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(UPDATE_TASK);
+			PreparedStatement statement = connection.prepareStatement(updateTask);
 			statement.setString(1, task.getName());
 			statement.setInt(2, task.getEstimate());
 			statement.setString(3, task.getCreatedOn().toString());
@@ -86,7 +92,7 @@ public class TaskDaoImpl implements DaoBase<Task> {
 				result = keys.getInt(1);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 				return result;
-				}
+			}
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		}
@@ -96,11 +102,10 @@ public class TaskDaoImpl implements DaoBase<Task> {
 	@Override
 	public void remove(Task task) throws DaoException {
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(REMOVE_TASK);
+			PreparedStatement statement = connection.prepareStatement(removeTask);
 			statement.setInt(1, task.getId());
 			statement.execute();
 			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		}
@@ -108,16 +113,13 @@ public class TaskDaoImpl implements DaoBase<Task> {
 
 	@Override
 	public List<Task> findAll() throws DaoException {
-		List<Task> tasks = null;
+		List<Task> tasks = new ArrayList<>();
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(SELECT_ALL_TASKS_WITH_REFS);
+			PreparedStatement statement = connection.prepareStatement(selectAllTasksWithRefs);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				tasks = DaoCreator.createTasksWithRefs(resultSet);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-			}
-			else {
-				return tasks;
 			}
 		} catch (SQLException e) {
 			throw new DaoException(e);
@@ -129,18 +131,36 @@ public class TaskDaoImpl implements DaoBase<Task> {
 	public Task findById(int taskId) throws DaoException {
 		Task task = null;
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(SELECT_TASK_BY_ID);
+			PreparedStatement statement = connection.prepareStatement(selectTaskById);
 			statement.setInt(1, taskId);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				task = DaoCreator.createTasks(resultSet).get(0);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-			} else {
-				return task;
 			}
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		}
 		return task;
+	}
+
+	public List<Task> findTasksByEmployeeId(int employeeId) throws DaoException {
+		return findTasksBy(employeeId, selectTasksByEmployeeId);
+	}
+
+	public List<Task> findTasksBy(Integer id, String selectStatement) throws DaoException {
+		List<Task> tasks = new ArrayList<>();
+		try (Connection connection = DBConnection.getDBConnection()) {
+			PreparedStatement statement = connection.prepareStatement(selectStatement);
+			statement.setInt(1, id);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				tasks = DaoCreator.createTasksWithRefs(resultSet);
+				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		}
+		return tasks;
 	}
 }

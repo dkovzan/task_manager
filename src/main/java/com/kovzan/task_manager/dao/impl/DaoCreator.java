@@ -48,7 +48,8 @@ public class DaoCreator {
 				task.setProjectId(resultSet.getInt(5));
 				task.setStatus(TaskStatus.valueOf(resultSet.getString(6)));
 				task.setEmployeeId(resultSet.getInt(8));
-				tasks.add(task);}
+				tasks.add(task);
+			}
 			while (resultSet.next());
 		} catch (SQLException e) {
 			throw new DaoException(e);
@@ -73,8 +74,7 @@ public class DaoCreator {
 				tasks.add(task);
 			}
 			while (resultSet.next());
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new DaoException(e);
 		}
 		return tasks;
