@@ -14,21 +14,21 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class EmployeeDaoImpl implements DaoBase<Employee> {
 
-	private static final String ADD_EMPLOYEE =
-			"INSERT INTO EMPLOYEES (LASTNAME, FIRSTNAME, MIDDLENAME, POSITION) " +
+	private static final String addEmployee =
+			"INSERT INTO employee (lastname, firstname, middlename, position) " +
 			"VALUES (?,?,?,?)";
-	private static final String REMOVE_EMPLOYEE =
-			"DELETE FROM EMPLOYEES " +
-			"WHERE ID = ?";
-	private static final String UPDATE_EMPLOYEE =
-			"UPDATE EMPLOYEES " +
-			"SET LASTNAME = ?, FIRSTNAME = ?, MIDDLENAME = ?, POSITION = ? " +
-			"WHERE ID = ?";
-	private static final String SELECT_ALL_EMPLOYEES =
-			"SELECT * FROM EMPLOYEES ORDER BY ID";
+	private static final String removeEmployee =
+			"DELETE FROM employee " +
+			"WHERE id = ?";
+	private static final String updateEmployee =
+			"UPDATE employee " +
+			"SET lastname = ?, firstname = ?, middlename = ?, position = ? " +
+			"WHERE id = ?";
+	private static final String selectAllEmployees =
+			"SELECT id, lastname, firstname, middlename, position FROM employee ORDER BY id";
 	private static final String SELECT_EMPLOYEE_BY_ID =
-			"SELECT * FROM EMPLOYEES " +
-			"WHERE ID = ?";
+			"SELECT id, lastname, firstname, middlename, position FROM employee " +
+			"WHERE id = ?";
 
 	private static EmployeeDaoImpl instance = new EmployeeDaoImpl();
 
@@ -39,7 +39,7 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 	@Override
 	public int add(Employee element) throws DaoException {
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(ADD_EMPLOYEE);
+			PreparedStatement statement = connection.prepareStatement(addEmployee);
 			statement.setString(1, element.getLastName());
 			statement.setString(2, element.getFirstName());
 			statement.setString(3, element.getMiddleName());
@@ -61,7 +61,7 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 	@Override
 	public int update(Employee element) throws DaoException {
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(UPDATE_EMPLOYEE);
+			PreparedStatement statement = connection.prepareStatement(updateEmployee);
 			statement.setString(1, element.getLastName());
 			statement.setString(2, element.getFirstName());
 			statement.setString(3, element.getMiddleName());
@@ -85,7 +85,7 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 	@Override
 	public void remove(Employee element) throws DaoException {
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(REMOVE_EMPLOYEE);
+			PreparedStatement statement = connection.prepareStatement(removeEmployee);
 			statement.setInt(1, element.getId());
 			statement.execute();
 		} catch (SQLException e) {
@@ -97,7 +97,7 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 	public List<Employee> findAll() throws DaoException {
 		List<Employee> employees = null;
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(SELECT_ALL_EMPLOYEES);
+			PreparedStatement statement = connection.prepareStatement(selectAllEmployees);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				employees = DaoCreator.createEmployees(resultSet);

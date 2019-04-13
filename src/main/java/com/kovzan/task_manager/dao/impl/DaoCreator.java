@@ -42,8 +42,8 @@ public class DaoCreator {
 				Task task = new Task();
 				task.setId(resultSet.getInt(1));
 				task.setName(resultSet.getString(2));
-				task.setCreatedOn(LocalDate.parse(resultSet.getString(3)));
-				task.setFinishedOn(LocalDate.parse(resultSet.getString(7)));
+				task.setCreatedOn(resultSet.getDate(3).toLocalDate());
+				task.setFinishedOn(resultSet.getDate(7).toLocalDate());
 				task.setEstimate(resultSet.getInt(4));
 				task.setProjectId(resultSet.getInt(5));
 				task.setStatus(TaskStatus.valueOf(resultSet.getString(6)));
@@ -65,8 +65,8 @@ public class DaoCreator {
 				Task task = new Task();
 				task.setId(resultSet.getInt(1));
 				task.setName(resultSet.getString(2));
-				task.setCreatedOn(LocalDate.parse(resultSet.getString(3)));
-				task.setFinishedOn(LocalDate.parse(resultSet.getString(7)));
+				task.setCreatedOn(resultSet.getDate(3).toLocalDate());
+				task.setFinishedOn(resultSet.getDate(7).toLocalDate());
 				task.setEstimate(resultSet.getInt(4));
 				task.setProjectShortName(resultSet.getString(5));
 				task.setStatus(TaskStatus.valueOf(resultSet.getString(6)));

@@ -7,6 +7,7 @@ import com.kovzan.task_manager.dao.DaoException;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,27 +20,27 @@ import static com.kovzan.task_manager.logger.Log.logger;
 public class TaskDaoImpl implements DaoBase<Task> {
 
 	private static final String addTask =
-			"INSERT INTO tasks " +
-			"(name, estimate, createdon, finishedon, projectid, employeeid, status) " +
+			"INSERT INTO task " +
+			"(name, work, begindate, enddate, projectid, employeeid, status) " +
 			"VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String updateTask =
-			"UPDATE tasks " +
-			"SET name = ?, estimate = ?, createdon = ?, finishedon = ?, projectid = ?, employeeid = ?, status = ? " +
+			"UPDATE task " +
+			"SET name = ?, work = ?, begindate = ?, enddate = ?, projectid = ?, employeeid = ?, status = ? " +
 			"WHERE id = ?";
 	private static final String removeTask =
-			"DELETE FROM tasks " +
+			"DELETE FROM task " +
 			"WHERE id = ?";
 	private static final String selectAllTasksWithRefs =
-			"SELECT t.id, t.name, t.createdon, t.estimate, p.shortname, t.status, t.finishedon, CONCAT(e.firstname, ' ', e.lastname) AS fullname FROM tasks t " +
-			"LEFT JOIN projects p ON p.id = t.projectid " +
-			"LEFT JOIN employees e ON e.id = t.employeeid ORDER BY t.id";
+			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname FROM task t " +
+			"LEFT JOIN project p ON p.id = t.projectid " +
+			"LEFT JOIN employee e ON e.id = t.employeeid ORDER BY t.id";
 	private static final String selectTaskById =
-			"SELECT id, name, createdon, estimate, projectid, status, finishedon, employeeid " +
-			"FROM tasks WHERE id = ?";
+			"SELECT id, name, begindate, work, projectid, status, enddate, employeeid " +
+			"FROM task WHERE id = ?";
 	private static final String selectTasksByEmployeeId =
-			"SELECT t.id, t.name, t.createdon, t.estimate, p.shortname, t.status, t.finishedon, CONCAT(e.firstname, ' ', e.lastname) AS fullname FROM tasks t " +
-			"LEFT JOIN projects p ON p.id = t.projectid " +
-			"LEFT JOIN employees e ON e.id = t.employeeid " +
+			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname FROM task t " +
+			"LEFT JOIN project p ON p.id = t.projectid " +
+			"LEFT JOIN employee e ON e.id = t.employeeid " +
 			"WHERE t.employeeid = ? ORDER BY t.id";
 
 	private static TaskDaoImpl instance = new TaskDaoImpl();
@@ -54,8 +55,8 @@ public class TaskDaoImpl implements DaoBase<Task> {
 			PreparedStatement statement = connection.prepareStatement(addTask);
 			statement.setString(1, task.getName());
 			statement.setInt(2, task.getEstimate());
-			statement.setString(3, task.getCreatedOn().toString());
-			statement.setString(4, task.getFinishedOn().toString());
+			statement.setDate(3, Date.valueOf(task.getCreatedOn()));
+			statement.setDate(4, Date.valueOf(task.getFinishedOn()));
 			statement.setInt(5, task.getProjectId());
 			statement.setInt(6, task.getEmployeeId());
 			statement.setString(7, task.getStatus().toString());
@@ -79,8 +80,8 @@ public class TaskDaoImpl implements DaoBase<Task> {
 			PreparedStatement statement = connection.prepareStatement(updateTask);
 			statement.setString(1, task.getName());
 			statement.setInt(2, task.getEstimate());
-			statement.setString(3, task.getCreatedOn().toString());
-			statement.setString(4, task.getFinishedOn().toString());
+			statement.setDate(3, Date.valueOf(task.getCreatedOn()));
+			statement.setDate(4, Date.valueOf(task.getFinishedOn()));
 			statement.setInt(5, task.getProjectId());
 			statement.setInt(6, task.getEmployeeId());
 			statement.setString(7, task.getStatus().toString());

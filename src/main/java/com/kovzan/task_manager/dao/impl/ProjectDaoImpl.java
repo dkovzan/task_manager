@@ -17,20 +17,20 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class ProjectDaoImpl implements DaoBase<Project> {
 
-	private static final String ADD_PROJECT =
-			"INSERT INTO PROJECTS (NAME, SHORTNAME, DESCRIPTION) " +
+	private static final String addProject =
+			"INSERT INTO project (name, shortname, description) " +
 			"VALUES (?, ?, ?)";
-	private static final String UPDATE_PROJECT =
-			"UPDATE PROJECTS SET NAME = ?, SHORTNAME = ?, DESCRIPTION = ? " +
-			"WHERE ID = ?";
-	private static final String REMOVE_PROJECT =
-			"DELETE FROM PROJECTS " +
-			"WHERE ID = ?";
-	private static final String SELECT_ALL_PROJECTS =
-			"SELECT * FROM PROJECTS ORDER BY ID";
-	private static final String SELECT_PROJECT_BY_ID =
-			"SELECT * FROM PROJECTS " +
-			"WHERE ID = ?";
+	private static final String updateProject =
+			"UPDATE project SET name = ?, shortname = ?, description = ? " +
+			"WHERE id = ?";
+	private static final String removeProject =
+			"DELETE FROM project " +
+			"WHERE id = ?";
+	private static final String selectAllProjects =
+			"SELECT id, name, shortname, description FROM project ORDER BY id";
+	private static final String selectProjectById =
+			"SELECT id, name, shortname, description FROM project " +
+			"WHERE id = ?";
 
 	private static ProjectDaoImpl instance = new ProjectDaoImpl();
 
@@ -41,7 +41,7 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 	@Override
 	public int add(Project element) throws DaoException {
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(ADD_PROJECT);
+			PreparedStatement statement = connection.prepareStatement(addProject);
 			statement.setString(1, element.getName());
 			statement.setString(2, element.getShortName());
 			statement.setString(3, element.getDescription());
@@ -62,7 +62,7 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 	@Override
 	public int update(Project element) throws DaoException {
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(UPDATE_PROJECT);
+			PreparedStatement statement = connection.prepareStatement(updateProject);
 			statement.setString(1, element.getName());
 			statement.setString(2, element.getShortName());
 			statement.setString(3, element.getDescription());
@@ -85,7 +85,7 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 	@Override
 	public void remove(Project element) throws DaoException {
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(REMOVE_PROJECT);
+			PreparedStatement statement = connection.prepareStatement(removeProject);
 			statement.setInt(1, element.getId());
 			statement.execute();
 			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
@@ -99,7 +99,7 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 	public List<Project> findAll() throws DaoException {
 		List<Project> projects = null;
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(SELECT_ALL_PROJECTS);
+			PreparedStatement statement = connection.prepareStatement(selectAllProjects);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				projects = DaoCreator.createProjects(resultSet);
@@ -120,7 +120,7 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 	public Project findById(int projectId) throws DaoException {
 		Project project = null;
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(SELECT_PROJECT_BY_ID);
+			PreparedStatement statement = connection.prepareStatement(selectProjectById);
 			statement.setInt(1, projectId);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
