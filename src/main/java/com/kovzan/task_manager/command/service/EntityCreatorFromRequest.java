@@ -21,18 +21,18 @@ public class EntityCreatorFromRequest {
 			taskId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_ID));
 		}
 		String taskName = request.getParameter(ParameterNameConstant.TASK_NAME);
-		Integer taskEstimate = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_ESTIMATE));
-		LocalDate taskCreatedOn = LocalDate.parse(request.getParameter(ParameterNameConstant.TASK_CREATEDON));
-		LocalDate taskFinishedOn = LocalDate.parse(request.getParameter(ParameterNameConstant.TASK_FINISHEDON));
+		Integer taskWork = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_WORK));
+		LocalDate taskBeginDate = LocalDate.parse(request.getParameter(ParameterNameConstant.TASK_BEGINDATE));
+		LocalDate taskEndDate = LocalDate.parse(request.getParameter(ParameterNameConstant.TASK_ENDDATE));
 		Integer taskProjectId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_PROJECT_ID));
 		Integer taskEmployeeId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_EMPLOYEE_ID));
 		TaskStatus taskStatus = TaskStatus.valueOf(request.getParameter(ParameterNameConstant.TASK_STATUS));
 		Task task = new Task();
 		task.setId(taskId);
 		task.setName(taskName);
-		task.setEstimate(taskEstimate);
-		task.setCreatedOn(taskCreatedOn);
-		task.setFinishedOn(taskFinishedOn);
+		task.setWork(taskWork);
+		task.setBeginDate(taskBeginDate);
+		task.setEndDate(taskEndDate);
 		task.setProjectId(taskProjectId);
 		task.setEmployeeId(taskEmployeeId);
 		task.setStatus(taskStatus);

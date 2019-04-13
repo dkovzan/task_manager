@@ -42,9 +42,9 @@ public class DaoCreator {
 				Task task = new Task();
 				task.setId(resultSet.getInt(1));
 				task.setName(resultSet.getString(2));
-				task.setCreatedOn(resultSet.getDate(3).toLocalDate());
-				task.setFinishedOn(resultSet.getDate(7).toLocalDate());
-				task.setEstimate(resultSet.getInt(4));
+				task.setBeginDate(resultSet.getDate(3).toLocalDate());
+				task.setEndDate(resultSet.getDate(7).toLocalDate());
+				task.setWork(resultSet.getInt(4));
 				task.setProjectId(resultSet.getInt(5));
 				task.setStatus(TaskStatus.valueOf(resultSet.getString(6)));
 				task.setEmployeeId(resultSet.getInt(8));
@@ -65,9 +65,9 @@ public class DaoCreator {
 				Task task = new Task();
 				task.setId(resultSet.getInt(1));
 				task.setName(resultSet.getString(2));
-				task.setCreatedOn(resultSet.getDate(3).toLocalDate());
-				task.setFinishedOn(resultSet.getDate(7).toLocalDate());
-				task.setEstimate(resultSet.getInt(4));
+				task.setBeginDate(resultSet.getDate(3).toLocalDate());
+				task.setEndDate(resultSet.getDate(7).toLocalDate());
+				task.setWork(resultSet.getInt(4));
 				task.setProjectShortName(resultSet.getString(5));
 				task.setStatus(TaskStatus.valueOf(resultSet.getString(6)));
 				task.setEmployeeFullName(resultSet.getString(8));

@@ -28,8 +28,8 @@
 							<th>Id</th>
 							<th>Project</th>
 							<th>Name</th>
-							<th>Start Date</th>
-							<th>Finish Date</th>
+							<th>Begin Date</th>
+							<th>End Date</th>
 							<th>Assignee</th>
 							<th colspan="2">Actions</th>
 						</tr>
@@ -42,8 +42,8 @@
 								<td>${task.id}</td>
 								<td>${task.projectShortName}</td>
 								<td>${task.name}</td>
-								<td>${task.createdOn}</td>
-								<td>${task.finishedOn}</td>
+								<td>${task.beginDate}</td>
+								<td>${task.endDate}</td>
 								<td>${task.employeeFullName}</td>
 								<td>
 									<button

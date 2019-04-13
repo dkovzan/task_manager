@@ -62,17 +62,17 @@
 					style="width: 30%">
 				</label><br> <label>Estimate: <input
 					placeholder="Write estimate" required type="text"
-					name="${ParameterNameConstant.TASK_ESTIMATE}"
-					value="${printed_edit_task.estimate}"
+					name="${ParameterNameConstant.TASK_WORK}"
+					value="${printed_edit_task.work}"
 					class="w3-input w3-animate-input w3-border w3-round-large"
 					style="width: 30%">
 				</label><br> <label>Start Date: <input required type="date"
-					name="${ParameterNameConstant.TASK_CREATEDON}"
-					value="${printed_edit_task.createdOn}"
+					name="${ParameterNameConstant.TASK_BEGINDATE}"
+					value="${printed_edit_task.beginDate}"
 					class="w3-input w3-border w3-round-large" style="width: 30%">
 				</label><br> <label>Finish Date: <input required type="date"
-					name="${ParameterNameConstant.TASK_FINISHEDON}"
-					value="${printed_edit_task.finishedOn}"
+					name="${ParameterNameConstant.TASK_ENDDATE}"
+					value="${printed_edit_task.endDate}"
 					class="w3-input w3-border w3-round-large" style="width: 30%">
 				</label><br> <label>Assignee:</label><br> <select
 					class="w3-select w3-margin-bottom"

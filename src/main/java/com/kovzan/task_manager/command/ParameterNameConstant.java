@@ -12,9 +12,9 @@ public class ParameterNameConstant {
 
 	public static final String TASK_ID = "task_id";
 	public static final String TASK_NAME = "task_name";
-	public static final String TASK_ESTIMATE = "task_estimate";
-	public static final String TASK_CREATEDON = "task_createdOn";
-	public static final String TASK_FINISHEDON = "task_finishedOn";
+	public static final String TASK_WORK = "task_work";
+	public static final String TASK_BEGINDATE = "task_beginDate";
+	public static final String TASK_ENDDATE = "task_endDate";
 	public static final String TASK_PROJECT_ID = "task_project_id";
 	public static final String TASK_EMPLOYEE_ID = "task_employee_id";
 	public static final String TASK_STATUS = "task_status";

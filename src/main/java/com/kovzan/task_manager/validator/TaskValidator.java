@@ -22,21 +22,21 @@ public class TaskValidator {
 	}
 
 	public static boolean validateTask(Task task) {
-		return (validateTaskDates(task.getCreatedOn(), task.getFinishedOn())
-				&& validateTaskName(task.getName()) && validateTaskEstimate(task.getEstimate()));
+		return (validateTaskDates(task.getBeginDate(), task.getEndDate())
+				&& validateTaskName(task.getName()) && validateTaskEstimate(task.getWork()));
 	}
 
 	public static Task getTaskWithValidFields(Task task) {
 		Task taskWithValidFields = task;
-		if (!validateTaskDates(task.getCreatedOn(), task.getFinishedOn())) {
-			taskWithValidFields.setCreatedOn(null);
-			taskWithValidFields.setFinishedOn(null);
+		if (!validateTaskDates(task.getBeginDate(), task.getEndDate())) {
+			taskWithValidFields.setBeginDate(null);
+			taskWithValidFields.setEndDate(null);
 		}
 		if (!validateTaskName(task.getName())) {
 			taskWithValidFields.setName(null);
 		}
-		if (!validateTaskEstimate(task.getEstimate())) {
-			taskWithValidFields.setEstimate(null);
+		if (!validateTaskEstimate(task.getWork())) {
+			taskWithValidFields.setWork(null);
 		}
 		return taskWithValidFields;
 	}

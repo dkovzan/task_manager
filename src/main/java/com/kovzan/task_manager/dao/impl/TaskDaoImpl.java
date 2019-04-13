@@ -54,9 +54,9 @@ public class TaskDaoImpl implements DaoBase<Task> {
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(addTask);
 			statement.setString(1, task.getName());
-			statement.setInt(2, task.getEstimate());
-			statement.setDate(3, Date.valueOf(task.getCreatedOn()));
-			statement.setDate(4, Date.valueOf(task.getFinishedOn()));
+			statement.setInt(2, task.getWork());
+			statement.setDate(3, Date.valueOf(task.getBeginDate()));
+			statement.setDate(4, Date.valueOf(task.getEndDate()));
 			statement.setInt(5, task.getProjectId());
 			statement.setInt(6, task.getEmployeeId());
 			statement.setString(7, task.getStatus().toString());
@@ -79,9 +79,9 @@ public class TaskDaoImpl implements DaoBase<Task> {
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(updateTask);
 			statement.setString(1, task.getName());
-			statement.setInt(2, task.getEstimate());
-			statement.setDate(3, Date.valueOf(task.getCreatedOn()));
-			statement.setDate(4, Date.valueOf(task.getFinishedOn()));
+			statement.setInt(2, task.getWork());
+			statement.setDate(3, Date.valueOf(task.getBeginDate()));
+			statement.setDate(4, Date.valueOf(task.getEndDate()));
 			statement.setInt(5, task.getProjectId());
 			statement.setInt(6, task.getEmployeeId());
 			statement.setString(7, task.getStatus().toString());
