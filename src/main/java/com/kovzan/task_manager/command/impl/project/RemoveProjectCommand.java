@@ -17,19 +17,14 @@ import static com.kovzan.task_manager.logger.Log.logger;
 public class RemoveProjectCommand implements Command {
 
 	@Override
-	public String execute(HttpServletRequest request) {
+	public String execute(HttpServletRequest request) throws SQLException {
 
-		try {
-			int projectId = Integer.parseInt(request.getParameter(ParameterNameConstant.PROJECT_ID));
-			Project project = new Project();
-			project.setId(projectId);
-			ProjectService.removeProject(project);
-			List<Project> projects = ProjectService.getInstance().findAllProjects();
-			request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-			return PageConstant.ERROR_PAGE;
-		}
+		int projectId = Integer.parseInt(request.getParameter(ParameterNameConstant.PROJECT_ID));
+		Project project = new Project();
+		project.setId(projectId);
+		ProjectService.removeProject(project);
+		List<Project> projects = ProjectService.findAllProjects();
+		request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.PROJECTS_PAGE;
 	}

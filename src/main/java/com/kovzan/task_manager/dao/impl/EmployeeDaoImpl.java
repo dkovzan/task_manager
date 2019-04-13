@@ -3,7 +3,6 @@ package com.kovzan.task_manager.dao.impl;
 import com.kovzan.task_manager.connection.DBConnection;
 import com.kovzan.task_manager.dao.DaoBase;
 import com.kovzan.task_manager.entity.Employee;
-import com.kovzan.task_manager.dao.DaoException;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.*;
@@ -26,7 +25,7 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 			"WHERE id = ?";
 	private static final String selectAllEmployees =
 			"SELECT id, lastname, firstname, middlename, position FROM employee ORDER BY id";
-	private static final String SELECT_EMPLOYEE_BY_ID =
+	private static final String selectEmployeeById =
 			"SELECT id, lastname, firstname, middlename, position FROM employee " +
 			"WHERE id = ?";
 
@@ -37,7 +36,7 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 	}
 
 	@Override
-	public int add(Employee element) throws DaoException {
+	public int add(Employee element) throws SQLException {
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(addEmployee);
 			statement.setString(1, element.getLastName());
@@ -52,14 +51,12 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 				return result;
 			}
-		} catch (SQLException e) {
-			throw new DaoException(e);
 		}
 		return -1;
 	}
 
 	@Override
-	public int update(Employee element) throws DaoException {
+	public int update(Employee element) throws SQLException {
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(updateEmployee);
 			statement.setString(1, element.getLastName());
@@ -76,25 +73,21 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 				return result;
 			}
 
-		} catch (SQLException e) {
-			throw new DaoException(e);
 		}
 		return -1;
 	}
 
 	@Override
-	public void remove(Employee element) throws DaoException {
+	public void remove(Employee element) throws SQLException {
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(removeEmployee);
 			statement.setInt(1, element.getId());
 			statement.execute();
-		} catch (SQLException e) {
-			throw new DaoException(e);
 		}
 	}
 
 	@Override
-	public List<Employee> findAll() throws DaoException {
+	public List<Employee> findAll() throws SQLException {
 		List<Employee> employees = null;
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(selectAllEmployees);
@@ -107,17 +100,14 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 				return employees;
 			}
 		}
-		catch (SQLException e) {
-			throw new DaoException(e);
-		}
 		return employees;
 	}
 
 	@Override
-	public Employee findById(int employeeId) throws DaoException {
+	public Employee findById(int employeeId) throws SQLException {
 		Employee employee = null;
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(SELECT_EMPLOYEE_BY_ID);
+			PreparedStatement statement = connection.prepareStatement(selectEmployeeById);
 			statement.setInt(1, employeeId);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
@@ -126,9 +116,6 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 			} else {
 				return employee;
 			}
-		}
-		catch (SQLException e) {
-			throw new DaoException(e);
 		}
 		return employee;
 	}

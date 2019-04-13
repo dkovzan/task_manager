@@ -3,7 +3,6 @@ package com.kovzan.task_manager.dao.impl;
 import com.kovzan.task_manager.connection.DBConnection;
 import com.kovzan.task_manager.dao.DaoBase;
 import com.kovzan.task_manager.entity.Task;
-import com.kovzan.task_manager.dao.DaoException;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.Connection;
@@ -50,7 +49,7 @@ public class TaskDaoImpl implements DaoBase<Task> {
 	}
 
 	@Override
-	public int add(Task task) throws DaoException {
+	public int add(Task task) throws SQLException {
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(addTask);
 			statement.setString(1, task.getName());
@@ -68,14 +67,12 @@ public class TaskDaoImpl implements DaoBase<Task> {
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 				return result;
 			}
-			} catch (SQLException e) {
-				throw new DaoException(e);
-			}
+		}
 		return -1;
 	}
 
 	@Override
-	public int update(Task task) throws DaoException {
+	public int update(Task task) throws SQLException {
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(updateTask);
 			statement.setString(1, task.getName());
@@ -94,26 +91,22 @@ public class TaskDaoImpl implements DaoBase<Task> {
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 				return result;
 			}
-		} catch (SQLException e) {
-			throw new DaoException(e);
 		}
 		return -1;
 	}
 
 	@Override
-	public void remove(Task task) throws DaoException {
+	public void remove(Task task) throws SQLException {
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(removeTask);
 			statement.setInt(1, task.getId());
 			statement.execute();
 			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-		} catch (SQLException e) {
-			throw new DaoException(e);
 		}
 	}
 
 	@Override
-	public List<Task> findAll() throws DaoException {
+	public List<Task> findAll() throws SQLException {
 		List<Task> tasks = new ArrayList<>();
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(selectAllTasksWithRefs);
@@ -122,14 +115,12 @@ public class TaskDaoImpl implements DaoBase<Task> {
 				tasks = DaoCreator.createTasksWithRefs(resultSet);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 			}
-		} catch (SQLException e) {
-			throw new DaoException(e);
 		}
 		return tasks;
 	}
 
 	@Override
-	public Task findById(int taskId) throws DaoException {
+	public Task findById(int taskId) throws SQLException {
 		Task task = null;
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(selectTaskById);
@@ -139,17 +130,15 @@ public class TaskDaoImpl implements DaoBase<Task> {
 				task = DaoCreator.createTasks(resultSet).get(0);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 			}
-		} catch (SQLException e) {
-			throw new DaoException(e);
 		}
 		return task;
 	}
 
-	public List<Task> findTasksByEmployeeId(int employeeId) throws DaoException {
+	public List<Task> findTasksByEmployeeId(int employeeId) throws SQLException {
 		return findTasksBy(employeeId, selectTasksByEmployeeId);
 	}
 
-	public List<Task> findTasksBy(Integer id, String selectStatement) throws DaoException {
+	public List<Task> findTasksBy(Integer id, String selectStatement) throws SQLException {
 		List<Task> tasks = new ArrayList<>();
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(selectStatement);
@@ -159,8 +148,6 @@ public class TaskDaoImpl implements DaoBase<Task> {
 				tasks = DaoCreator.createTasksWithRefs(resultSet);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 			}
-		} catch (SQLException e) {
-			throw new DaoException(e);
 		}
 		return tasks;
 	}

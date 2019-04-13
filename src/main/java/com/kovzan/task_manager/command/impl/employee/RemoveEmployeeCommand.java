@@ -3,7 +3,6 @@ package com.kovzan.task_manager.command.impl.employee;
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.ParameterNameConstant;
-import com.kovzan.task_manager.dao.DaoException;
 import com.kovzan.task_manager.dao.impl.DaoCreator;
 import com.kovzan.task_manager.dao.impl.TaskDaoImpl;
 import com.kovzan.task_manager.entity.Employee;
@@ -22,33 +21,22 @@ public class RemoveEmployeeCommand implements Command {
 	private static final String EMPLOYEE_CANNOT_BE_DELETED = "Employee cannot be deleted while is being assigned to task";
 
 	@Override
-	public String execute(HttpServletRequest request) {
-		try {
-			int employeeId = Integer.parseInt(request.getParameter(ParameterNameConstant.EMPLOYEE_ID));
-			Employee employee = new Employee();
-			employee.setId(employeeId);
-			if (canEmployeeBeDeleted(employee.getId())) {
-				EmployeeService.getInstance().removeEmployee(employee);
-			} else {
-				request.setAttribute(ParameterNameConstant.ERROR, EMPLOYEE_CANNOT_BE_DELETED);
-			}
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-			return PageConstant.ERROR_PAGE;
+	public String execute(HttpServletRequest request) throws SQLException {
+		int employeeId = Integer.parseInt(request.getParameter(ParameterNameConstant.EMPLOYEE_ID));
+		Employee employee = new Employee();
+		employee.setId(employeeId);
+		if (canEmployeeBeDeleted(employee.getId())) {
+			EmployeeService.removeEmployee(employee);
+		} else {
+			request.setAttribute(ParameterNameConstant.ERROR, EMPLOYEE_CANNOT_BE_DELETED);
 		}
-		List<Employee> employees;
-		try {
-			employees = EmployeeService.getInstance().findAllEmployees();
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-			return PageConstant.ERROR_PAGE;
-		}
+		List<Employee> employees = EmployeeService.findAllEmployees();
 		request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.EMPLOYEES_PAGE;
 	}
 
-	public static boolean canEmployeeBeDeleted(int id) throws DaoException {
+	public static boolean canEmployeeBeDeleted(int id) throws SQLException {
 		TaskDaoImpl taskDao = new TaskDaoImpl();
 		return taskDao.findTasksByEmployeeId(id).isEmpty();
 	}

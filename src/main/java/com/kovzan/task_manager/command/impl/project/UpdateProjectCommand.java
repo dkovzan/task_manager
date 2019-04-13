@@ -18,18 +18,12 @@ import static com.kovzan.task_manager.logger.Log.logger;
 public class UpdateProjectCommand implements Command {
 
 	@Override
-	public String execute(HttpServletRequest request) {
+	public String execute(HttpServletRequest request) throws SQLException {
 
-		Project project;
-		try {
-			project = EntityCreatorFromRequest.createProjectFromRequest(request);
-			ProjectService.getInstance().updateProject(project);
-			List<Project> projects = ProjectService.getInstance().findAllProjects();
-			request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-			return PageConstant.ERROR_PAGE;
-		}
+		Project project = EntityCreatorFromRequest.createProjectFromRequest(request);
+		ProjectService.updateProject(project);
+		List<Project> projects = ProjectService.findAllProjects();
+		request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.PROJECTS_PAGE;
 	}

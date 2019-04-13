@@ -18,17 +18,12 @@ import static com.kovzan.task_manager.logger.Log.logger;
 public class AddEmployeeCommand implements Command {
 
 	@Override
-	public String execute(HttpServletRequest request) {
+	public String execute(HttpServletRequest request) throws SQLException{
 
 		Employee employee = EntityCreatorFromRequest.createEmployeeFromRequest(request);
-		try {
-			EmployeeService.addEmployee(employee);
-			List<Employee> employees = EmployeeService.getInstance().findAllEmployees();
-			request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-			return PageConstant.ERROR_PAGE;
-		}
+		EmployeeService.addEmployee(employee);
+		List<Employee> employees = EmployeeService.findAllEmployees();
+		request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.EMPLOYEES_PAGE;
 	}

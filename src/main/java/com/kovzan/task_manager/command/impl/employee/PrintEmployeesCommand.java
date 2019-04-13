@@ -17,14 +17,8 @@ import static com.kovzan.task_manager.logger.Log.logger;
 public class PrintEmployeesCommand implements Command{
 
 	@Override
-	public String execute(HttpServletRequest request) {
-		List<Employee> employees;
-		try {
-			employees = EmployeeService.getInstance().findAllEmployees();
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-			return PageConstant.ERROR_PAGE;
-		}
+	public String execute(HttpServletRequest request) throws SQLException {
+		List<Employee> employees = EmployeeService.findAllEmployees();
 		request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.EMPLOYEES_PAGE;

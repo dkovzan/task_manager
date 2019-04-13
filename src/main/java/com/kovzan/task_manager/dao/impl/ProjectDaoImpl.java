@@ -3,7 +3,6 @@ package com.kovzan.task_manager.dao.impl;
 import com.kovzan.task_manager.connection.DBConnection;
 import com.kovzan.task_manager.dao.DaoBase;
 import com.kovzan.task_manager.entity.Project;
-import com.kovzan.task_manager.dao.DaoException;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.Connection;
@@ -39,7 +38,7 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 	}
 
 	@Override
-	public int add(Project element) throws DaoException {
+	public int add(Project element) throws SQLException {
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(addProject);
 			statement.setString(1, element.getName());
@@ -53,14 +52,12 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 				return result;
 			}
-		} catch (SQLException e) {
-			throw new DaoException(e);
 		}
 		return -1;
 	}
 
 	@Override
-	public int update(Project element) throws DaoException {
+	public int update(Project element) throws SQLException {
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(updateProject);
 			statement.setString(1, element.getName());
@@ -76,27 +73,21 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 				return result;
 			}
 		}
-		catch (SQLException e) {
-			throw new DaoException(e);
-		}
 		return -1;
 	}
 
 	@Override
-	public void remove(Project element) throws DaoException {
+	public void remove(Project element) throws SQLException {
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(removeProject);
 			statement.setInt(1, element.getId());
 			statement.execute();
 			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		}
-		catch (SQLException e) {
-			throw new DaoException(e);
-		}
 	}
 
 	@Override
-	public List<Project> findAll() throws DaoException {
+	public List<Project> findAll() throws SQLException {
 		List<Project> projects = null;
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(selectAllProjects);
@@ -110,14 +101,11 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 			}
 
 		}
-		catch (SQLException e) {
-			throw new DaoException(e);
-		}
 		return projects;
 	}
 
 	@Override
-	public Project findById(int projectId) throws DaoException {
+	public Project findById(int projectId) throws SQLException {
 		Project project = null;
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(selectProjectById);
@@ -130,9 +118,6 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 			else {
 				return project;
 			}
-		}
-		catch (SQLException e) {
-			throw new DaoException(e);
 		}
 		return project;
 	}

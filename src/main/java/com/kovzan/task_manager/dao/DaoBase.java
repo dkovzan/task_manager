@@ -2,13 +2,14 @@ package com.kovzan.task_manager.dao;
 
 import com.kovzan.task_manager.entity.Entity;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface DaoBase<T extends Entity> {
-	int add(T element) throws DaoException;
-	void remove(T element) throws DaoException;
-	int update(T element) throws DaoException;
-	List<T> findAll() throws DaoException;
-	T findById(int id) throws DaoException;
+	int add(T element) throws SQLException;
+	void remove(T element) throws SQLException;
+	int update(T element) throws SQLException;
+	List<T> findAll() throws SQLException;
+	T findById(int id) throws SQLException;
 
 }

@@ -16,22 +16,16 @@ import static com.kovzan.task_manager.logger.Log.logger;
 public class PrintEditProjectCommand implements Command {
 
 	@Override
-	public String execute(HttpServletRequest request) {
+	public String execute(HttpServletRequest request) throws SQLException {
 
 		int isAddForm = Integer.parseInt(request.getParameter(ParameterNameConstant.IS_ADD_FORM));
 		if (isAddForm == 1) {
 			request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 1);
 		} else {
-			Project project;
-			try {
-				int projectId = Integer.parseInt(request.getParameter(ParameterNameConstant.PROJECT_ID));
-				project = ProjectService.getInstance().findProjectById(projectId);
-				request.setAttribute(ParameterNameConstant.PRINTED_EDIT_PROJECT, project);
-				request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 0);
-			} catch (SQLException e) {
-				logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
-				return PageConstant.ERROR_PAGE;
-			}
+			int projectId = Integer.parseInt(request.getParameter(ParameterNameConstant.PROJECT_ID));
+			Project project = ProjectService.findProjectById(projectId);
+			request.setAttribute(ParameterNameConstant.PRINTED_EDIT_PROJECT, project);
+			request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 0);
 		}
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.EDIT_PROJECT_PAGE;
