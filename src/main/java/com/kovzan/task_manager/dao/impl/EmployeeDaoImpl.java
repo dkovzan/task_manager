@@ -96,9 +96,6 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 				employees = DaoCreator.createEmployees(resultSet);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 			}
-			else {
-				return employees;
-			}
 		}
 		return employees;
 	}
@@ -113,8 +110,6 @@ public class EmployeeDaoImpl implements DaoBase<Employee> {
 			if (resultSet.next()) {
 				employee = DaoCreator.createEmployees(resultSet).get(0);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-			} else {
-				return employee;
 			}
 		}
 		return employee;

@@ -18,6 +18,7 @@ public class PrintEmployeesCommand implements Command{
 
 	@Override
 	public String execute(HttpServletRequest request) throws SQLException {
+		
 		List<Employee> employees = EmployeeService.findAllEmployees();
 		request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);

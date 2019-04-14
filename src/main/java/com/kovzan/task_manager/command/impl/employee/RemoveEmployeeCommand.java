@@ -22,6 +22,7 @@ public class RemoveEmployeeCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request) throws SQLException {
+		
 		int employeeId = Integer.parseInt(request.getParameter(ParameterNameConstant.EMPLOYEE_ID));
 		Employee employee = new Employee();
 		employee.setId(employeeId);

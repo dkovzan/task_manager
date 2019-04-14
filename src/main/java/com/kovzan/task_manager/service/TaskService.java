@@ -48,7 +48,7 @@ public class TaskService {
 	}
 
 	public static boolean validateTask(Task task) {
-		return TaskValidator.validateTask(task);
+		return TaskValidator.isTaskValid(task);
 	}
 
 	public static Task getTaskWithValidFields(Task task) {

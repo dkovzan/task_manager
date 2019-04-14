@@ -3,6 +3,7 @@ package com.kovzan.task_manager.service;
 import com.kovzan.task_manager.dao.impl.ProjectDaoImpl;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.logger.LogConstant;
+import com.kovzan.task_manager.validator.ProjectValidator;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -45,6 +46,18 @@ public class ProjectService {
 
 	public static void removeProject(Project project) throws SQLException {
 		ProjectDaoImpl.getInstance().remove(project);
+	}
+	
+	public static boolean isProjectValid(Project project) throws SQLException {
+		return ProjectValidator.isProjectValid(project);
+	}
+	
+	public static Project getProjectWithValidFields(Project project) throws SQLException {
+		return ProjectValidator.getProjectWithValidFields(project);
+	}
+	
+	public static boolean isProjectShortNameUnique(Project project) throws SQLException {
+		return ProjectValidator.isProjectShortNameUnique(project);
 	}
 
 }

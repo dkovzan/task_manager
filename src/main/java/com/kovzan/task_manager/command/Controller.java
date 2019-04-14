@@ -36,9 +36,11 @@ public class Controller extends HttpServlet {
 		try {
 			page = commandType.execute(req);
 		} catch (SQLException e) {
+			req.setAttribute(ParameterNameConstant.ERROR, e);
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 			page = PageConstant.ERROR_PAGE;
 		} catch (NumberFormatException e) {
+			req.setAttribute(ParameterNameConstant.ERROR, e);
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 			page = PageConstant.ERROR_PAGE;
 		}

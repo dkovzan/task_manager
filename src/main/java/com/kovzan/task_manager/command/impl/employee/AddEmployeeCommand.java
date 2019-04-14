@@ -18,7 +18,7 @@ import static com.kovzan.task_manager.logger.Log.logger;
 public class AddEmployeeCommand implements Command {
 
 	@Override
-	public String execute(HttpServletRequest request) throws SQLException{
+	public String execute(HttpServletRequest request) throws SQLException {
 
 		Employee employee = EntityCreatorFromRequest.createEmployeeFromRequest(request);
 		EmployeeService.addEmployee(employee);

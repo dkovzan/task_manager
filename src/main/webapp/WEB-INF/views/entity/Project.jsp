@@ -56,6 +56,20 @@
 						class="w3-input w3-animate-input w3-border w3-round-large"
 						style="width: 30%; resize: none">${printed_edit_project.description}</textarea>
 				</label><br>
+				
+				<c:choose>
+					<c:when
+						test="${requestScope.get(ParameterNameConstant.ERROR) != null}">
+						<div
+							class="w3-panel w3-red w3-display-container w3-card-4 w3-round">
+							<span onclick="this.parentElement.style.display='none'"
+								class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border w3-border-red w3-hover-border-grey">X
+							</span>
+							<h5>${requestScope.get(ParameterNameConstant.ERROR)}</h5>
+						</div>
+					</c:when>
+				</c:choose>
+				
 				<button type="submit"
 					class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
 				<button

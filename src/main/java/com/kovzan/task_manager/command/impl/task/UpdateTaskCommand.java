@@ -22,6 +22,8 @@ import java.util.logging.Level;
 import static com.kovzan.task_manager.logger.Log.logger;
 
 public class UpdateTaskCommand implements Command {
+	
+	private static final String INCORRECT_DATA = "Incorrect data is entered.";
 
 	@Override
 	public String execute(HttpServletRequest request) throws SQLException {
@@ -43,7 +45,7 @@ public class UpdateTaskCommand implements Command {
 			request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
 			request.setAttribute(ParameterNameConstant.PRINTED_STATUSES, statuses);
 
-			request.setAttribute(ParameterNameConstant.ERROR, "Incorrect data are entered.");
+			request.setAttribute(ParameterNameConstant.ERROR, INCORRECT_DATA);
 			request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 0);
 			return PageConstant.EDIT_TASK_PAGE;
 		}

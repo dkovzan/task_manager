@@ -96,10 +96,6 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 				projects = DaoCreator.createProjects(resultSet);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 			}
-			else {
-				return projects;
-			}
-
 		}
 		return projects;
 	}
@@ -114,9 +110,6 @@ public class ProjectDaoImpl implements DaoBase<Project> {
 			if (resultSet.next()) {
 				project = DaoCreator.createProjects(resultSet).get(0);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-			}
-			else {
-				return project;
 			}
 		}
 		return project;
