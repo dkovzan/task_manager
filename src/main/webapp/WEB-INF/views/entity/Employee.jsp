@@ -2,6 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
 <%@ page import="com.kovzan.task_manager.command.ParameterNameConstant"%>
+<%@ page import="com.kovzan.task_manager.command.ValidationException" %>
+<%@ page import="java.lang.String" %>
 <html>
 <head>
 <title>Employee</title>
@@ -15,6 +17,15 @@
 		<div class="w3-card-4">
 			<form action="controller" method="post"
 				class="w3-selection w3-light-grey w3-padding">
+				<c:choose>
+					<c:when test="${requestScope.get(ParameterNameConstant.INCORRECT_DATA) != null}">
+						<c:set var="error" value="${requestScope.get(ParameterNameConstant.INCORRECT_DATA)}"></c:set>
+						<c:set var="employee" value="${error.getEntity()}"></c:set>
+					</c:when>
+					<c:otherwise>
+						<c:set var="employee" value="${requestScope.get(ParameterNameConstant.PRINTED_EDIT_EMPLOYEE)}"></c:set>
+					</c:otherwise>
+				</c:choose>
 				<c:choose>
 					<c:when
 						test="${requestScope.get(ParameterNameConstant.IS_ADD_FORM) == 1}">
@@ -32,38 +43,55 @@
 						</div>
 						<label>ID: <input readonly
 							name="${ParameterNameConstant.EMPLOYEE_ID}"
-							value="${printed_edit_employee.id}"
+							value="${employee.id}"
 							class="w3-input w3-animate-input w3-border w3-round-large"
 							style="width: 30%">
 						</label>
 						<br>
 					</c:otherwise>
 				</c:choose>
-				<label>First name: <input placeholder="Write first name"
-					required type="text"
+				<label>First name: 
+				<input placeholder="Write first name"
+					type="text"
 					name="${ParameterNameConstant.EMPLOYEE_FIRSTNAME}"
-					value="${printed_edit_employee.firstName}"
+					value="${employee.firstName}"
 					class="w3-input w3-animate-input w3-border w3-round-large"
 					style="width: 30%">
-				</label><br> <label>Last name: <input
-					placeholder="Write last name" required type="text"
+				</label>
+				<c:if test="${error.getInvalidFields().containsKey(ParameterNameConstant.EMPLOYEE_FIRSTNAME)}">
+					<span style="color:red"><c:out value="${error.getMessage()}"></c:out></span>
+				</c:if>
+				<br> <label>Last name: <input
+					placeholder="Write last name" type="text"
 					name="${ParameterNameConstant.EMPLOYEE_LASTNAME}"
-					value="${printed_edit_employee.lastName}"
+					value="${employee.lastName}"
 					class="w3-input w3-animate-input w3-border w3-round-large"
 					style="width: 30%">
-				</label><br> <label>Middle name: <input
+				</label>
+				<c:if test="${error.getInvalidFields().containsKey(ParameterNameConstant.EMPLOYEE_LASTNAME)}">
+					<span style="color:red"><c:out value="${error.getMessage()}"></c:out></span>
+				</c:if>
+				<br> <label>Middle name: <input
 					placeholder="Write middle name (optional)" type="text"
 					name="${ParameterNameConstant.EMPLOYEE_MIDDLENAME}"
-					value="${printed_edit_employee.middleName}"
+					value="${employee.middleName}"
 					class="w3-input w3-animate-input w3-border w3-round-large"
 					style="width: 30%">
-				</label><br> <label>Position: <input
-					placeholder="Write position" required type="text"
+				</label>
+				<c:if test="${error.getInvalidFields().containsKey(ParameterNameConstant.EMPLOYEE_MIDDLENAME)}">
+					<span style="color:red"><c:out value="${error.getMessage()}"></c:out></span>
+				</c:if>
+				<br> <label>Position: <input
+					placeholder="Write position" type="text"
 					name="${ParameterNameConstant.EMPLOYEE_POSITION}"
-					value="${printed_edit_employee.position}"
+					value="${employee.position}"
 					class="w3-input w3-animate-input w3-border w3-round-large"
 					style="width: 30%">
-				</label><br>
+				</label>
+				<c:if test="${error.getInvalidFields().containsKey(ParameterNameConstant.EMPLOYEE_POSITION)}">
+					<span style="color:red"><c:out value="${error.getMessage()}"></c:out></span>
+				</c:if>
+				<br>
 				<button type="submit"
 					class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
 				<button

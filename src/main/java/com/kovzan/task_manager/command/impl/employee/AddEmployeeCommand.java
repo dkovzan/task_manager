@@ -3,7 +3,7 @@ package com.kovzan.task_manager.command.impl.employee;
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.ParameterNameConstant;
-import com.kovzan.task_manager.command.service.EntityCreatorFromRequest;
+import com.kovzan.task_manager.command.ValidationException;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.EmployeeService;
@@ -20,7 +20,14 @@ public class AddEmployeeCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request) throws SQLException {
 
-		Employee employee = EntityCreatorFromRequest.createEmployeeFromRequest(request);
+		Employee employee = new Employee();
+		try {
+			employee = EmployeeUtils.buildEmployee(request);
+		} catch (ValidationException e) {
+			request.setAttribute(ParameterNameConstant.INCORRECT_DATA, e);
+			request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 1);
+			return PageConstant.EDIT_EMPLOYEE_PAGE;
+		}
 		EmployeeService.addEmployee(employee);
 		List<Employee> employees = EmployeeService.findAllEmployees();
 		request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);

@@ -2,6 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
 <%@ page import="com.kovzan.task_manager.command.ParameterNameConstant"%>
+<%@ page import="com.kovzan.task_manager.command.ValidationException" %>
+<%@ page import="java.lang.String" %>
 <html>
 <head>
 <title>Task</title>
@@ -15,6 +17,15 @@
 		<div class="w3-card-4">
 			<form action="controller" method="post"
 				class="w3-selection w3-light-grey w3-padding">
+				<c:choose>
+					<c:when test="${requestScope.get(ParameterNameConstant.INCORRECT_DATA) != null}">
+						<c:set var="error" value="${requestScope.get(ParameterNameConstant.INCORRECT_DATA)}"></c:set>
+						<c:set var="task" value="${error.getEntity()}"></c:set>
+					</c:when>
+					<c:otherwise>
+						<c:set var="task" value="${requestScope.get(ParameterNameConstant.PRINTED_EDIT_TASK)}"></c:set>
+					</c:otherwise>
+				</c:choose>
 				<c:choose>
 					<c:when
 						test="${requestScope.get(ParameterNameConstant.IS_ADD_FORM) == 1}">
@@ -32,7 +43,7 @@
 						</div>
 						<label>ID: <input readonly
 							name="${ParameterNameConstant.TASK_ID}"
-							value="${printed_edit_task.id}"
+							value="${task.id}"
 							class="w3-input w3-animate-input w3-border w3-round-large"
 							style="width: 30%">
 						</label>
@@ -45,34 +56,46 @@
 					name="${ParameterNameConstant.TASK_PROJECT_ID}" style="width: 30%">
 					<c:forEach
 						items="${requestScope.get(ParameterNameConstant.PRINTED_PROJECTS)}"
-						var="project">
+						var="projectInDropdown">
 						<c:choose>
-							<c:when test="${printed_edit_task.projectId == project.id}">
-								<option selected value="${project.id}">${project.shortName}</option>
+							<c:when test="${task.projectId == projectInDropdown.id}">
+								<option selected value="${projectInDropdown.id}">${projectInDropdown.shortName}</option>
 							</c:when>
 							<c:otherwise>
-								<option value="${project.id}">${project.shortName}</option>
+								<option value="${projectInDropdown.id}">${projectInDropdown.shortName}</option>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
 				</select><br> <label>Name: <input placeholder="Write name"
-					required type="text" name="${ParameterNameConstant.TASK_NAME}"
-					value="${printed_edit_task.name}"
+					type="text" name="${ParameterNameConstant.TASK_NAME}"
+					value="${task.name}"
 					class="w3-input w3-animate-input w3-border w3-round-large"
 					style="width: 30%">
-				</label><br> <label>Estimate: <input
-					placeholder="Write estimate" required type="text"
+				</label>
+				<c:if test="${error.getInvalidFields().containsKey(ParameterNameConstant.TASK_NAME)}">
+					<span style="color:red"><c:out value="${error.getMessage()}"></c:out></span>
+				</c:if>
+				<br> <label>Estimate: <input
+					placeholder="Write estimate" type="text"
 					name="${ParameterNameConstant.TASK_WORK}"
-					value="${printed_edit_task.work}"
+					value="${task.work}"
 					class="w3-input w3-animate-input w3-border w3-round-large"
 					style="width: 30%">
-				</label><br> <label>Start Date: <input required type="date"
+				</label>
+				<c:if test="${error.getInvalidFields().containsKey(ParameterNameConstant.TASK_WORK)}">
+					<span style="color:red"><c:out value="${error.getMessage()}"></c:out></span>
+				</c:if>
+				<br> <label>Start Date: <input type="date"
 					name="${ParameterNameConstant.TASK_BEGINDATE}"
-					value="${printed_edit_task.beginDate}"
+					value="${task.beginDate}"
 					class="w3-input w3-border w3-round-large" style="width: 30%">
-				</label><br> <label>Finish Date: <input required type="date"
+				</label>
+				<c:if test="${error.getInvalidFields().containsKey(ParameterNameConstant.TASK_BEGINDATE)}">
+					<span style="color:red"><c:out value="${error.getMessage()}"></c:out></span>
+				</c:if>
+				<br> <label>Finish Date: <input type="date"
 					name="${ParameterNameConstant.TASK_ENDDATE}"
-					value="${printed_edit_task.endDate}"
+					value="${task.endDate}"
 					class="w3-input w3-border w3-round-large" style="width: 30%">
 				</label><br> <label>Assignee:</label><br> <select
 					class="w3-select w3-margin-bottom"
@@ -81,7 +104,7 @@
 						items="${requestScope.get(ParameterNameConstant.PRINTED_EMPLOYEES)}"
 						var="employee">
 						<c:choose>
-							<c:when test="${printed_edit_task.employeeId == employee.id}">
+							<c:when test="${task.employeeId == employee.id}">
 								<option selected value="${employee.id}">${employee.firstName}
 									${employee.lastName}</option>
 							</c:when>
@@ -98,7 +121,7 @@
 						items="${requestScope.get(ParameterNameConstant.PRINTED_STATUSES)}"
 						var="status">
 						<c:choose>
-							<c:when test="${printed_edit_task.getStatus().equals(status)}">
+							<c:when test="${task.getStatus().equals(status)}">
 								<option selected value="${status}">${status.getStatusName()}</option>
 							</c:when>
 							<c:otherwise>

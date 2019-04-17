@@ -1,9 +1,9 @@
 package com.kovzan.task_manager.service;
 
+import com.kovzan.task_manager.command.impl.task.TaskValidator;
 import com.kovzan.task_manager.dao.impl.TaskDaoImpl;
 import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.logger.LogConstant;
-import com.kovzan.task_manager.validator.TaskValidator;
 
 import java.sql.SQLException;
 import java.util.List;

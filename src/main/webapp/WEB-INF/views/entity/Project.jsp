@@ -2,6 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
 <%@ page import="com.kovzan.task_manager.command.ParameterNameConstant"%>
+<%@ page import="com.kovzan.task_manager.command.ValidationException" %>
+<%@ page import="java.lang.String" %>
 <html>
 <head>
 <title>Project</title>
@@ -15,6 +17,15 @@
 		<div class="w3-card-4">
 			<form action="controller" method="post"
 				class="w3-selection w3-light-grey w3-padding">
+				<c:choose>
+					<c:when test="${requestScope.get(ParameterNameConstant.INCORRECT_DATA) != null}">
+						<c:set var="incorrect_data_error" value="${requestScope.get(ParameterNameConstant.INCORRECT_DATA)}"></c:set>
+						<c:set var="project" value="${error.getEntity()}"></c:set>
+					</c:when>
+					<c:otherwise>
+						<c:set var="project" value="${requestScope.get(ParameterNameConstant.PRINTED_EDIT_PROJECT)}"></c:set>
+					</c:otherwise>
+				</c:choose>
 				<c:choose>
 					<c:when
 						test="${requestScope.get(ParameterNameConstant.IS_ADD_FORM) == 1}">
@@ -32,30 +43,42 @@
 						</div>
 						<label>ID: <input readonly
 							name="${ParameterNameConstant.PROJECT_ID}"
-							value="${printed_edit_project.id}"
+							value="${project.id}"
 							class="w3-input w3-animate-input w3-border w3-round-large"
 							style="width: 30%">
 						</label>
 						<br>
 					</c:otherwise>
 				</c:choose>
-				<label>Name: <input placeholder="Write name" required
-					type="text" name="${ParameterNameConstant.PROJECT_NAME}"
-					value="${printed_edit_project.name}"
+				<label>Name: <input placeholder="Write name" type="text"
+					name="${ParameterNameConstant.PROJECT_NAME}"
+					value="${project.name}"
 					class="w3-input w3-animate-input w3-border w3-round-large"
 					style="width: 30%">
-				</label><br> <label>Short name: <input
-					placeholder="Write short name" required type="text"
+				</label>
+				<c:if test="${incorrect_data_error.getInvalidFields().containsKey(ParameterNameConstant.PROJECT_NAME)}">
+					<span style="color:red"><c:out value="${incorrect_data_error.getMessage()}"></c:out></span>
+				</c:if>
+				<br> <label>Short name: <input
+					placeholder="Write short name" type="text"
 					name="${ParameterNameConstant.PROJECT_SHORTNAME}"
-					value="${printed_edit_project.shortName}"
+					value="${project.shortName}"
 					class="w3-input w3-animate-input w3-border w3-round-large"
 					style="width: 30%">
-				</label><br> <label>Description: <textarea
+				</label>
+				<c:if test="${incorrect_data_error.getInvalidFields().containsKey(ParameterNameConstant.PROJECT_SHORTNAME)}">
+					<span style="color:red"><c:out value="${incorrect_data_error.getMessage()}"></c:out></span>
+				</c:if>
+				<br> <label>Description: <textarea
 						placeholder="Write description"
 						name="${ParameterNameConstant.PROJECT_DESCRIPTION}"
 						class="w3-input w3-animate-input w3-border w3-round-large"
-						style="width: 30%; resize: none">${printed_edit_project.description}</textarea>
-				</label><br>
+						style="width: 30%; resize: none">${project.description}</textarea>
+				</label>
+				<c:if test="${incorrect_data_error.getInvalidFields().containsKey(ParameterNameConstant.PROJECT_DESCRIPTION)}">
+					<span style="color:red"><c:out value="${incorrect_data_error.getMessage()}"></c:out></span>
+				</c:if>
+				<br>
 				
 				<c:choose>
 					<c:when

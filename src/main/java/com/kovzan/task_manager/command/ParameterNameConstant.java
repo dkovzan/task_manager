@@ -36,4 +36,6 @@ public class ParameterNameConstant {
 	public static final String IS_ADD_FORM = "is_add_form";
 
 	public static final String ERROR = "error";
+	
+	public static final String INCORRECT_DATA = "incorrect_data";
 }
