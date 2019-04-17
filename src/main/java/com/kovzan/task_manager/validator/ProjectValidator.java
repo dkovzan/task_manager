@@ -33,11 +33,15 @@ public class ProjectValidator {
 	
 	public static boolean isProjectShortNameUnique(Project project) throws SQLException {
 		List<Project> projects = ProjectService.findAllProjects();
-		projects.removeIf(p -> p.getId().equals(project.getId()));
 		boolean result = true;
-		for (Project projectFromDB : projects) {
-			if (projectFromDB.getShortName().equals(project.getShortName())) {
-				result = false;
+		if (projects != null) {
+			if (project.getId() != null) {
+				projects.removeIf(p -> p.getId().equals(project.getId()));
+			}
+			for (Project projectFromDB : projects) {
+				if (projectFromDB.getShortName().equals(project.getShortName())) {
+					result = false;
+				}
 			}
 		}
 		return result;
