@@ -8,8 +8,10 @@
 	<artifactId>task_manager</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
+
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -18,25 +20,18 @@
 					<target>8</target>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
-				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 
-	<properties>
-		<tomcat.version>7.0.92</tomcat.version>
-		<maven.compile.source>1.8</maven.compile.source>
-		<maven.compile.target>1.8</maven.compile.target>
-	</properties>
-
 	<dependencies>
-		<!-- Servlet API 3.0 for tomcat 7 -->
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -44,28 +39,25 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- JavaServer Pages API 2.2 for tomcat 7 -->
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>javax.servlet.jsp-api</artifactId>
 			<version>2.2.1</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- Java Standart Tag Library 1.2 for JSP 2.2 -->
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
+
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.1-901-1.jdbc4</version>
 		</dependency>
 
-
 	</dependencies>
-
 
 </project>
