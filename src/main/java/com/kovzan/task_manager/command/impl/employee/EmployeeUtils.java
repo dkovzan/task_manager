@@ -19,8 +19,8 @@ public class EmployeeUtils {
 	public static Employee buildEmployee(HttpServletRequest request) throws ValidationException {
 		
 		Employee employee = new Employee();
-		HashMap<String, String> invalidFields = new HashMap<String, String>();
-		Integer id = null;
+		HashMap<String, String> invalidFields = new HashMap<>();
+		Integer id;
 		if (request.getParameter(ParameterNameConstant.EMPLOYEE_ID) != null) {
 			id = Integer.parseInt(request.getParameter(ParameterNameConstant.EMPLOYEE_ID));
 			employee.setId(id);

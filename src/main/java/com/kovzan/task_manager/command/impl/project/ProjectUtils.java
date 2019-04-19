@@ -20,8 +20,8 @@ public class ProjectUtils {
 	public static Project buildProject(HttpServletRequest request) throws ValidationException, SQLException {
 		
 		Project project = new Project();
-		HashMap<String, String> invalidFields = new HashMap<String, String>();
-		Integer id = null;
+		HashMap<String, String> invalidFields = new HashMap<>();
+		Integer id;
 		if (request.getParameter(ParameterNameConstant.PROJECT_ID) != null) {
 			id = Integer.parseInt(request.getParameter(ParameterNameConstant.PROJECT_ID));
 			project.setId(id);

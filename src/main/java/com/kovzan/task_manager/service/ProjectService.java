@@ -41,14 +41,6 @@ public class ProjectService {
 	public static void removeProject(Project project) throws SQLException {
 		ProjectDaoImpl.getInstance().remove(project);
 	}
-	
-	public static boolean isProjectValid(Project project) throws SQLException {
-		return ProjectValidator.isProjectValid(project);
-	}
-	
-	public static Project getProjectWithValidFields(Project project) throws SQLException {
-		return ProjectValidator.getProjectWithValidFields(project);
-	}
 
 	public static boolean isProjectShortNameUnique(Project project) throws SQLException {
 		List<Project> projects = findAllProjects();

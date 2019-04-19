@@ -74,8 +74,8 @@
 				<c:if test="${invalidFields.containsKey(ParameterNameConstant.TASK_NAME)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
-				<br> <label>Estimate: <input
-					placeholder="Write estimate" type="text"
+				<br> <label>Work: <input
+					placeholder="Write work (natural number)" type="text"
 					name="${ParameterNameConstant.TASK_WORK}"
 					value="${task.work}"
 					class="w3-input w3-animate-input w3-border w3-round-large"
@@ -84,7 +84,7 @@
 				<c:if test="${invalidFields.containsKey(ParameterNameConstant.TASK_WORK)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
-				<br> <label>Start Date: <input type="date"
+				<br> <label>Start Date: <input type="text" placeholder="Enter start date (format: yyyy-mm-dd)"
 					name="${ParameterNameConstant.TASK_BEGINDATE}"
 					value="${task.beginDate}"
 					class="w3-input w3-border w3-round-large" style="width: 30%">
@@ -92,7 +92,7 @@
 				<c:if test="${invalidFields.containsKey(ParameterNameConstant.TASK_BEGINDATE)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
-				<br> <label>Finish Date: <input type="date"
+				<br> <label>End Date: <input type="text" placeholder="Enter end date (format: yyyy-mm-dd)"
 					name="${ParameterNameConstant.TASK_ENDDATE}"
 					value="${task.endDate}"
 					class="w3-input w3-border w3-round-large" style="width: 30%">

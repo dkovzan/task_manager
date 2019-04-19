@@ -2,8 +2,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
 <%@ page import="com.kovzan.task_manager.command.ParameterNameConstant"%>
-<%@ page import="com.kovzan.task_manager.command.ValidationException" %>
-<%@ page import="java.lang.String" %>
 <html>
 <head>
 <title>Employee</title>

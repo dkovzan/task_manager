@@ -17,7 +17,7 @@
 			<div class="w3-bar w3-padding-large w3-padding-24">
 				<button
 					class="w3-button w3-hover-grey w3-round-large w3-large w3-green"
-					onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ParameterNameConstant.IS_ADD_FORM}=1'">Add
+					onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ParameterNameConstant.IS_ADD_FORM}=1'">Add
 					project</button>
 			</div>
 			<c:choose>
@@ -43,12 +43,12 @@
 								<td>${project.description}</td>
 								<td>
 									<button
-										onclick="location.href='controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&project_id=${project.id}&${ParameterNameConstant.IS_ADD_FORM}=0'"
+										onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&project_id=${project.id}&${ParameterNameConstant.IS_ADD_FORM}=0'"
 										class="w3-button w3-indigo w3-round-large">Edit</button>
 								</td>
 								<td>
 									<button
-										onclick="location.href='controller?command=${CommandEnum.REMOVE_PROJECT}&project_id=${project.id}'"
+										onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.REMOVE_PROJECT}&project_id=${project.id}'"
 										class="w3-button w3-red w3-round-large">Delete</button>
 								</td>
 							</tr>
@@ -57,10 +57,7 @@
 				</c:when>
 				<c:otherwise>
 					<div
-						class="w3-panel w3-red w3-display-container w3-card-4 w3-round">
-						<span onclick="this.parentElement.style.display='none'"
-							class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border w3-border-red w3-hover-border-grey">X
-						</span>
+						class="w3-panel w3-blue w3-display-container w3-card-4 w3-round">
 						<h5>There are no projects yet!</h5>
 					</div>
 				</c:otherwise>

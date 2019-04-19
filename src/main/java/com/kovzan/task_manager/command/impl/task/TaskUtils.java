@@ -22,7 +22,7 @@ public class TaskUtils {
 		
 		Task task = new Task();
 		HashMap<String, String> invalidFields = new HashMap<>();
-		Integer id = null;
+		Integer id;
 		if (request.getParameter(ParameterNameConstant.TASK_ID) != null) {
 			id = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_ID));
 			task.setId(id);
@@ -55,12 +55,9 @@ public class TaskUtils {
 		} else {
 			invalidFields.put(ParameterNameConstant.TASK_BEGINDATE, beginDate);
 		}
-		Integer projectId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_PROJECT_ID));
-		task.setProjectId(projectId);
-		Integer employeeId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_EMPLOYEE_ID));
-		task.setEmployeeId(employeeId);
-		TaskStatus status = TaskStatus.valueOf(request.getParameter(ParameterNameConstant.TASK_STATUS));
-		task.setStatus(status);
+		task.setProjectId(Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_PROJECT_ID)));
+		task.setEmployeeId(Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_EMPLOYEE_ID)));
+		task.setStatus(TaskStatus.valueOf(request.getParameter(ParameterNameConstant.TASK_STATUS)));
 		if(!invalidFields.isEmpty()) {
 			throw new ValidationException(INCORRECT_DATA_MESSAGE, task, invalidFields);
 		}

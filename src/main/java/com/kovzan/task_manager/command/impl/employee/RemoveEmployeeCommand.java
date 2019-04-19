@@ -37,7 +37,7 @@ public class RemoveEmployeeCommand implements Command {
 		return PageConstant.EMPLOYEES_PAGE;
 	}
 
-	public static boolean canEmployeeBeDeleted(int id) throws SQLException {
+	private static boolean canEmployeeBeDeleted(int id) throws SQLException {
 		TaskDaoImpl taskDao = new TaskDaoImpl();
 		return taskDao.findTasksByEmployeeId(id).isEmpty();
 	}

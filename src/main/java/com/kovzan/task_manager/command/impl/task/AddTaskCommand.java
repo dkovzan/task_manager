@@ -22,11 +22,12 @@ import java.util.logging.Level;
 import static com.kovzan.task_manager.logger.Log.logger;
 
 public class AddTaskCommand implements Command {
-
+	
 	@Override
 	public String execute(HttpServletRequest request) throws SQLException {
 
 		Task taskFromRequest;
+		
 		try {
 			taskFromRequest = TaskUtils.buildTask(request);
 		} catch (ValidationException e) {
@@ -49,4 +50,5 @@ public class AddTaskCommand implements Command {
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.TASKS_PAGE;
 	}
+	
 }
