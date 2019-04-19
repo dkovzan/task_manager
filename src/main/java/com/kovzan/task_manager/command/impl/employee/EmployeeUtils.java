@@ -7,8 +7,8 @@ import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.kovzan.task_manager.command.ParameterNameConstant;
 import com.kovzan.task_manager.command.ValidationException;
+import com.kovzan.task_manager.command.impl.parameters.EmployeeParams;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.logger.LogConstant;
 
@@ -21,33 +21,33 @@ public class EmployeeUtils {
 		Employee employee = new Employee();
 		HashMap<String, String> invalidFields = new HashMap<>();
 		Integer id;
-		if (request.getParameter(ParameterNameConstant.EMPLOYEE_ID) != null) {
-			id = Integer.parseInt(request.getParameter(ParameterNameConstant.EMPLOYEE_ID));
+		if (request.getParameter(EmployeeParams.EMPLOYEE_ID) != null) {
+			id = Integer.parseInt(request.getParameter(EmployeeParams.EMPLOYEE_ID));
 			employee.setId(id);
 		}
-		String firstName = request.getParameter(ParameterNameConstant.EMPLOYEE_FIRSTNAME);
+		String firstName = request.getParameter(EmployeeParams.EMPLOYEE_FIRSTNAME);
 		if (EmployeeValidator.isEmployeeFirstNameValid(firstName)) {
 			employee.setFirstName(firstName);
 		} else {
-			invalidFields.put(ParameterNameConstant.EMPLOYEE_FIRSTNAME, firstName);
+			invalidFields.put(EmployeeParams.EMPLOYEE_FIRSTNAME, firstName);
 		}
-		String lastName = request.getParameter(ParameterNameConstant.EMPLOYEE_LASTNAME);
+		String lastName = request.getParameter(EmployeeParams.EMPLOYEE_LASTNAME);
 		if (EmployeeValidator.isEmployeeLastNameValid(lastName)) {
 			employee.setLastName(lastName);
 		} else {
-			invalidFields.put(ParameterNameConstant.EMPLOYEE_LASTNAME, lastName);
+			invalidFields.put(EmployeeParams.EMPLOYEE_LASTNAME, lastName);
 		}
-		String middleName = request.getParameter(ParameterNameConstant.EMPLOYEE_MIDDLENAME);
+		String middleName = request.getParameter(EmployeeParams.EMPLOYEE_MIDDLENAME);
 		if (EmployeeValidator.isEmployeeMiddleNameValid(middleName)) {
 			employee.setMiddleName(middleName);
 		} else {
-			invalidFields.put(ParameterNameConstant.EMPLOYEE_MIDDLENAME, middleName);
+			invalidFields.put(EmployeeParams.EMPLOYEE_MIDDLENAME, middleName);
 		}
-		String position = request.getParameter(ParameterNameConstant.EMPLOYEE_POSITION);
+		String position = request.getParameter(EmployeeParams.EMPLOYEE_POSITION);
 		if (EmployeeValidator.isEmployeePositionValid(position)) {
 			employee.setPosition(position);
 		} else {
-			invalidFields.put(ParameterNameConstant.EMPLOYEE_POSITION, position);
+			invalidFields.put(EmployeeParams.EMPLOYEE_POSITION, position);
 		}
 		if (!invalidFields.isEmpty()) {
 			throw new ValidationException(INCORRECT_DATA_MESSAGE, employee, invalidFields);

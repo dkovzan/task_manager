@@ -2,8 +2,9 @@ package com.kovzan.task_manager.command.impl.employee;
 
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
-import com.kovzan.task_manager.command.ParameterNameConstant;
 import com.kovzan.task_manager.command.ValidationException;
+import com.kovzan.task_manager.command.impl.parameters.EmployeeParams;
+import com.kovzan.task_manager.command.impl.parameters.UtilParams;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.EmployeeService;
@@ -24,13 +25,13 @@ public class AddEmployeeCommand implements Command {
 		try {
 			employee = EmployeeUtils.buildEmployee(request);
 		} catch (ValidationException e) {
-			request.setAttribute(ParameterNameConstant.VALIDATION_EXCEPTION, e);
-			request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 1);
+			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);
+			request.setAttribute(UtilParams.IS_ADD_FORM, 1);
 			return PageConstant.EDIT_EMPLOYEE_PAGE;
 		}
 		EmployeeService.addEmployee(employee);
 		List<Employee> employees = EmployeeService.findAllEmployees();
-		request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
+		request.setAttribute(EmployeeParams.PRINTED_EMPLOYEES, employees);
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.EMPLOYEES_PAGE;
 	}

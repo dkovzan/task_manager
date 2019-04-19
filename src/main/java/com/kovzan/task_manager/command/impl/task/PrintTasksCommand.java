@@ -2,7 +2,7 @@ package com.kovzan.task_manager.command.impl.task;
 
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
-import com.kovzan.task_manager.command.ParameterNameConstant;
+import com.kovzan.task_manager.command.impl.parameters.TaskParams;
 import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.TaskService;
@@ -21,7 +21,7 @@ public class PrintTasksCommand implements Command {
 	public String execute(HttpServletRequest request) throws SQLException {
 
 		List<Task> tasks = TaskService.findAllTasks();
-		request.setAttribute(ParameterNameConstant.PRINTED_TASKS, tasks);
+		request.setAttribute(TaskParams.PRINTED_TASKS, tasks);
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.TASKS_PAGE;
 	}

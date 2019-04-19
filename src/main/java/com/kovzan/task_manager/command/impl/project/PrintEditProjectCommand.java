@@ -2,7 +2,8 @@ package com.kovzan.task_manager.command.impl.project;
 
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
-import com.kovzan.task_manager.command.ParameterNameConstant;
+import com.kovzan.task_manager.command.impl.parameters.ProjectParams;
+import com.kovzan.task_manager.command.impl.parameters.UtilParams;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.ProjectService;
@@ -18,14 +19,14 @@ public class PrintEditProjectCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request) throws SQLException {
 
-		int isAddForm = Integer.parseInt(request.getParameter(ParameterNameConstant.IS_ADD_FORM));
+		int isAddForm = Integer.parseInt(request.getParameter(UtilParams.IS_ADD_FORM));
 		if (isAddForm == 1) {
-			request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 1);
+			request.setAttribute(UtilParams.IS_ADD_FORM, 1);
 		} else {
-			int projectId = Integer.parseInt(request.getParameter(ParameterNameConstant.PROJECT_ID));
+			int projectId = Integer.parseInt(request.getParameter(ProjectParams.PROJECT_ID));
 			Project project = ProjectService.findProjectById(projectId);
-			request.setAttribute(ParameterNameConstant.PRINTED_EDIT_PROJECT, project);
-			request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 0);
+			request.setAttribute(ProjectParams.PRINTED_EDIT_PROJECT, project);
+			request.setAttribute(UtilParams.IS_ADD_FORM, 0);
 		}
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.EDIT_PROJECT_PAGE;

@@ -2,8 +2,11 @@ package com.kovzan.task_manager.command.impl.task;
 
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
-import com.kovzan.task_manager.command.ParameterNameConstant;
 import com.kovzan.task_manager.command.ValidationException;
+import com.kovzan.task_manager.command.impl.parameters.EmployeeParams;
+import com.kovzan.task_manager.command.impl.parameters.ProjectParams;
+import com.kovzan.task_manager.command.impl.parameters.TaskParams;
+import com.kovzan.task_manager.command.impl.parameters.UtilParams;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.entity.TaskStatus;
@@ -35,17 +38,17 @@ public class UpdateTaskCommand implements Command {
 			List<Employee> employees = EmployeeService.findAllEmployees();
 			List<TaskStatus> statuses = Arrays.asList(TaskStatus.values());
 
-			request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
-			request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
-			request.setAttribute(ParameterNameConstant.PRINTED_STATUSES, statuses);
+			request.setAttribute(ProjectParams.PRINTED_PROJECTS, projects);
+			request.setAttribute(EmployeeParams.PRINTED_EMPLOYEES, employees);
+			request.setAttribute(TaskParams.PRINTED_STATUSES, statuses);
 			
-			request.setAttribute(ParameterNameConstant.VALIDATION_EXCEPTION, e);
-			request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 0);
+			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);
+			request.setAttribute(UtilParams.IS_ADD_FORM, 0);
 			return PageConstant.EDIT_TASK_PAGE;
 		}
 		TaskService.updateTask(taskFromRequest);
 		List<Task> tasks = TaskService.findAllTasks();
-		request.setAttribute(ParameterNameConstant.PRINTED_TASKS, tasks);
+		request.setAttribute(TaskParams.PRINTED_TASKS, tasks);
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.TASKS_PAGE;
 	}

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kovzan.task_manager.command.impl.parameters.UtilParams;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import static com.kovzan.task_manager.logger.Log.logger;
@@ -36,11 +37,11 @@ public class Controller extends HttpServlet {
 		try {
 			page = commandType.execute(req);
 		} catch (SQLException e) {
-			req.setAttribute(ParameterNameConstant.ERROR, e);
+			req.setAttribute(UtilParams.ERROR, e);
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 			page = PageConstant.ERROR_PAGE;
 		} catch (NumberFormatException e) {
-			req.setAttribute(ParameterNameConstant.ERROR, e);
+			req.setAttribute(UtilParams.ERROR, e);
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 			page = PageConstant.ERROR_PAGE;
 		}
