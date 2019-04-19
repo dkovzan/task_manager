@@ -2,8 +2,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
 <%@ page import="com.kovzan.task_manager.command.ParameterNameConstant"%>
-<%@ page import="com.kovzan.task_manager.command.ValidationException" %>
-<%@ page import="java.lang.String" %>
 <html>
 <head>
 <title>Task</title>
@@ -17,10 +15,11 @@
 		<div class="w3-card-4">
 			<form action="controller" method="post"
 				class="w3-selection w3-light-grey w3-padding">
+				<c:set var="valid_error" value="${requestScope.get(ParameterNameConstant.VALIDATION_EXCEPTION)}"></c:set>
 				<c:choose>
-					<c:when test="${requestScope.get(ParameterNameConstant.INCORRECT_DATA) != null}">
-						<c:set var="error" value="${requestScope.get(ParameterNameConstant.INCORRECT_DATA)}"></c:set>
-						<c:set var="task" value="${error.getEntity()}"></c:set>
+					<c:when test="${valid_error != null}">
+						<c:set var="task" value="${valid_error.getEntity()}"></c:set>
+						<c:set var="invalidFields" value="${valid_error.getInvalidFields()}"></c:set>
 					</c:when>
 					<c:otherwise>
 						<c:set var="task" value="${requestScope.get(ParameterNameConstant.PRINTED_EDIT_TASK)}"></c:set>
@@ -72,8 +71,8 @@
 					class="w3-input w3-animate-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
-				<c:if test="${error.getInvalidFields().containsKey(ParameterNameConstant.TASK_NAME)}">
-					<span style="color:red"><c:out value="${error.getMessage()}"></c:out></span>
+				<c:if test="${invalidFields.containsKey(ParameterNameConstant.TASK_NAME)}">
+					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br> <label>Estimate: <input
 					placeholder="Write estimate" type="text"
@@ -82,16 +81,16 @@
 					class="w3-input w3-animate-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
-				<c:if test="${error.getInvalidFields().containsKey(ParameterNameConstant.TASK_WORK)}">
-					<span style="color:red"><c:out value="${error.getMessage()}"></c:out></span>
+				<c:if test="${invalidFields.containsKey(ParameterNameConstant.TASK_WORK)}">
+					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br> <label>Start Date: <input type="date"
 					name="${ParameterNameConstant.TASK_BEGINDATE}"
 					value="${task.beginDate}"
 					class="w3-input w3-border w3-round-large" style="width: 30%">
 				</label>
-				<c:if test="${error.getInvalidFields().containsKey(ParameterNameConstant.TASK_BEGINDATE)}">
-					<span style="color:red"><c:out value="${error.getMessage()}"></c:out></span>
+				<c:if test="${invalidFields.containsKey(ParameterNameConstant.TASK_BEGINDATE)}">
+					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br> <label>Finish Date: <input type="date"
 					name="${ParameterNameConstant.TASK_ENDDATE}"
@@ -130,25 +129,10 @@
 						</c:choose>
 					</c:forEach>
 				</select><br>
-
-				<c:choose>
-					<c:when
-						test="${requestScope.get(ParameterNameConstant.ERROR) != null}">
-						<div
-							class="w3-panel w3-red w3-display-container w3-card-4 w3-round">
-							<span onclick="this.parentElement.style.display='none'"
-								class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border w3-border-red w3-hover-border-grey">X
-							</span>
-							<h5>${requestScope.get(ParameterNameConstant.ERROR)}</h5>
-						</div>
-					</c:when>
-				</c:choose>
-
 				<button type="submit"
 					class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
-				<button
-					onclick="location.href='${pageContext.request.contextPath}/controller?command=${CommandEnum.PRINT_TASKS}'"
-					class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</button>
+				<a href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_TASKS}'
+					class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</a>
 			</form>
 		</div>
 	</div>

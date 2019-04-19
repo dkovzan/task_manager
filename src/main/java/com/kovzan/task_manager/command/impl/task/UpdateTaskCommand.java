@@ -39,7 +39,7 @@ public class UpdateTaskCommand implements Command {
 			request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
 			request.setAttribute(ParameterNameConstant.PRINTED_STATUSES, statuses);
 			
-			request.setAttribute(ParameterNameConstant.INCORRECT_DATA, e);
+			request.setAttribute(ParameterNameConstant.VALIDATION_EXCEPTION, e);
 			request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 0);
 			return PageConstant.EDIT_TASK_PAGE;
 		}

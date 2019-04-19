@@ -20,11 +20,11 @@ public class AddEmployeeCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request) throws SQLException {
 
-		Employee employee = new Employee();
+		Employee employee;
 		try {
 			employee = EmployeeUtils.buildEmployee(request);
 		} catch (ValidationException e) {
-			request.setAttribute(ParameterNameConstant.INCORRECT_DATA, e);
+			request.setAttribute(ParameterNameConstant.VALIDATION_EXCEPTION, e);
 			request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 1);
 			return PageConstant.EDIT_EMPLOYEE_PAGE;
 		}

@@ -2,8 +2,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
 <%@ page import="com.kovzan.task_manager.command.ParameterNameConstant"%>
-<%@ page import="com.kovzan.task_manager.command.ValidationException" %>
-<%@ page import="java.lang.String" %>
 <html>
 <head>
 <title>Project</title>
@@ -17,10 +15,11 @@
 		<div class="w3-card-4">
 			<form action="controller" method="post"
 				class="w3-selection w3-light-grey w3-padding">
+				<c:set var="valid_error" value="${requestScope.get(ParameterNameConstant.VALIDATION_EXCEPTION)}"></c:set>
 				<c:choose>
-					<c:when test="${requestScope.get(ParameterNameConstant.INCORRECT_DATA) != null}">
-						<c:set var="incorrect_data_error" value="${requestScope.get(ParameterNameConstant.INCORRECT_DATA)}"></c:set>
-						<c:set var="project" value="${error.getEntity()}"></c:set>
+					<c:when test="${valid_error != null}">
+						<c:set var="project" value="${valid_error.getEntity()}"></c:set>
+						<c:set var="invalidFields" value="${valid_error.getInvalidFields()}"></c:set>
 					</c:when>
 					<c:otherwise>
 						<c:set var="project" value="${requestScope.get(ParameterNameConstant.PRINTED_EDIT_PROJECT)}"></c:set>
@@ -56,8 +55,8 @@
 					class="w3-input w3-animate-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
-				<c:if test="${incorrect_data_error.getInvalidFields().containsKey(ParameterNameConstant.PROJECT_NAME)}">
-					<span style="color:red"><c:out value="${incorrect_data_error.getMessage()}"></c:out></span>
+				<c:if test="${invalidFields.containsKey(ParameterNameConstant.PROJECT_NAME)}">
+					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br> <label>Short name: <input
 					placeholder="Write short name" type="text"
@@ -66,8 +65,8 @@
 					class="w3-input w3-animate-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
-				<c:if test="${incorrect_data_error.getInvalidFields().containsKey(ParameterNameConstant.PROJECT_SHORTNAME)}">
-					<span style="color:red"><c:out value="${incorrect_data_error.getMessage()}"></c:out></span>
+				<c:if test="${invalidFields.containsKey(ParameterNameConstant.PROJECT_SHORTNAME)}">
+					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br> <label>Description: <textarea
 						placeholder="Write description"
@@ -75,8 +74,8 @@
 						class="w3-input w3-animate-input w3-border w3-round-large"
 						style="width: 30%; resize: none">${project.description}</textarea>
 				</label>
-				<c:if test="${incorrect_data_error.getInvalidFields().containsKey(ParameterNameConstant.PROJECT_DESCRIPTION)}">
-					<span style="color:red"><c:out value="${incorrect_data_error.getMessage()}"></c:out></span>
+				<c:if test="${invalidFields.containsKey(ParameterNameConstant.PROJECT_DESCRIPTION)}">
+					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br>
 				
@@ -95,9 +94,8 @@
 				
 				<button type="submit"
 					class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
-				<button
-					onclick="location.href='${pageContext.request.contextPath}/controller?command=${CommandEnum.PRINT_PROJECTS}'"
-					class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</button>
+				<a href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_PROJECTS}'
+					class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</a>
 			</form>
 		</div>
 	</div>

@@ -14,8 +14,8 @@ public class TaskValidator {
 		return name.matches(CHECK_TASK_NAME_REGEX);
 	}
 
-	public static boolean isTaskWorkValid(Integer work) {
-		return String.valueOf(work).matches(CHECK_TASK_WORK_REGEX);
+	public static boolean isTaskWorkValid(String work) {
+		return work.matches(CHECK_TASK_WORK_REGEX);
 	}
 	
 	public static boolean isTaskDateValid(String date) {
@@ -33,7 +33,7 @@ public class TaskValidator {
 
 	public static boolean isTaskValid(Task task) {
 		return (areTaskDatesValid(task.getBeginDate(), task.getEndDate())
-				&& isTaskNameValid(task.getName()) && isTaskWorkValid(task.getWork()));
+				&& isTaskNameValid(task.getName()) && isTaskWorkValid(String.valueOf(task.getWork())));
 	}
 
 	public static Task getTaskWithValidFields(Task task) {
@@ -45,7 +45,7 @@ public class TaskValidator {
 		if (!isTaskNameValid(task.getName())) {
 			taskWithValidFields.setName(null);
 		}
-		if (!isTaskWorkValid(task.getWork())) {
+		if (!isTaskWorkValid(String.valueOf(task.getWork()))) {
 			taskWithValidFields.setWork(null);
 		}
 		return taskWithValidFields;

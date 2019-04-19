@@ -13,13 +13,7 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class TaskService {
 
-	public static final TaskService instance = new TaskService();
-
 	private TaskService() {}
-
-	public static TaskService getInstance() {
-		return instance;
-	}
 
 	public static List<Task> findAllTasks() throws SQLException {
 		return TaskDaoImpl.getInstance().findAll();

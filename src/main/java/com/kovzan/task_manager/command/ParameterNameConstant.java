@@ -37,5 +37,5 @@ public class ParameterNameConstant {
 
 	public static final String ERROR = "error";
 	
-	public static final String INCORRECT_DATA = "incorrect_data";
+	public static final String VALIDATION_EXCEPTION = "validation_exception";
 }

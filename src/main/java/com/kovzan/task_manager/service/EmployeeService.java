@@ -12,13 +12,7 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class EmployeeService {
 
-	public static final EmployeeService instance = new EmployeeService();
-
 	private EmployeeService() {}
-
-	public static EmployeeService getInstance() {
-		return instance;
-	}
 
 	public static List<Employee> findAllEmployees() throws SQLException {
 		return EmployeeDaoImpl.getInstance().findAll();

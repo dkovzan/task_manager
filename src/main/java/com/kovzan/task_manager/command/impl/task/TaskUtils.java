@@ -33,9 +33,9 @@ public class TaskUtils {
 		} else {
 			invalidFields.put(ParameterNameConstant.TASK_NAME, name);
 		}
-		Integer work = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_WORK));
+		String work = request.getParameter(ParameterNameConstant.TASK_WORK);
 		if (TaskValidator.isTaskWorkValid(work)) {
-			task.setWork(work);
+			task.setWork(Integer.parseInt(work));
 		} else {
 			invalidFields.put(ParameterNameConstant.TASK_WORK, String.valueOf(work));
 		}

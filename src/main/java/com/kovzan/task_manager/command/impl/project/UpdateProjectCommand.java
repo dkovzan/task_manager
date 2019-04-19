@@ -26,7 +26,7 @@ public class UpdateProjectCommand implements Command {
 		try {
 			projectFromRequest = ProjectUtils.buildProject(request);
 		} catch (ValidationException e) {
-			request.setAttribute(ParameterNameConstant.INCORRECT_DATA, e);
+			request.setAttribute(ParameterNameConstant.VALIDATION_EXCEPTION, e);
 			request.setAttribute(ParameterNameConstant.IS_ADD_FORM, 0);
 			return PageConstant.EDIT_PROJECT_PAGE;
 		}
