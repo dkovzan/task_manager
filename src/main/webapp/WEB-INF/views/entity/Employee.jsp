@@ -54,7 +54,7 @@
 					type="text"
 					name="${ParameterNameConstant.EMPLOYEE_FIRSTNAME}"
 					value="${employee.firstName}"
-					class="w3-input w3-animate-input w3-border w3-round-large"
+					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
 				<c:if test="${invalidFields.containsKey(ParameterNameConstant.EMPLOYEE_FIRSTNAME)}">
@@ -64,7 +64,7 @@
 					placeholder="Write last name" type="text"
 					name="${ParameterNameConstant.EMPLOYEE_LASTNAME}"
 					value="${employee.lastName}"
-					class="w3-input w3-animate-input w3-border w3-round-large"
+					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
 				<c:if test="${invalidFields.containsKey(ParameterNameConstant.EMPLOYEE_LASTNAME)}">
@@ -74,7 +74,7 @@
 					placeholder="Write middle name (optional)" type="text"
 					name="${ParameterNameConstant.EMPLOYEE_MIDDLENAME}"
 					value="${employee.middleName}"
-					class="w3-input w3-animate-input w3-border w3-round-large"
+					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
 				<c:if test="${invalidFields.containsKey(ParameterNameConstant.EMPLOYEE_MIDDLENAME)}">
@@ -84,7 +84,7 @@
 					placeholder="Write position" type="text"
 					name="${ParameterNameConstant.EMPLOYEE_POSITION}"
 					value="${employee.position}"
-					class="w3-input w3-animate-input w3-border w3-round-large"
+					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
 				<c:if test="${invalidFields.containsKey(ParameterNameConstant.EMPLOYEE_POSITION)}">

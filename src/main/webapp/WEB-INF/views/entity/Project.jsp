@@ -52,7 +52,7 @@
 				<label>Name: <input placeholder="Write name" type="text"
 					name="${ParameterNameConstant.PROJECT_NAME}"
 					value="${project.name}"
-					class="w3-input w3-animate-input w3-border w3-round-large"
+					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
 				<c:if test="${invalidFields.containsKey(ParameterNameConstant.PROJECT_NAME)}">
@@ -62,7 +62,7 @@
 					placeholder="Write short name" type="text"
 					name="${ParameterNameConstant.PROJECT_SHORTNAME}"
 					value="${project.shortName}"
-					class="w3-input w3-animate-input w3-border w3-round-large"
+					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
 				<c:if test="${invalidFields.containsKey(ParameterNameConstant.PROJECT_SHORTNAME)}">
@@ -71,7 +71,7 @@
 				<br> <label>Description: <textarea
 						placeholder="Write description"
 						name="${ParameterNameConstant.PROJECT_DESCRIPTION}"
-						class="w3-input w3-animate-input w3-border w3-round-large"
+						class="w3-input w3-border w3-round-large"
 						style="width: 30%; resize: none">${project.description}</textarea>
 				</label>
 				<c:if test="${invalidFields.containsKey(ParameterNameConstant.PROJECT_DESCRIPTION)}">

@@ -68,7 +68,7 @@
 				</select><br> <label>Name: <input placeholder="Write name"
 					type="text" name="${ParameterNameConstant.TASK_NAME}"
 					value="${task.name}"
-					class="w3-input w3-animate-input w3-border w3-round-large"
+					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
 				<c:if test="${invalidFields.containsKey(ParameterNameConstant.TASK_NAME)}">
@@ -78,7 +78,7 @@
 					placeholder="Write work (natural number)" type="text"
 					name="${ParameterNameConstant.TASK_WORK}"
 					value="${task.work}"
-					class="w3-input w3-animate-input w3-border w3-round-large"
+					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
 				<c:if test="${invalidFields.containsKey(ParameterNameConstant.TASK_WORK)}">
