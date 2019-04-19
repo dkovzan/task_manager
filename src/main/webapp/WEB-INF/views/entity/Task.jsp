@@ -4,7 +4,7 @@
 <%@ page import="com.kovzan.task_manager.command.ParameterNameConstant"%>
 <html>
 <head>
-<title>Task</title>
+<title>Edit task</title>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body class="w3-light-grey">
