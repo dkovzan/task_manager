@@ -17,6 +17,7 @@ import com.kovzan.task_manager.logger.LogConstant;
 public class TaskUtils {
 	
 	private static final String INCORRECT_DATA_MESSAGE = "Incorrect data are entered.";
+	private static final String DATES_ARE_NOT_IN_RANGE = "Begin date should be earlier then end date.";
 	
 	public static Task buildTask(HttpServletRequest request) throws ValidationException {
 		
@@ -40,20 +41,27 @@ public class TaskUtils {
 			invalidFields.put(ParameterNameConstant.TASK_WORK, String.valueOf(work));
 		}
 		String beginDate = request.getParameter(ParameterNameConstant.TASK_BEGINDATE);
-		String endDate = request.getParameter(ParameterNameConstant.TASK_ENDDATE);
-		if (TaskValidator.isTaskDateValid(beginDate)) {
-			if (TaskValidator.isTaskDateValid(endDate)) {
-				if (TaskValidator.areTaskDatesValid(LocalDate.parse(beginDate), LocalDate.parse(endDate))) {
-					task.setBeginDate(LocalDate.parse(beginDate));
-					task.setEndDate(LocalDate.parse(endDate));
-				} else {
-					invalidFields.put(ParameterNameConstant.TASK_BEGINDATE, beginDate);
-				}
-			} else {
-				invalidFields.put(ParameterNameConstant.TASK_BEGINDATE, endDate);
-			}
+		boolean isBeginDateValid = true;
+		if (TaskValidator.isTaskDateValid(beginDate) && TaskValidator.isTaskDateInRange(beginDate)) {
+			task.setBeginDate(LocalDate.parse(beginDate));
 		} else {
 			invalidFields.put(ParameterNameConstant.TASK_BEGINDATE, beginDate);
+			isBeginDateValid = false;
+		}
+		String endDate = request.getParameter(ParameterNameConstant.TASK_ENDDATE);
+		boolean isEndDateValid = true;
+		if (TaskValidator.isTaskDateValid(endDate) && TaskValidator.isTaskDateInRange(endDate)) {
+			task.setEndDate(LocalDate.parse(endDate));
+		} else {
+			invalidFields.put(ParameterNameConstant.TASK_ENDDATE, endDate);
+			isEndDateValid = false;
+		}
+		if (isBeginDateValid && isEndDateValid) {
+			if (!TaskValidator.areTaskDatesValid(LocalDate.parse(beginDate), LocalDate.parse(endDate))) {
+				task.setBeginDate(null);
+				invalidFields.put(ParameterNameConstant.TASK_BEGINDATE, beginDate);
+				invalidFields.put(ParameterNameConstant.TASK_INVALID_DATE_RANGE, beginDate);
+			}
 		}
 		task.setProjectId(Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_PROJECT_ID)));
 		task.setEmployeeId(Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_EMPLOYEE_ID)));

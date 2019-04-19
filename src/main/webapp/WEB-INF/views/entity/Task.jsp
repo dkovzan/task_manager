@@ -84,7 +84,7 @@
 				<c:if test="${invalidFields.containsKey(ParameterNameConstant.TASK_WORK)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
-				<br> <label>Start Date: <input type="text" placeholder="Enter start date (format: yyyy-mm-dd)"
+				<br> <label>Begin Date: <input type="text" placeholder="Enter begin date (format: yyyy-mm-dd)"
 					name="${ParameterNameConstant.TASK_BEGINDATE}"
 					value="${task.beginDate}"
 					class="w3-input w3-border w3-round-large" style="width: 30%">
@@ -92,11 +92,18 @@
 				<c:if test="${invalidFields.containsKey(ParameterNameConstant.TASK_BEGINDATE)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
+				<c:if test="${invalidFields.containsKey(ParameterNameConstant.TASK_INVALID_DATE_RANGE)}">
+					<span style="color:red"><c:out value="${ParameterNameConstant.VALUE_INVALID_DATE_RANGE}"></c:out></span>
+				</c:if>
 				<br> <label>End Date: <input type="text" placeholder="Enter end date (format: yyyy-mm-dd)"
 					name="${ParameterNameConstant.TASK_ENDDATE}"
 					value="${task.endDate}"
 					class="w3-input w3-border w3-round-large" style="width: 30%">
-				</label><br> <label>Assignee:</label><br> <select
+				</label>
+				<c:if test="${invalidFields.containsKey(ParameterNameConstant.TASK_ENDDATE)}">
+					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
+				</c:if>
+				<br> <label>Assignee:</label><br> <select
 					class="w3-select w3-margin-bottom"
 					name="${ParameterNameConstant.TASK_EMPLOYEE_ID}" style="width: 30%">
 					<c:forEach
