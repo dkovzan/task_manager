@@ -1,7 +1,6 @@
 package com.kovzan.task_manager.service;
 
-import com.kovzan.task_manager.command.impl.project.ProjectValidator;
-import com.kovzan.task_manager.dao.impl.ProjectDaoImpl;
+import com.kovzan.task_manager.dao.impl.ProjectDao;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.logger.LogConstant;
 
@@ -16,12 +15,12 @@ public class ProjectService {
 	private ProjectService() {}
 
 	public static List<Project> findAllProjects() throws SQLException {
-		return ProjectDaoImpl.getInstance().findAll();
+		return ProjectDao.getInstance().findAll();
 	}
 
 	public static Project findProjectById(int id) throws SQLException {
 		Project project = null;
-		project = ProjectDaoImpl.getInstance().findById(id);
+		project = ProjectDao.getInstance().findById(id);
 		if (project == null) {
 			String paramName = "Id";
 			//throw new Exception(String.format(LogConstant.PROJECT_NOT_FOUND, paramName, id));
@@ -31,15 +30,15 @@ public class ProjectService {
 	}
 
 	public static void addProject(Project project) throws SQLException {
-		ProjectDaoImpl.getInstance().add(project);
+		ProjectDao.getInstance().add(project);
 	}
 
 	public static void updateProject(Project project) throws SQLException {
-		ProjectDaoImpl.getInstance().update(project);
+		ProjectDao.getInstance().update(project);
 	}
 
 	public static void removeProject(Project project) throws SQLException {
-		ProjectDaoImpl.getInstance().remove(project);
+		ProjectDao.getInstance().remove(project);
 	}
 
 	public static boolean isProjectShortNameUnique(Project project) throws SQLException {

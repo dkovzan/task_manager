@@ -1,6 +1,6 @@
 package com.kovzan.task_manager.service;
 
-import com.kovzan.task_manager.dao.impl.EmployeeDaoImpl;
+import com.kovzan.task_manager.dao.impl.EmployeeDao;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.logger.LogConstant;
 
@@ -15,11 +15,11 @@ public class EmployeeService {
 	private EmployeeService() {}
 
 	public static List<Employee> findAllEmployees() throws SQLException {
-		return EmployeeDaoImpl.getInstance().findAll();
+		return EmployeeDao.getInstance().findAll();
 	}
 
 	public static Employee findEmployeeById(int id) throws SQLException {
-		Employee employee = EmployeeDaoImpl.getInstance().findById(id);
+		Employee employee = EmployeeDao.getInstance().findById(id);
 		if (employee == null) {
 			String paramName = "Id";
 			//throw new Exception(String.format(LogConstant.EMPLOYEE_NOT_FOUND, paramName, id));
@@ -29,15 +29,15 @@ public class EmployeeService {
 	}
 
 	public static void addEmployee(Employee employee) throws SQLException {
-		EmployeeDaoImpl.getInstance().add(employee);
+		EmployeeDao.getInstance().add(employee);
 	}
 
 	public static void updateEmployee(Employee employee) throws SQLException {
-		EmployeeDaoImpl.getInstance().update(employee);
+		EmployeeDao.getInstance().update(employee);
 	}
 
 	public static void removeEmployee(Employee employee) throws SQLException {
-		EmployeeDaoImpl.getInstance().remove(employee);
+		EmployeeDao.getInstance().remove(employee);
 	}
 
 }

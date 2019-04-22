@@ -1,7 +1,6 @@
 package com.kovzan.task_manager.service;
 
-import com.kovzan.task_manager.command.impl.task.TaskValidator;
-import com.kovzan.task_manager.dao.impl.TaskDaoImpl;
+import com.kovzan.task_manager.dao.impl.TaskDao;
 import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.logger.LogConstant;
 
@@ -17,11 +16,11 @@ public class TaskService {
 	}
 	
 	public static List<Task> findAllTasks() throws SQLException {
-		return TaskDaoImpl.getInstance().findAll();
+		return TaskDao.getInstance().findAll();
 	}
 	
 	public static Task findTaskById(int id) throws SQLException {
-		Task task = TaskDaoImpl.getInstance().findById(id);
+		Task task = TaskDao.getInstance().findById(id);
 		if (task == null) {
 			String paramName = "Id";
 			//throw new Exception(String.format(LogConstant.TASK_NOT_FOUND, paramName, id));
@@ -31,14 +30,14 @@ public class TaskService {
 	}
 	
 	public static void addTask(Task task) throws SQLException {
-		TaskDaoImpl.getInstance().add(task);
+		TaskDao.getInstance().add(task);
 	}
 	
 	public static void updateTask(Task task) throws SQLException {
-		TaskDaoImpl.getInstance().update(task);
+		TaskDao.getInstance().update(task);
 	}
 	
 	public static void removeTask(Task task) throws SQLException {
-		TaskDaoImpl.getInstance().remove(task);
+		TaskDao.getInstance().remove(task);
 	}
 }
