@@ -92,6 +92,51 @@
 						</div>
 					</c:when>
 				</c:choose>
+
+				<c:choose>
+					<c:when
+							test="${requestScope.get(ProjectParams.PROJECT_TASKS) != null && !requestScope.get(ProjectParams.PROJECT_TASKS).isEmpty()}">
+						<table class="w3-table w3-bordered w3-border">
+							<tr>
+								<th>Id</th>
+								<th>Name</th>
+								<th>Begin Date</th>
+								<th>End Date</th>
+								<th>Assignee</th>
+								<%--<th colspan="2">Actions</th>--%>
+							</tr>
+							<c:forEach
+									items="${requestScope.get(ProjectParams.PROJECT_TASKS)}"
+									var="task">
+								<tr>
+									<td>${task.id}</td>
+									<td>${task.name}</td>
+									<td>${task.beginDate}</td>
+									<td>${task.endDate}</td>
+									<td>${task.employeeFullName}</td>
+									<%--<td>--%>
+										<%--<button--%>
+												<%--onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_TASK}&${TaskParams.TASK_ID}=${task.id}&${UtilParams.IS_ADD_FORM}=0'"--%>
+												<%--class="w3-button w3-indigo w3-round-large">Edit</button>--%>
+									<%--</td>--%>
+									<%--<td>--%>
+										<%--<button--%>
+												<%--onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.REMOVE_TASK}&${TaskParams.TASK_ID}=${task.id}'"--%>
+												<%--class="w3-button w3-red w3-round-large">Delete</button>--%>
+									<%--</td>--%>
+								</tr>
+							</c:forEach>
+						</table>
+						<br>
+					</c:when>
+					<c:otherwise>
+						<div
+								class="w3-panel w3-blue w3-display-container w3-card-4 w3-round">
+							<h5>Project has no tasks yet!</h5>
+						</div>
+						<br>
+					</c:otherwise>
+				</c:choose>
 				
 				<button type="submit"
 					class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>

@@ -29,6 +29,14 @@ public class TaskService {
 		return task;
 	}
 	
+	public static List<Task> findTasksByEmployeeId(int employeeId) throws SQLException {
+		return TaskDao.getInstance().findTasksByEmployeeId(employeeId);
+	}
+	
+	public static List<Task> findTasksByProjectId(int projectId) throws SQLException {
+		return TaskDao.getInstance().findTasksByProjectId(projectId);
+	}
+	
 	public static void addTask(Task task) throws SQLException {
 		TaskDao.getInstance().add(task);
 	}

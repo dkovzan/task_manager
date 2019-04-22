@@ -5,11 +5,14 @@ import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.impl.parameters.ProjectParams;
 import com.kovzan.task_manager.command.impl.parameters.UtilParams;
 import com.kovzan.task_manager.entity.Project;
+import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.ProjectService;
+import com.kovzan.task_manager.service.TaskService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 
 import static com.kovzan.task_manager.logger.Log.logger;
@@ -24,6 +27,10 @@ public class PrintEditProjectCommand implements Command {
 			request.setAttribute(UtilParams.IS_ADD_FORM, 1);
 		} else {
 			int projectId = Integer.parseInt(request.getParameter(ProjectParams.PROJECT_ID));
+			List<Task> projectTasks = TaskService.findTasksByProjectId(projectId);
+			if (projectTasks != null && !projectTasks.isEmpty()) {
+				request.setAttribute(ProjectParams.PROJECT_TASKS, projectTasks);
+			}
 			Project project = ProjectService.findProjectById(projectId);
 			request.setAttribute(ProjectParams.PRINTED_EDIT_PROJECT, project);
 			request.setAttribute(UtilParams.IS_ADD_FORM, 0);

@@ -25,22 +25,29 @@ public class TaskDao implements DaoBase<Task> {
 	private static final String updateTask =
 			"UPDATE task " +
 			"SET name = ?, work = ?, begindate = ?, enddate = ?, projectid = ?, employeeid = ?, status = ? " +
-			"WHERE id = ?";
+				"WHERE id = ?";
 	private static final String removeTask =
 			"DELETE FROM task " +
-			"WHERE id = ?";
+				"WHERE id = ?";
 	private static final String selectAllTasksWithRefs =
-			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname FROM task t " +
-			"LEFT JOIN project p ON p.id = t.projectid " +
-			"LEFT JOIN employee e ON e.id = t.employeeid ORDER BY t.id";
+			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname " +
+				"FROM task t " +
+				"LEFT JOIN project p ON p.id = t.projectid " +
+				"LEFT JOIN employee e ON e.id = t.employeeid ORDER BY t.id";
 	private static final String selectTaskById =
 			"SELECT id, name, begindate, work, projectid, status, enddate, employeeid " +
-			"FROM task WHERE id = ?";
+			"FROM task " +
+				"WHERE id = ?";
 	private static final String selectTasksByEmployeeId =
 			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname FROM task t " +
-			"LEFT JOIN project p ON p.id = t.projectid " +
-			"LEFT JOIN employee e ON e.id = t.employeeid " +
-			"WHERE t.employeeid = ? ORDER BY t.id";
+				"LEFT JOIN project p ON p.id = t.projectid " +
+				"LEFT JOIN employee e ON e.id = t.employeeid " +
+					"WHERE t.employeeid = ? ORDER BY t.id";
+	private static final String selectTasksByProjectId =
+			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname FROM task t " +
+				"LEFT JOIN project p ON p.id = t.projectid " +
+				"LEFT JOIN employee e ON e.id = t.employeeid " +
+					"WHERE t.projectid = ? ORDER BY t.id";
 
 	private static TaskDao instance = new TaskDao();
 
@@ -136,6 +143,10 @@ public class TaskDao implements DaoBase<Task> {
 
 	public List<Task> findTasksByEmployeeId(int employeeId) throws SQLException {
 		return findTasksBy(employeeId, selectTasksByEmployeeId);
+	}
+	
+	public List<Task> findTasksByProjectId (int projectId) throws SQLException {
+		return findTasksBy(projectId, selectTasksByProjectId);
 	}
 
 	public List<Task> findTasksBy(Integer id, String selectStatement) throws SQLException {

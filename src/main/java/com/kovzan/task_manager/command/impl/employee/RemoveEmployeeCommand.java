@@ -4,10 +4,10 @@ import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.impl.parameters.EmployeeParams;
 import com.kovzan.task_manager.command.impl.parameters.UtilParams;
-import com.kovzan.task_manager.dao.impl.TaskDao;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.EmployeeService;
+import com.kovzan.task_manager.service.TaskService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -38,7 +38,6 @@ public class RemoveEmployeeCommand implements Command {
 	}
 
 	private static boolean canEmployeeBeDeleted(int id) throws SQLException {
-		TaskDao taskDao = new TaskDao();
-		return taskDao.findTasksByEmployeeId(id).isEmpty();
+		return TaskService.findTasksByEmployeeId(id).isEmpty();
 	}
 }
