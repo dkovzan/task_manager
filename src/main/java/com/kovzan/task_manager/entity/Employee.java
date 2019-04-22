@@ -1,7 +1,6 @@
 package com.kovzan.task_manager.entity;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class Employee extends Entity implements Serializable {
 

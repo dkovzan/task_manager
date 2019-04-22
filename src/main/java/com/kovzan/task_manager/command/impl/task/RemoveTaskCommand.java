@@ -2,7 +2,7 @@ package com.kovzan.task_manager.command.impl.task;
 
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
-import com.kovzan.task_manager.command.ParameterNameConstant;
+import com.kovzan.task_manager.command.impl.parameters.TaskParams;
 import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.TaskService;
@@ -19,12 +19,12 @@ public class RemoveTaskCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request) throws SQLException {
 
-		Integer taskId = Integer.parseInt(request.getParameter(ParameterNameConstant.TASK_ID));
+		Integer taskId = Integer.parseInt(request.getParameter(TaskParams.TASK_ID));
 		Task task = new Task();
 		task.setId(taskId);
 		TaskService.removeTask(task);
 		List<Task> tasks = TaskService.findAllTasks();
-		request.setAttribute(ParameterNameConstant.PRINTED_TASKS, tasks);
+		request.setAttribute(TaskParams.PRINTED_TASKS, tasks);
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.TASKS_PAGE;
 	}

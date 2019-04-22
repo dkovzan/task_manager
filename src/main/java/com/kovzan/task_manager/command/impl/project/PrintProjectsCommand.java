@@ -2,7 +2,7 @@ package com.kovzan.task_manager.command.impl.project;
 
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
-import com.kovzan.task_manager.command.ParameterNameConstant;
+import com.kovzan.task_manager.command.impl.parameters.ProjectParams;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.ProjectService;
@@ -20,7 +20,7 @@ public class PrintProjectsCommand implements Command {
 	public String execute(HttpServletRequest request) throws SQLException {
 
 		List<Project> projects = ProjectService.findAllProjects();
-		request.setAttribute(ParameterNameConstant.PRINTED_PROJECTS, projects);
+		request.setAttribute(ProjectParams.PRINTED_PROJECTS, projects);
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.PROJECTS_PAGE;
 	}

@@ -1,9 +1,9 @@
 package com.kovzan.task_manager.service;
 
+import com.kovzan.task_manager.command.impl.project.ProjectValidator;
 import com.kovzan.task_manager.dao.impl.ProjectDaoImpl;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.logger.LogConstant;
-import com.kovzan.task_manager.validator.ProjectValidator;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,13 +13,7 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 public class ProjectService {
 
-	public static final ProjectService instance = new ProjectService();
-
 	private ProjectService() {}
-
-	public static ProjectService getInstance() {
-		return instance;
-	}
 
 	public static List<Project> findAllProjects() throws SQLException {
 		return ProjectDaoImpl.getInstance().findAll();
@@ -47,17 +41,19 @@ public class ProjectService {
 	public static void removeProject(Project project) throws SQLException {
 		ProjectDaoImpl.getInstance().remove(project);
 	}
-	
-	public static boolean isProjectValid(Project project) throws SQLException {
-		return ProjectValidator.isProjectValid(project);
-	}
-	
-	public static Project getProjectWithValidFields(Project project) throws SQLException {
-		return ProjectValidator.getProjectWithValidFields(project);
-	}
-	
+
 	public static boolean isProjectShortNameUnique(Project project) throws SQLException {
-		return ProjectValidator.isProjectShortNameUnique(project);
+		List<Project> projects = findAllProjects();
+		boolean result = true;
+		if (projects != null) {
+			projects.removeIf(p -> p.getId().equals(project.getId()));
+			for (Project projectFromDB : projects) {
+				if (projectFromDB.getShortName().equals(project.getShortName())) {
+					result = false;
+				}
+			}
+		}
+		return result;
 	}
 
 }

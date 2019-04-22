@@ -1,10 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
-<%@ page import="com.kovzan.task_manager.command.ParameterNameConstant"%>
+<%@ page import="com.kovzan.task_manager.command.impl.parameters.EmployeeParams"%>
+<%@ page import="com.kovzan.task_manager.command.impl.parameters.ProjectParams"%>
+<%@ page import="com.kovzan.task_manager.command.impl.parameters.TaskParams"%>
+<%@ page import="com.kovzan.task_manager.command.impl.parameters.UtilParams"%>
 <html>
 <head>
-<title>Task</title>
+<title>Edit task</title>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body class="w3-light-grey">
@@ -15,9 +18,19 @@
 		<div class="w3-card-4">
 			<form action="controller" method="post"
 				class="w3-selection w3-light-grey w3-padding">
+				<c:set var="valid_error" value="${requestScope.get(UtilParams.VALIDATION_EXCEPTION)}"></c:set>
+				<c:choose>
+					<c:when test="${valid_error != null}">
+						<c:set var="task" value="${valid_error.getEntity()}"></c:set>
+						<c:set var="invalidFields" value="${valid_error.getInvalidFields()}"></c:set>
+					</c:when>
+					<c:otherwise>
+						<c:set var="task" value="${requestScope.get(TaskParams.PRINTED_EDIT_TASK)}"></c:set>
+					</c:otherwise>
+				</c:choose>
 				<c:choose>
 					<c:when
-						test="${requestScope.get(ParameterNameConstant.IS_ADD_FORM) == 1}">
+						test="${requestScope.get(UtilParams.IS_ADD_FORM) == 1}">
 						<input type="hidden" value="${CommandEnum.ADD_TASK}"
 							name="command">
 						<div class="w3-container w3-center w3-green">
@@ -31,8 +44,8 @@
 							<h2>EDIT TASK</h2>
 						</div>
 						<label>ID: <input readonly
-							name="${ParameterNameConstant.TASK_ID}"
-							value="${printed_edit_task.id}"
+							name="${TaskParams.TASK_ID}"
+							value="${task.id}"
 							class="w3-input w3-animate-input w3-border w3-round-large"
 							style="width: 30%">
 						</label>
@@ -42,46 +55,65 @@
 
 				<label>Project:</label><br> <select
 					class="w3-select w3-margin-bottom"
-					name="${ParameterNameConstant.TASK_PROJECT_ID}" style="width: 30%">
+					name="${TaskParams.TASK_PROJECT_ID}" style="width: 30%">
 					<c:forEach
-						items="${requestScope.get(ParameterNameConstant.PRINTED_PROJECTS)}"
-						var="project">
+						items="${requestScope.get(ProjectParams.PRINTED_PROJECTS)}"
+						var="projectInDropdown">
 						<c:choose>
-							<c:when test="${printed_edit_task.projectId == project.id}">
-								<option selected value="${project.id}">${project.shortName}</option>
+							<c:when test="${task.projectId == projectInDropdown.id}">
+								<option selected value="${projectInDropdown.id}">${projectInDropdown.shortName}</option>
 							</c:when>
 							<c:otherwise>
-								<option value="${project.id}">${project.shortName}</option>
+								<option value="${projectInDropdown.id}">${projectInDropdown.shortName}</option>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
 				</select><br> <label>Name: <input placeholder="Write name"
-					required type="text" name="${ParameterNameConstant.TASK_NAME}"
-					value="${printed_edit_task.name}"
-					class="w3-input w3-animate-input w3-border w3-round-large"
+					type="text" name="${TaskParams.TASK_NAME}"
+					value="${task.name}"
+					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
-				</label><br> <label>Estimate: <input
-					placeholder="Write estimate" required type="text"
-					name="${ParameterNameConstant.TASK_WORK}"
-					value="${printed_edit_task.work}"
-					class="w3-input w3-animate-input w3-border w3-round-large"
+				</label>
+				<c:if test="${invalidFields.containsKey(TaskParams.TASK_NAME)}">
+					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
+				</c:if>
+				<br> <label>Work: <input
+					placeholder="Write work (natural number)" type="text"
+					name="${TaskParams.TASK_WORK}"
+					value="${task.work}"
+					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
-				</label><br> <label>Start Date: <input required type="date"
-					name="${ParameterNameConstant.TASK_BEGINDATE}"
-					value="${printed_edit_task.beginDate}"
+				</label>
+				<c:if test="${invalidFields.containsKey(TaskParams.TASK_WORK)}">
+					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
+				</c:if>
+				<br> <label>Begin Date: <input type="text" placeholder="Enter begin date (format: yyyy-mm-dd)"
+					name="${TaskParams.TASK_BEGINDATE}"
+					value="${task.beginDate}"
 					class="w3-input w3-border w3-round-large" style="width: 30%">
-				</label><br> <label>Finish Date: <input required type="date"
-					name="${ParameterNameConstant.TASK_ENDDATE}"
-					value="${printed_edit_task.endDate}"
+				</label>
+				<c:if test="${invalidFields.containsKey(TaskParams.TASK_BEGINDATE)}">
+					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
+				</c:if>
+				<c:if test="${invalidFields.containsKey(TaskParams.TASK_INVALID_DATE_RANGE)}">
+					<span style="color:red"><c:out value="${ParameterNameConstant.VALUE_INVALID_DATE_RANGE}"></c:out></span>
+				</c:if>
+				<br> <label>End Date: <input type="text" placeholder="Enter end date (format: yyyy-mm-dd)"
+					name="${TaskParams.TASK_ENDDATE}"
+					value="${task.endDate}"
 					class="w3-input w3-border w3-round-large" style="width: 30%">
-				</label><br> <label>Assignee:</label><br> <select
+				</label>
+				<c:if test="${invalidFields.containsKey(TaskParams.TASK_ENDDATE)}">
+					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
+				</c:if>
+				<br> <label>Assignee:</label><br> <select
 					class="w3-select w3-margin-bottom"
-					name="${ParameterNameConstant.TASK_EMPLOYEE_ID}" style="width: 30%">
+					name="${TaskParams.TASK_EMPLOYEE_ID}" style="width: 30%">
 					<c:forEach
-						items="${requestScope.get(ParameterNameConstant.PRINTED_EMPLOYEES)}"
+						items="${requestScope.get(EmployeeParams.PRINTED_EMPLOYEES)}"
 						var="employee">
 						<c:choose>
-							<c:when test="${printed_edit_task.employeeId == employee.id}">
+							<c:when test="${task.employeeId == employee.id}">
 								<option selected value="${employee.id}">${employee.firstName}
 									${employee.lastName}</option>
 							</c:when>
@@ -93,12 +125,12 @@
 					</c:forEach>
 				</select><br> <label>Status:</label><br> <select
 					class="w3-select w3-margin-bottom"
-					name="${ParameterNameConstant.TASK_STATUS}" style="width: 30%">
+					name="${TaskParams.TASK_STATUS}" style="width: 30%">
 					<c:forEach
-						items="${requestScope.get(ParameterNameConstant.PRINTED_STATUSES)}"
+						items="${requestScope.get(TaskParams.PRINTED_STATUSES)}"
 						var="status">
 						<c:choose>
-							<c:when test="${printed_edit_task.getStatus().equals(status)}">
+							<c:when test="${task.getStatus().equals(status)}">
 								<option selected value="${status}">${status.getStatusName()}</option>
 							</c:when>
 							<c:otherwise>
@@ -107,25 +139,10 @@
 						</c:choose>
 					</c:forEach>
 				</select><br>
-
-				<c:choose>
-					<c:when
-						test="${requestScope.get(ParameterNameConstant.ERROR) != null}">
-						<div
-							class="w3-panel w3-red w3-display-container w3-card-4 w3-round">
-							<span onclick="this.parentElement.style.display='none'"
-								class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border w3-border-red w3-hover-border-grey">X
-							</span>
-							<h5>${requestScope.get(ParameterNameConstant.ERROR)}</h5>
-						</div>
-					</c:when>
-				</c:choose>
-
 				<button type="submit"
 					class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
-				<button
-					onclick="location.href='${pageContext.request.contextPath}/controller?command=${CommandEnum.PRINT_TASKS}'"
-					class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</button>
+				<a href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_TASKS}'
+					class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</a>
 			</form>
 		</div>
 	</div>

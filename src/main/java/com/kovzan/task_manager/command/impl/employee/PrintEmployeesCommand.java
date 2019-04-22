@@ -2,7 +2,7 @@ package com.kovzan.task_manager.command.impl.employee;
 
 import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
-import com.kovzan.task_manager.command.ParameterNameConstant;
+import com.kovzan.task_manager.command.impl.parameters.EmployeeParams;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.logger.LogConstant;
 import com.kovzan.task_manager.service.EmployeeService;
@@ -20,7 +20,7 @@ public class PrintEmployeesCommand implements Command{
 	public String execute(HttpServletRequest request) throws SQLException {
 		
 		List<Employee> employees = EmployeeService.findAllEmployees();
-		request.setAttribute(ParameterNameConstant.PRINTED_EMPLOYEES, employees);
+		request.setAttribute(EmployeeParams.PRINTED_EMPLOYEES, employees);
 		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.EMPLOYEES_PAGE;
 	}

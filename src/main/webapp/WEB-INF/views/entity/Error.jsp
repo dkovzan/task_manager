@@ -1,4 +1,5 @@
 <%@ page isErrorPage="true" contentType="text/html;charset=UTF-8"%>
+<%@ page import="com.kovzan.task_manager.command.impl.parameters.UtilParams"%>
 <html>
 <head>
 <title>Error</title>
@@ -11,7 +12,7 @@
 			<h2>Error page</h2>
 		</div>
 		<div class="w3-panel w3-pale-red">
-			<p>${error}</p>
+			<p>${UtilParams.ERROR}</p>
 			<p>
 				<xmp>${pageContext.exception}</xmp>
 			</p>
