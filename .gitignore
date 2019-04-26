@@ -2,3 +2,13 @@
 /out
 *.iml
 /.idea
+.gradle
+.idea
+
+com.kovzan.task_manager.database/.gradle
+com.kovzan.task_manager.database/build
+com.kovzan.task_manager.database/database*
+
+com.kovzan.task_manager.server/.gradle
+com.kovzan.task_manager.server/build
+com.kovzan.task_manager.server/out

@@ -1,0 +1,48 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
+    }
+}
+
+apply plugin: 'war'
+apply plugin: 'com.bmuschko.tomcat'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.hsqldb', name: 'hsqldb', version: '2.4.1'
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+    compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+
+    def tomcatVersion = '8.5.35'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:8.5.2",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+}
+
+group 'com.kovzan.task_manager'
+
+tomcat {
+    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+}
+
+war {
+    from('WEB-INF') {
+        include 'web.xml'
+        into 'WEB-INF'
+    }
+}
+
+tomcatRunWar.contextPath = '/'
+
+task startServer(){
+}
+
+startServer.finalizedBy(tomcatRunWar)

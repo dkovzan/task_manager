@@ -1,0 +1,6 @@
+rootProject.name = 'task_manager'
+
+include("com.kovzan.task_manager.server")
+findProject(":com.kovzan.task_manager.server")?.name = 'server'
+include("com.kovzan.task_manager.database")
+findProject(":com.kovzan.task_manager.database")?.name = 'database'
