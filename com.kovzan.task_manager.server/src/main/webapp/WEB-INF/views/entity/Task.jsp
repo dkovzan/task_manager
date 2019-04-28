@@ -46,7 +46,7 @@
 						<label>ID: <input readonly
 							name="${TaskParams.TASK_ID}"
 							value="${task.id}"
-							class="w3-input w3-animate-input w3-border w3-round-large"
+							class="w3-input w3-border w3-round-large"
 							style="width: 30%">
 						</label>
 						<br>

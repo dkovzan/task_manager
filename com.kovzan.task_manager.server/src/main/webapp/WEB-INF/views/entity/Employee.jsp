@@ -44,7 +44,7 @@
 						<label>ID: <input readonly
 							name="${EmployeeParams.EMPLOYEE_ID}"
 							value="${employee.id}"
-							class="w3-input w3-animate-input w3-border w3-round-large"
+							class="w3-input w3-border w3-round-large"
 							style="width: 30%">
 						</label>
 						<br>
