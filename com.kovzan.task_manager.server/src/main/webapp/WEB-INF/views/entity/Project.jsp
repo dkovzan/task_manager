@@ -17,6 +17,8 @@
 			<form action="controller" method="post"
 				class="w3-selection w3-light-grey w3-padding">
 				<c:set var="valid_error" value="${requestScope.get(UtilParams.VALIDATION_EXCEPTION)}"></c:set>
+				<c:set var="is_add_project_form" value="${requestScope.get(UtilParams.IS_ADD_FORM)}"></c:set>
+				<c:set var="runtime_tasks" value="${sessionScope.get(TaskParams.PRINTED_RUNTIME_TASKS)}"></c:set>
 				<c:choose>
 					<c:when test="${valid_error != null}">
 						<c:set var="project" value="${valid_error.getEntity()}"></c:set>
@@ -28,7 +30,7 @@
 				</c:choose>
 				<c:choose>
 					<c:when
-						test="${requestScope.get(UtilParams.IS_ADD_FORM) == 1}">
+						test="${is_add_project_form == 1}">
 						<input type="hidden" value="${CommandEnum.ADD_PROJECT}"
 							name="command">
 						<div class="w3-container w3-center w3-green">
@@ -95,7 +97,7 @@
 
 				<c:choose>
 					<c:when
-							test="${requestScope.get(ProjectParams.PROJECT_TASKS) != null && !requestScope.get(ProjectParams.PROJECT_TASKS).isEmpty()}">
+							test="${runtime_tasks != null}">
 						<table class="w3-table w3-bordered w3-border">
 							<tr>
 								<th>Id</th>
@@ -106,7 +108,7 @@
 								<%--<th colspan="2">Actions</th>--%>
 							</tr>
 							<c:forEach
-									items="${requestScope.get(ProjectParams.PROJECT_TASKS)}"
+									items="${runtime_tasks}"
 									var="task">
 								<tr>
 									<td>${task.id}</td>
@@ -114,16 +116,16 @@
 									<td>${task.beginDate}</td>
 									<td>${task.endDate}</td>
 									<td>${task.employeeFullName}</td>
-									<%--<td>--%>
-										<%--<button--%>
-												<%--onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_TASK}&${TaskParams.TASK_ID}=${task.id}&${UtilParams.IS_ADD_FORM}=0'"--%>
-												<%--class="w3-button w3-indigo w3-round-large">Edit</button>--%>
-									<%--</td>--%>
-									<%--<td>--%>
-										<%--<button--%>
-												<%--onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.REMOVE_TASK}&${TaskParams.TASK_ID}=${task.id}'"--%>
-												<%--class="w3-button w3-red w3-round-large">Delete</button>--%>
-									<%--</td>--%>
+									<td>
+										<button
+												onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_RUNTIME_TASK}&${ProjectParams.PROJECT_ID}=${project.id}&${TaskParams.TASK_ID}=${task.id}&${UtilParams.IS_ADD_FORM}=0'"
+												class="w3-button w3-indigo w3-round-large">Edit</button>
+									</td>
+									<td>
+										<button
+												onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.REMOVE_RUNTIME_TASK}&${TaskParams.TASK_ID}=${task.id}'"
+												class="w3-button w3-red w3-round-large">Delete</button>
+									</td>
 								</tr>
 							</c:forEach>
 						</table>

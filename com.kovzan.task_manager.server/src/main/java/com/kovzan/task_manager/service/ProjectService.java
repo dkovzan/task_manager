@@ -2,6 +2,7 @@ package com.kovzan.task_manager.service;
 
 import com.kovzan.task_manager.dao.impl.ProjectDao;
 import com.kovzan.task_manager.entity.Project;
+import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.SQLException;
@@ -54,5 +55,8 @@ public class ProjectService {
 		}
 		return result;
 	}
-
+	
+	public static void addProjectWithTasks(Project projectFromRequest, List<Task> runtimeTasks) throws SQLException {
+		ProjectDao.getInstance().addProjectWithTasks(projectFromRequest, runtimeTasks);
+	}
 }

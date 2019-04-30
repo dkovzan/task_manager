@@ -57,6 +57,7 @@ public class TaskDao implements DaoBase<Task> {
 
 	@Override
 	public int add(Task task) throws SQLException {
+		int result = -1;
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(addTask);
 			statement.setString(1, task.getName());
@@ -68,18 +69,16 @@ public class TaskDao implements DaoBase<Task> {
 			statement.setString(7, task.getStatus().toString());
 			statement.executeUpdate();
 			ResultSet keys = statement.getGeneratedKeys();
-			int result;
 			if (keys.next()) {
 				result = keys.getInt(1);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-				return result;
 			}
 		}
-		return -1;
+		return result;
 	}
 
 	@Override
-	public int update(Task task) throws SQLException {
+	public void update(Task task) throws SQLException {
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(updateTask);
 			statement.setString(1, task.getName());
@@ -91,16 +90,9 @@ public class TaskDao implements DaoBase<Task> {
 			statement.setString(7, task.getStatus().toString());
 			statement.setInt(8, task.getId());
 			statement.executeUpdate();
-			int result;
-			ResultSet keys = statement.getGeneratedKeys();
-			if (keys.next()) {
-				result = keys.getInt(1);
-				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-				return result;
+			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 			}
 		}
-		return -1;
-	}
 
 	@Override
 	public void remove(Task task) throws SQLException {

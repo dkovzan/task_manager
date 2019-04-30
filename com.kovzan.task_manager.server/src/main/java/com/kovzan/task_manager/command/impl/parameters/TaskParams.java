@@ -15,4 +15,7 @@ public class TaskParams {
 	public static final String PRINTED_STATUSES = "printed_statuses";
 	public static final String PRINTED_TASKS = "printed_tasks";
 	public static final String PRINTED_EDIT_TASK = "printed_edit_task";
+	
+	public static final String PRINTED_RUNTIME_TASKS = "printed_runtime_tasks";
+	public static final String PRINTED_EDIT_RUNTIME_TASK = "printed_edit_runtime_task";
 }

@@ -3,6 +3,7 @@ package com.kovzan.task_manager.dao.impl;
 import com.kovzan.task_manager.connection.DBConnection;
 import com.kovzan.task_manager.dao.DaoBase;
 import com.kovzan.task_manager.entity.Project;
+import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.Connection;
@@ -39,6 +40,7 @@ public class ProjectDao implements DaoBase<Project> {
 
 	@Override
 	public int add(Project element) throws SQLException {
+		int result = -1;
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(addProject);
 			statement.setString(1, element.getName());
@@ -46,18 +48,16 @@ public class ProjectDao implements DaoBase<Project> {
 			statement.setString(3, element.getDescription());
 			statement.executeUpdate();
 			ResultSet keys = statement.getGeneratedKeys();
-			int result;
 			if(keys.next()) {
 				result = keys.getInt(1);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-				return result;
 			}
 		}
-		return -1;
+		return result;
 	}
 
 	@Override
-	public int update(Project element) throws SQLException {
+	public void update(Project element) throws SQLException {
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(updateProject);
 			statement.setString(1, element.getName());
@@ -65,15 +65,8 @@ public class ProjectDao implements DaoBase<Project> {
 			statement.setString(3, element.getDescription());
 			statement.setInt(4, element.getId());
 			statement.executeUpdate();
-			int result;
-			ResultSet keys = statement.getGeneratedKeys();
-			if(keys.next()) {
-				result = keys.getInt(1);
-				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-				return result;
-			}
+			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		}
-		return -1;
 	}
 
 	@Override
@@ -113,5 +106,18 @@ public class ProjectDao implements DaoBase<Project> {
 			}
 		}
 		return project;
+	}
+	
+	public int addProjectWithTasks(Project projectFromRequest, List<Task> runtimeTasks) throws SQLException {
+		int projectId = add(projectFromRequest);
+		addTasksToAddedProject(runtimeTasks, projectId);
+		return projectId;
+	}
+	
+	private void addTasksToAddedProject(List<Task> runtimeTasks, int projectId) throws SQLException {
+		for (Task runtimeTask : runtimeTasks) {
+			runtimeTask.setProjectId(projectId);
+			TaskDao.getInstance().add(runtimeTask);
+		}
 	}
 }

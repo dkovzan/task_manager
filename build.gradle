@@ -10,6 +10,7 @@ subprojects {
 
 group 'com.kovzan.task_manager'
 
+//Where to find dependencies of project repositories
 repositories {
     mavenCentral()
 }

@@ -6,6 +6,7 @@ import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.logger.LogConstant;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -37,6 +38,7 @@ public class EmployeeDao implements DaoBase<Employee> {
 
 	@Override
 	public int add(Employee element) throws SQLException {
+		int result = -1;
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(addEmployee);
 			statement.setString(1, element.getLastName());
@@ -44,19 +46,17 @@ public class EmployeeDao implements DaoBase<Employee> {
 			statement.setString(3, element.getMiddleName());
 			statement.setString(4, element.getPosition());
 			statement.executeUpdate();
-			int result;
 			ResultSet keys = statement.getGeneratedKeys();
 			if(keys.next()) {
 				result = keys.getInt(1);
 				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-				return result;
 			}
 		}
-		return -1;
+		return result;
 	}
 
 	@Override
-	public int update(Employee element) throws SQLException {
+	public void update(Employee element) throws SQLException {
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(updateEmployee);
 			statement.setString(1, element.getLastName());
@@ -65,17 +65,9 @@ public class EmployeeDao implements DaoBase<Employee> {
 			statement.setString(4, element.getPosition());
 			statement.setInt(5, element.getId());
 			statement.executeUpdate();
-			int result;
-			ResultSet keys = statement.getGeneratedKeys();
-			if(keys.next()) {
-				result = keys.getInt(1);
-				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-				return result;
+			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 			}
-
 		}
-		return -1;
-	}
 
 	@Override
 	public void remove(Employee element) throws SQLException {
@@ -88,7 +80,7 @@ public class EmployeeDao implements DaoBase<Employee> {
 
 	@Override
 	public List<Employee> findAll() throws SQLException {
-		List<Employee> employees = null;
+		List<Employee> employees = new ArrayList<>();
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(selectAllEmployees);
 			ResultSet resultSet = statement.executeQuery();
@@ -102,7 +94,7 @@ public class EmployeeDao implements DaoBase<Employee> {
 
 	@Override
 	public Employee findById(int employeeId) throws SQLException {
-		Employee employee = null;
+		Employee employee = new Employee();
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(selectEmployeeById);
 			statement.setInt(1, employeeId);

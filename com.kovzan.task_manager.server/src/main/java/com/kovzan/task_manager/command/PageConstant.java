@@ -12,4 +12,5 @@ public class PageConstant {
 	public static final String EDIT_EMPLOYEE_PAGE = "/WEB-INF/views/entity/Employee.jsp";
 
 	public static final String ERROR_PAGE = "/WEB-INF/views/entity/Error.jsp";
+	public static final String EDIT_RUNTIME_TASK_PAGE = "/WEB-INF/views/entity/RuntimeTask.jsp";
 }
