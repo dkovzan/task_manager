@@ -34,7 +34,6 @@ public class AddProjectCommand implements Command {
 			runtimeTasks = RuntimeTasksUtils.getRuntimeTasks(request);
 		}
 		try {
-			
 			projectFromRequest = ProjectUtils.buildProject(request);
 		} catch (ValidationException e) {
 			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);

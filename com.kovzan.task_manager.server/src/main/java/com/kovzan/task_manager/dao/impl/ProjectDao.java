@@ -5,11 +5,13 @@ import com.kovzan.task_manager.dao.DaoBase;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.logger.LogConstant;
+import com.kovzan.task_manager.service.TaskService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -106,6 +108,30 @@ public class ProjectDao implements DaoBase<Project> {
 			}
 		}
 		return project;
+	}
+	
+	public void updateProjectWithTasks(Project projectFromRequest, List<Task> runtimeTasks) throws SQLException {
+		update(projectFromRequest);
+		List<Task> tasksOfProjectFromDB = TaskService.findTasksByProjectId(projectFromRequest.getId());
+		List<Task> tasksToDelete = new ArrayList<>(tasksOfProjectFromDB);
+		for (Task runtimeTask : runtimeTasks) {
+			if (runtimeTask.getId().compareTo(0) >= 0) {
+				for (Task taskOfProjectFromDB : tasksOfProjectFromDB) {
+					if (taskOfProjectFromDB.getId().equals(runtimeTask.getId())) {
+						if (!taskOfProjectFromDB.equals(runtimeTask)) {
+							TaskService.updateTask(runtimeTask);
+						}
+						tasksToDelete.remove(taskOfProjectFromDB);
+					}
+				}
+			} else {
+				runtimeTask.setProjectId(projectFromRequest.getId());
+				TaskService.addTask(runtimeTask);
+			}
+		}
+		for (Task taskToDelete : tasksToDelete) {
+			TaskService.removeTask(taskToDelete);
+		}
 	}
 	
 	public int addProjectWithTasks(Project projectFromRequest, List<Task> runtimeTasks) throws SQLException {

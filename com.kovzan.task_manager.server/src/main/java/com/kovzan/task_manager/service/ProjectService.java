@@ -59,4 +59,8 @@ public class ProjectService {
 	public static void addProjectWithTasks(Project projectFromRequest, List<Task> runtimeTasks) throws SQLException {
 		ProjectDao.getInstance().addProjectWithTasks(projectFromRequest, runtimeTasks);
 	}
+	
+	public static void updateProjectWithTasks(Project projectFromRequest, List<Task> runtimeTasks) throws SQLException {
+		ProjectDao.getInstance().updateProjectWithTasks(projectFromRequest, runtimeTasks);
+	}
 }

@@ -105,7 +105,7 @@
 								<th>Begin Date</th>
 								<th>End Date</th>
 								<th>Assignee</th>
-								<%--<th colspan="2">Actions</th>--%>
+								<th colspan="2">Actions</th>
 							</tr>
 							<c:forEach
 									items="${runtime_tasks}"
