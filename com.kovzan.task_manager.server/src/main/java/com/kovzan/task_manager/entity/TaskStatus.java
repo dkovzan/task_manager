@@ -24,7 +24,7 @@ public enum TaskStatus {
 		return statusName;
 	}
 
-	void setStatusName(String statusName) {
+	private void setStatusName(String statusName) {
 		this.statusName = statusName;
 	}
 

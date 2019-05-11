@@ -96,7 +96,7 @@
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<c:if test="${invalidFields.containsKey(TaskParams.TASK_INVALID_DATE_RANGE)}">
-					<span style="color:red"><c:out value="${ParameterNameConstant.VALUE_INVALID_DATE_RANGE}"></c:out></span>
+					<span style="color:red"><c:out value="${TaskParams.VALUE_INVALID_DATE_RANGE}"></c:out></span>
 				</c:if>
 				<br> <label>End Date: <input type="text" placeholder="Enter end date (format: yyyy-mm-dd)"
 					name="${TaskParams.TASK_ENDDATE}"
