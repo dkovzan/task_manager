@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.kovzan.task_manager.command.ValidationException;
 import com.kovzan.task_manager.command.impl.parameters.ProjectParams;
+import com.kovzan.task_manager.dao.impl.ProjectDao;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.logger.LogConstant;
 
@@ -17,15 +18,21 @@ public class ProjectUtils {
 	
 	private static final String INCORRECT_DATA_MESSAGE = "Incorrect data are entered.";
 	
+	public static Project createProjectFromRequest(HttpServletRequest request) {
+		
+		Project project = new Project();
+		project.setId(Integer.parseInt(request.getParameter(ProjectParams.PROJECT_ID)));
+		project.setName(request.getParameter(ProjectParams.PROJECT_NAME));
+		project.setShortName(request.getParameter(ProjectParams.PROJECT_SHORTNAME));
+		project.setDescription(request.getParameter(ProjectParams.PROJECT_DESCRIPTION));
+		return project;
+	}
+	
 	public static Project buildProject(HttpServletRequest request) throws ValidationException, SQLException {
 		
 		Project project = new Project();
 		HashMap<String, String> invalidFields = new HashMap<>();
-		Integer id;
-		if (request.getParameter(ProjectParams.PROJECT_ID) != null) {
-			id = Integer.parseInt(request.getParameter(ProjectParams.PROJECT_ID));
-			project.setId(id);
-		}
+		project.setId(Integer.parseInt(request.getParameter(ProjectParams.PROJECT_ID)));
 		String name = request.getParameter(ProjectParams.PROJECT_NAME);
 		if (ProjectValidator.isProjectNameValid(name)) {
 			project.setName(name);
@@ -33,10 +40,16 @@ public class ProjectUtils {
 			invalidFields.put(ProjectParams.PROJECT_NAME, name);
 		}
 		String shortName = request.getParameter(ProjectParams.PROJECT_SHORTNAME);
-		if (ProjectValidator.isProjectShortNameValid(shortName)) {
-			project.setShortName(shortName);
+		if (ProjectDao.isProjectShortNameUnique(project.getId(), shortName)) {
+			if (ProjectValidator.isProjectShortNameValid(shortName)) {
+				project.setShortName(shortName);
+			} else {
+				invalidFields.put(ProjectParams.PROJECT_SHORTNAME, shortName);
+				
+			}
 		} else {
 			invalidFields.put(ProjectParams.PROJECT_SHORTNAME, shortName);
+			invalidFields.put(ProjectParams.PROJECT_SHORTNAME_NOT_UNIQUE, shortName);
 		}
 		String description = request.getParameter(ProjectParams.PROJECT_DESCRIPTION);
 		if (ProjectValidator.isProjectDescriptionValid(description)) {

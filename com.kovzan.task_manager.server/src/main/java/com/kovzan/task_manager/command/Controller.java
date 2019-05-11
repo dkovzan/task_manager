@@ -18,7 +18,9 @@ import java.util.logging.Level;
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
 
-	public static final String COMMAND = "command";
+	private static final String COMMAND = "command";
+	
+	private static final String SQL_ERROR_MESSAGE = "Oops... Database error has occured.";
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,17 +32,21 @@ public class Controller extends HttpServlet {
 		processRequest(req, resp);
 	}
 
-	private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException{
-		String command = req.getParameter(COMMAND);
+	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		String command = request.getParameter(COMMAND);
 		Command commandType = CommandEnum.valueOf(command.toUpperCase()).getCommand();
 		String page;
 		try {
-			page = commandType.execute(req);
-		} catch (Exception e) {
-			req.setAttribute(UtilParams.ERROR, e);
+			page = commandType.execute(request);
+		} catch (SQLException e) {
+			request.setAttribute(UtilParams.ERROR, SQL_ERROR_MESSAGE);
+			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
+			page = PageConstant.ERROR_PAGE;
+		}catch (Exception e) {
+			request.setAttribute(UtilParams.ERROR, e);
 			logger.log(Level.SEVERE, LogConstant.EXCEPTION, e);
 			page = PageConstant.ERROR_PAGE;
 		}
-		req.getRequestDispatcher(page).forward(req,resp);
+		request.getRequestDispatcher(page).forward(request,response);
 	}
 }

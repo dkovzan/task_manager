@@ -10,6 +10,7 @@
 </head>
 <body class="w3-light-grey">
 	<jsp:include page="/WEB-INF/views/common/Header.jsp"></jsp:include>
+	<c:set var="projects" value="${requestScope.get(ProjectParams.PRINTED_PROJECTS)}"></c:set>
 	<div class="w3-container w3-center w3-margin-bottom w3-padding">
 		<div class="w3-card-4">
 			<div class="w3-container w3-light-blue">
@@ -23,7 +24,7 @@
 			</div>
 			<c:choose>
 				<c:when
-					test="${requestScope.get(ProjectParams.PRINTED_PROJECTS) != null && !requestScope.get(ProjectParams.PRINTED_PROJECTS).isEmpty()}">
+					test="${projects != null && !projects.isEmpty()}">
 					<table class="w3-table w3-bordered w3-border">
 						<tr>
 							<th>Id</th>
@@ -33,7 +34,7 @@
 							<th colspan="2">Actions</th>
 						</tr>
 						<c:forEach
-							items="${requestScope.get(ProjectParams.PRINTED_PROJECTS)}"
+							items="${projects}"
 							var="project">
 							<tr>
 								<input type="hidden" name="${ProjectParams.PROJECT_ID}"

@@ -10,11 +10,11 @@ public class CommandService {
 		request.getSession().invalidate();
 	}
 	
-	public static void setEditProjectModeByProjectId(HttpServletRequest request, int projectId) {
-		if (projectId < 0) {
-			request.setAttribute(UtilParams.IS_ADD_FORM, 0);
-		} else {
-			request.setAttribute(UtilParams.IS_ADD_FORM, 1);
-		}
-	}
+//	public static void setEditProjectModeByProjectId(HttpServletRequest request, int projectId) {
+//		if (projectId == -1) {
+//			request.setAttribute(UtilParams.IS_ADD_FORM, 0);
+//		} else {
+//			request.setAttribute(UtilParams.IS_ADD_FORM, 1);
+//		}
+//	}
 }

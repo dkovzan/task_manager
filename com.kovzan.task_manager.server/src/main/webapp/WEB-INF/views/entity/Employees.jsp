@@ -10,7 +10,8 @@
 </head>
 <body class="w3-light-grey">
 	<jsp:include page="/WEB-INF/views/common/Header.jsp"></jsp:include>
-	<c:set var="error" value="${requestScope.get(ParameterNameConstant.ERROR)}"></c:set>
+	<c:set var="error" value="${requestScope.get(UtilParams.ERROR)}"></c:set>
+	<c:set var="employees" value="${requestScope.get(EmployeeParams.PRINTED_EMPLOYEES)}"></c:set>
 	<div class="w3-container w3-center w3-margin-bottom w3-padding">
 		<div class="w3-card-4">
 			<div class="w3-container w3-light-blue">
@@ -33,7 +34,7 @@
 
 			<c:choose>
 				<c:when
-					test="${requestScope.get(EmployeeParams.PRINTED_EMPLOYEES) != null && !requestScope.get(EmployeeParams.PRINTED_EMPLOYEES).isEmpty()}">
+					test="${employees != null && !employees.isEmpty()}">
 					<table class="w3-table w3-bordered w3-border">
 						<tr>
 							<th>Id</th>
@@ -44,7 +45,7 @@
 							<th colspan="2">Actions</th>
 						</tr>
 						<c:forEach
-							items="${requestScope.get(EmployeeParams.PRINTED_EMPLOYEES)}"
+							items="${employees}"
 							var="employee">
 							<tr>
 								<input type="hidden" name="${EmployeeParams.EMPLOYEE_ID}"

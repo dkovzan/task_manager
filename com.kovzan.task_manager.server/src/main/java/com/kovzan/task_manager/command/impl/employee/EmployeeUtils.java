@@ -4,7 +4,6 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 import java.util.HashMap;
 import java.util.logging.Level;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.kovzan.task_manager.command.ValidationException;

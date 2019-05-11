@@ -3,6 +3,7 @@
 <%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.ProjectParams"%>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.UtilParams"%>
+<%@ page import="com.kovzan.task_manager.command.impl.parameters.TaskParams"%>
 <html>
 <head>
 <title>Edit project</title>
@@ -13,26 +14,30 @@
 		<h1>Task Manager</h1>
 	</div>
 	<div class="w3-container w3-padding">
+		<div class="projectBlock">
 		<div class="w3-card-4">
 			<form action="controller" method="post"
 				class="w3-selection w3-light-grey w3-padding">
 				<c:set var="valid_error" value="${requestScope.get(UtilParams.VALIDATION_EXCEPTION)}"></c:set>
-				<c:set var="is_add_project_form" value="${requestScope.get(UtilParams.IS_ADD_FORM)}"></c:set>
 				<c:set var="runtime_tasks" value="${sessionScope.get(TaskParams.PRINTED_RUNTIME_TASKS)}"></c:set>
+				<c:set var="is_add_project_form" value="${sessionScope.get(UtilParams.IS_ADD_FORM)}"></c:set>
 				<c:choose>
 					<c:when test="${valid_error != null}">
 						<c:set var="project" value="${valid_error.getEntity()}"></c:set>
 						<c:set var="invalidFields" value="${valid_error.getInvalidFields()}"></c:set>
 					</c:when>
 					<c:otherwise>
-						<c:set var="project" value="${requestScope.get(ProjectParams.PRINTED_EDIT_PROJECT)}"></c:set>
+						<c:set var="project" value="${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT)}"></c:set>
 					</c:otherwise>
 				</c:choose>
 				<c:choose>
 					<c:when
-						test="${is_add_project_form == 1}">
+						test="${is_add_project_form == '1'}">
 						<input type="hidden" value="${CommandEnum.ADD_PROJECT}"
 							name="command">
+						<input type="hidden" id="${ProjectParams.PROJECT_ID}"
+							   name="${ProjectParams.PROJECT_ID}"
+							   value="-1">
 						<div class="w3-container w3-center w3-green">
 							<h2>ADD PROJECT</h2>
 						</div>
@@ -43,7 +48,7 @@
 						<div class="w3-container w3-center w3-green">
 							<h2>EDIT PROJECT</h2>
 						</div>
-						<label>ID: <input readonly
+						<label>ID: <input readonly id="${ProjectParams.PROJECT_ID}"
 							name="${ProjectParams.PROJECT_ID}"
 							value="${project.id}"
 							class="w3-input w3-animate-input w3-border w3-round-large"
@@ -52,7 +57,7 @@
 						<br>
 					</c:otherwise>
 				</c:choose>
-				<label>Name: <input placeholder="Write name" type="text"
+				<label>Name: <input id="${ProjectParams.PROJECT_NAME}" placeholder="Write name" type="text"
 					name="${ProjectParams.PROJECT_NAME}"
 					value="${project.name}"
 					class="w3-input w3-border w3-round-large"
@@ -61,7 +66,7 @@
 				<c:if test="${invalidFields.containsKey(ProjectParams.PROJECT_NAME)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
-				<br> <label>Short name: <input
+				<br> <label>Short name: <input id="${ProjectParams.PROJECT_SHORTNAME}"
 					placeholder="Write short name" type="text"
 					name="${ProjectParams.PROJECT_SHORTNAME}"
 					value="${project.shortName}"
@@ -71,7 +76,10 @@
 				<c:if test="${invalidFields.containsKey(ProjectParams.PROJECT_SHORTNAME)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
-				<br> <label>Description: <textarea
+				<c:if test="${invalidFields.containsKey(ProjectParams.PROJECT_SHORTNAME_NOT_UNIQUE)}">
+					<span style="color:red"><c:out value="${ProjectParams.PROJECT_SHORTNAME_NOT_UNIQUE_MESSAGE}"></c:out></span>
+				</c:if>
+				<br> <label>Description: <textarea id="${ProjectParams.PROJECT_DESCRIPTION}"
 						placeholder="Write description"
 						name="${ProjectParams.PROJECT_DESCRIPTION}"
 						class="w3-input w3-border w3-round-large"
@@ -81,6 +89,11 @@
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br>
+				<button type="submit"
+						class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
+				<a href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_PROJECTS}'
+				   class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</a>
+			</form>
 				
 				<c:choose>
 					<c:when
@@ -94,10 +107,17 @@
 						</div>
 					</c:when>
 				</c:choose>
+		</div>
+			<div class="tasksBlock">
+				<a id="addTask"
+				   href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_RUNTIME_TASK}
+				&${UtilParams.IS_ADD_FORM}=1'
+				   onclick="getParams(this.id)"
+				   class="w3-btn w3-yellow w3-round-large w3-margin-bottom">Add task</a>
 
 				<c:choose>
 					<c:when
-							test="${runtime_tasks != null}">
+							test="${runtime_tasks != null && !runtime_tasks.isEmpty()}">
 						<table class="w3-table w3-bordered w3-border">
 							<tr>
 								<th>Id</th>
@@ -117,14 +137,16 @@
 									<td>${task.endDate}</td>
 									<td>${task.employeeFullName}</td>
 									<td>
-										<button
-												onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_RUNTIME_TASK}&${ProjectParams.PROJECT_ID}=${project.id}&${TaskParams.TASK_ID}=${task.id}&${UtilParams.IS_ADD_FORM}=0'"
-												class="w3-button w3-indigo w3-round-large">Edit</button>
+										<a id="updateTask${task.id}"
+										   href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_RUNTIME_TASK}&${TaskParams.TASK_ID}=${task.id}&${UtilParams.IS_ADD_FORM}=0'
+										   onclick="getParams(this.id)"
+										   class="w3-button w3-indigo w3-round-large">Edit</a>
 									</td>
 									<td>
-										<button
-												onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.REMOVE_RUNTIME_TASK}&${TaskParams.TASK_ID}=${task.id}'"
-												class="w3-button w3-red w3-round-large">Delete</button>
+										<a id="deleteTask${task.id}"
+										   href='${pageContext.request.contextPath}controller?command=${CommandEnum.REMOVE_RUNTIME_TASK}&${TaskParams.TASK_ID}=${task.id}'
+										   onclick="getParams(this.id)"
+										   class="w3-button w3-red w3-round-large">Delete</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -139,17 +161,24 @@
 						<br>
 					</c:otherwise>
 				</c:choose>
-				
-				<button type="submit"
-					class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
-				<a href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_PROJECTS}'
-					class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</a>
-			</form>
+			</div>
 		</div>
 	</div>
 	<div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
 		<button class="w3-btn w3-round-large" onclick="location.href='../../../'">Back
 			to main</button>
 	</div>
+<script>
+function getParams(elemId) {
+    var element = document.getElementById(elemId);
+    var id = document.getElementById('project_id').value;
+    var name = document.getElementById('project_name').value;
+    var shortName = document.getElementById('project_shortName').value;
+    var description = document.getElementById('project_description').value;
+    var href = element.getAttribute('href');
+    var params = '&project_id=' + id + '&project_name=' + name + '&project_shortName=' + shortName+'&project_description=' + description;
+    element.setAttribute('href', href + params);
+}
+</script>
 </body>
 </html>

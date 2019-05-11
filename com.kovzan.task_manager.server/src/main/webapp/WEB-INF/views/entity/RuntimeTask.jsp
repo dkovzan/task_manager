@@ -132,11 +132,7 @@
         </select><br>
             <button type="submit"
                     class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
-            <a href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}
-            &${ProjectParams.PROJECT_ID}=${project.id}
-            &${ProjectParams.PROJECT_NAME}=${project.name}
-            &${ProjectParams.PROJECT_SHORTNAME}=${project.shortName}
-            &${ProjectParams.PROJECT_DESCRIPTION}=${project.description}'
+            <a href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).id}&${ProjectParams.PROJECT_NAME}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).name}&${ProjectParams.PROJECT_SHORTNAME}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).shortName}&${ProjectParams.PROJECT_DESCRIPTION}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).description}'
                class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</a>
         </form>
     </div>

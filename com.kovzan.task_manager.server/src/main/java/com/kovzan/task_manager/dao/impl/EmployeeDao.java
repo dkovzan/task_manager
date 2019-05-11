@@ -40,7 +40,7 @@ public class EmployeeDao implements DaoBase<Employee> {
 	public int add(Employee element) throws SQLException {
 		int result = -1;
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(addEmployee);
+			PreparedStatement statement = connection.prepareStatement(addEmployee, Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, element.getLastName());
 			statement.setString(2, element.getFirstName());
 			statement.setString(3, element.getMiddleName());
@@ -94,7 +94,7 @@ public class EmployeeDao implements DaoBase<Employee> {
 
 	@Override
 	public Employee findById(int employeeId) throws SQLException {
-		Employee employee = new Employee();
+		Employee employee = null;
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(selectEmployeeById);
 			statement.setInt(1, employeeId);

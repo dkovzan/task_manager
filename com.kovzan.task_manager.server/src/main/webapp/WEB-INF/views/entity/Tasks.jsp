@@ -10,6 +10,8 @@
 </head>
 <body class="w3-light-grey">
 	<jsp:include page="/WEB-INF/views/common/Header.jsp"></jsp:include>
+	<c:set var="tasks" value="${requestScope.get(TaskParams.PRINTED_TASKS)}"></c:set>
+	<c:set var="error" value="${requestScope.get(UtilParams.ERROR)}"></c:set>
 	<div class="w3-container w3-center w3-margin-bottom w3-padding">
 		<div class="w3-card-4">
 			<div class="w3-container w3-light-blue">
@@ -22,17 +24,17 @@
 					task</button>
 			</div>
 
-			<c:if test="${requestScope.get(UtilParams.ERROR) != null}">
+			<c:if test="${error != null}">
 				<div class="w3-panel w3-red w3-display-container w3-card-4 w3-round">
 					<span onclick="this.parentElement.style.display='none'" class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border w3-border-red w3-hover-border-grey">X
 					</span>
-					<h5>${requestScope.get(UtilParams.ERROR)}</h5>
+					<h5>${error}</h5>
 				</div>
 			</c:if>
 
 			<c:choose>
 				<c:when
-					test="${requestScope.get(TaskParams.PRINTED_TASKS) != null && !requestScope.get(TaskParams.PRINTED_TASKS).isEmpty()}">
+					test="${tasks != null && !tasks.isEmpty()}">
 					<table class="w3-table w3-bordered w3-border">
 						<tr>
 							<th>Id</th>
@@ -44,7 +46,7 @@
 							<th colspan="2">Actions</th>
 						</tr>
 						<c:forEach
-							items="${requestScope.get(TaskParams.PRINTED_TASKS)}"
+							items="${tasks}"
 							var="task">
 							<tr>
 								<input type="hidden" name="${TaskParams.TASK_ID}"

@@ -2,6 +2,7 @@ package com.kovzan.task_manager.command.impl.task;
 
 import static com.kovzan.task_manager.logger.Log.logger;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.kovzan.task_manager.command.ValidationException;
 import com.kovzan.task_manager.command.impl.parameters.TaskParams;
+import com.kovzan.task_manager.dao.impl.EmployeeDao;
+import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.entity.TaskStatus;
 import com.kovzan.task_manager.logger.LogConstant;
@@ -19,7 +22,7 @@ public class TaskUtils {
 	private static final String INCORRECT_DATA_MESSAGE = "Incorrect data are entered.";
 	private static final String DATES_ARE_NOT_IN_RANGE = "Begin date should be earlier then end date.";
 	
-	public static Task buildTask(HttpServletRequest request) throws ValidationException {
+	public static Task buildTask(HttpServletRequest request) throws ValidationException, SQLException {
 		
 		Task task = new Task();
 		HashMap<String, String> invalidFields = new HashMap<>();
@@ -64,13 +67,21 @@ public class TaskUtils {
 			}
 		}
 		task.setProjectId(Integer.parseInt(request.getParameter(TaskParams.TASK_PROJECT_ID)));
-		task.setEmployeeId(Integer.parseInt(request.getParameter(TaskParams.TASK_EMPLOYEE_ID)));
+		int employeeId = Integer.parseInt(request.getParameter(TaskParams.TASK_EMPLOYEE_ID));
+		task.setEmployeeId(employeeId);
+		task.setEmployeeFullName(getEmployeeFullNameById(employeeId));
 		task.setStatus(TaskStatus.valueOf(request.getParameter(TaskParams.TASK_STATUS)));
 		if(!invalidFields.isEmpty()) {
 			throw new ValidationException(INCORRECT_DATA_MESSAGE, task, invalidFields);
 		}
 		logger.log(Level.INFO, LogConstant.OBJECT_CREATED + task.toString());
 		return task;
+	}
+	
+	private static String getEmployeeFullNameById(int employeeId) throws SQLException {
+		EmployeeDao employeeDao = new EmployeeDao();
+		Employee employee = employeeDao.findById(employeeId);
+		return employee.getFirstName() + " " + employee.getLastName();
 	}
 
 }

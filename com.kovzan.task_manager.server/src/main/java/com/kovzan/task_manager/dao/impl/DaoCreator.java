@@ -60,6 +60,7 @@ public class DaoCreator {
 			task.setProjectShortName(resultSet.getString(5));
 			task.setStatus(TaskStatus.valueOf(resultSet.getString(6)));
 			task.setEmployeeFullName(resultSet.getString(8));
+			task.setEmployeeId(resultSet.getInt(9));
 			tasks.add(task);
 		}
 		while (resultSet.next());

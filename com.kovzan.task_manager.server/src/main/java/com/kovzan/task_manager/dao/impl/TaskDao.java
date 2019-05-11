@@ -5,11 +5,7 @@ import com.kovzan.task_manager.dao.DaoBase;
 import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.logger.LogConstant;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,7 +26,7 @@ public class TaskDao implements DaoBase<Task> {
 			"DELETE FROM task " +
 				"WHERE id = ?";
 	private static final String selectAllTasksWithRefs =
-			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname " +
+			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname, t.employeeid " +
 				"FROM task t " +
 				"LEFT JOIN project p ON p.id = t.projectid " +
 				"LEFT JOIN employee e ON e.id = t.employeeid ORDER BY t.id";
@@ -39,12 +35,12 @@ public class TaskDao implements DaoBase<Task> {
 			"FROM task " +
 				"WHERE id = ?";
 	private static final String selectTasksByEmployeeId =
-			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname FROM task t " +
+			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname, t.employeeid FROM task t " +
 				"LEFT JOIN project p ON p.id = t.projectid " +
 				"LEFT JOIN employee e ON e.id = t.employeeid " +
 					"WHERE t.employeeid = ? ORDER BY t.id";
 	private static final String selectTasksByProjectId =
-			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname FROM task t " +
+			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname, t.employeeid FROM task t " +
 				"LEFT JOIN project p ON p.id = t.projectid " +
 				"LEFT JOIN employee e ON e.id = t.employeeid " +
 					"WHERE t.projectid = ? ORDER BY t.id";
@@ -59,7 +55,7 @@ public class TaskDao implements DaoBase<Task> {
 	public int add(Task task) throws SQLException {
 		int result = -1;
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(addTask);
+			PreparedStatement statement = connection.prepareStatement(addTask, Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, task.getName());
 			statement.setInt(2, task.getWork());
 			statement.setDate(3, Date.valueOf(task.getBeginDate()));

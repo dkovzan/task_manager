@@ -4,14 +4,12 @@ import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.ValidationException;
 import com.kovzan.task_manager.command.impl.parameters.EmployeeParams;
-import com.kovzan.task_manager.command.impl.parameters.ProjectParams;
 import com.kovzan.task_manager.command.impl.parameters.TaskParams;
 import com.kovzan.task_manager.command.impl.parameters.UtilParams;
-import com.kovzan.task_manager.command.impl.service.CommandService;
 import com.kovzan.task_manager.command.impl.task.TaskUtils;
+import com.kovzan.task_manager.dao.impl.EmployeeDao;
 import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.entity.TaskStatus;
-import com.kovzan.task_manager.service.EmployeeService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -32,12 +30,13 @@ public class AddRuntimeTask implements Command {
 			}
 			RuntimeTasksUtils.addRuntimeTask(runtimeTasks, taskFromRequest);
 			request.getSession().setAttribute(TaskParams.PRINTED_RUNTIME_TASKS, runtimeTasks);
-			CommandService.setEditProjectModeByProjectId(request, taskFromRequest.getProjectId());
+//			CommandService.setEditProjectModeByProjectId(request, taskFromRequest.getProjectId());
 		} catch (ValidationException e) {
+			EmployeeDao employeeDao = new EmployeeDao();
 			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);
-			request.setAttribute(EmployeeParams.PRINTED_EMPLOYEES, EmployeeService.findAllEmployees());
+			request.setAttribute(EmployeeParams.PRINTED_EMPLOYEES, employeeDao.findAll());
 			request.setAttribute(TaskParams.PRINTED_STATUSES, Arrays.asList(TaskStatus.values()));
-			request.setAttribute(UtilParams.IS_ADD_FORM, 1);
+//			request.setAttribute(UtilParams.IS_ADD_FORM, 1);
 			return PageConstant.EDIT_RUNTIME_TASK_PAGE;
 		}
 		

@@ -5,12 +5,8 @@ import com.kovzan.task_manager.dao.DaoBase;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.logger.LogConstant;
-import com.kovzan.task_manager.service.TaskService;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -33,18 +29,26 @@ public class ProjectDao implements DaoBase<Project> {
 	private static final String selectProjectById =
 			"SELECT id, name, shortname, description FROM project " +
 			"WHERE id = ?";
-
-	private static ProjectDao instance = new ProjectDao();
-
-	public static ProjectDao getInstance() {
-		return instance;
+	
+	public static boolean isProjectShortNameUnique(int projectId, String projectShortName) throws SQLException {
+		ProjectDao projectDao = new ProjectDao();
+		List<Project> projects = projectDao.findAll();
+		if (projects != null) {
+			projects.removeIf(p -> p.getId().equals(projectId));
+			for (Project projectFromDB : projects) {
+				if (projectFromDB.getShortName().equals(projectShortName)) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
-
+	
 	@Override
 	public int add(Project element) throws SQLException {
 		int result = -1;
 		try (Connection connection = DBConnection.getDBConnection()) {
-			PreparedStatement statement = connection.prepareStatement(addProject);
+			PreparedStatement statement = connection.prepareStatement(addProject, Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, element.getName());
 			statement.setString(2, element.getShortName());
 			statement.setString(3, element.getDescription());
@@ -83,7 +87,7 @@ public class ProjectDao implements DaoBase<Project> {
 
 	@Override
 	public List<Project> findAll() throws SQLException {
-		List<Project> projects = null;
+		List<Project> projects = new ArrayList<>();
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(selectAllProjects);
 			ResultSet resultSet = statement.executeQuery();
@@ -112,25 +116,27 @@ public class ProjectDao implements DaoBase<Project> {
 	
 	public void updateProjectWithTasks(Project projectFromRequest, List<Task> runtimeTasks) throws SQLException {
 		update(projectFromRequest);
-		List<Task> tasksOfProjectFromDB = TaskService.findTasksByProjectId(projectFromRequest.getId());
+		TaskDao taskDao = new TaskDao();
+		List<Task> tasksOfProjectFromDB = taskDao.findTasksByProjectId(projectFromRequest.getId());
 		List<Task> tasksToDelete = new ArrayList<>(tasksOfProjectFromDB);
 		for (Task runtimeTask : runtimeTasks) {
 			if (runtimeTask.getId().compareTo(0) >= 0) {
 				for (Task taskOfProjectFromDB : tasksOfProjectFromDB) {
 					if (taskOfProjectFromDB.getId().equals(runtimeTask.getId())) {
 						if (!taskOfProjectFromDB.equals(runtimeTask)) {
-							TaskService.updateTask(runtimeTask);
+							runtimeTask.setProjectId(projectFromRequest.getId());
+							taskDao.update(runtimeTask);
 						}
 						tasksToDelete.remove(taskOfProjectFromDB);
 					}
 				}
 			} else {
 				runtimeTask.setProjectId(projectFromRequest.getId());
-				TaskService.addTask(runtimeTask);
+				taskDao.add(runtimeTask);
 			}
 		}
 		for (Task taskToDelete : tasksToDelete) {
-			TaskService.removeTask(taskToDelete);
+			taskDao.remove(taskToDelete);
 		}
 	}
 	
