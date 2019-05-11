@@ -14,8 +14,7 @@
 		<h1>Task Manager</h1>
 	</div>
 	<div class="w3-container w3-padding">
-		<div class="projectBlock">
-		<div class="w3-card-4">
+		<div class="projectBlock w3-card-4">
 			<form action="controller" method="post"
 				class="w3-selection w3-light-grey w3-padding">
 				<c:set var="valid_error" value="${requestScope.get(UtilParams.VALIDATION_EXCEPTION)}"></c:set>
@@ -95,20 +94,19 @@
 				   class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</a>
 			</form>
 				
-				<c:choose>
-					<c:when
-						test="${requestScope.get(UtilParams.ERROR) != null}">
-						<div
-							class="w3-panel w3-red w3-display-container w3-card-4 w3-round">
-							<span onclick="this.parentElement.style.display='none'"
-								class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border w3-border-red w3-hover-border-grey">X
-							</span>
-							<h5>${requestScope.get(UtilParams.ERROR)}</h5>
-						</div>
-					</c:when>
-				</c:choose>
+			<c:choose>
+				<c:when test="${requestScope.get(UtilParams.ERROR) != null}">
+					<div class="w3-panel w3-red w3-display-container w3-card-4 w3-round">
+						<span onclick="this.parentElement.style.display='none'"
+							  class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border w3-border-red w3-hover-border-grey">X</span>
+						<h5>${requestScope.get(UtilParams.ERROR)}</h5>
+					</div>
+				</c:when>
+			</c:choose>
 		</div>
-			<div class="tasksBlock">
+	</div>
+	<div class="w3-container w3-padding">
+			<div class="tasksBlock w3-card-4 w3-padding">
 				<a id="addTask"
 				   href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_RUNTIME_TASK}
 				&${UtilParams.IS_ADD_FORM}=1'
@@ -162,7 +160,6 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
-		</div>
 	</div>
 	<div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
 		<button class="w3-btn w3-round-large" onclick="location.href='../../../'">Back
