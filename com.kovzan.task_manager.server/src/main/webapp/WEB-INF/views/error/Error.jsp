@@ -12,7 +12,7 @@
 			<h2>Error page</h2>
 		</div>
 		<div class="w3-panel w3-pale-red">
-			<p>${UtilParams.ERROR}</p>
+			<p>${requestScope.get(UtilParams.ERROR)}</p>
 			<p>
 				<xmp>${pageContext.exception}</xmp>
 			</p>
