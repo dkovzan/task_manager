@@ -17,45 +17,45 @@
 				<h2>Projects overview</h2>
 			</div>
 			<div class="w3-bar w3-padding-large w3-padding-24">
-				<button
-					class="w3-button w3-hover-grey w3-round-large w3-large w3-green"
+				<button class="w3-button w3-hover-grey w3-round-large w3-large w3-green"
 					onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=-1&${UtilParams.IS_ADD_FORM}=1&${UtilParams.IS_CLEAN_SESSION_NEEDED}=true'">Add
 					project</button>
 			</div>
 			<c:choose>
-				<c:when
-					test="${projects != null && !projects.isEmpty()}">
-					<table class="w3-table w3-bordered w3-border">
-						<tr>
-							<th>Id</th>
-							<th>Name</th>
-							<th>Short Name</th>
-							<th>Description</th>
-							<th colspan="2">Actions</th>
-						</tr>
-						<c:forEach
-							items="${projects}"
-							var="project">
+				<c:when test="${projects != null && !projects.isEmpty()}">
+					<div class="w3-padding">
+						<table class="w3-table w3-bordered w3-border">
 							<tr>
-								<input type="hidden" name="${ProjectParams.PROJECT_ID}"
-									value="${project.id}">
-								<td>${project.id}</td>
-								<td>${project.name}</td>
-								<td>${project.shortName}</td>
-								<td>${project.description}</td>
-								<td>
-									<button
-										onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=${project.id}&${UtilParams.IS_ADD_FORM}=0&${UtilParams.IS_CLEAN_SESSION_NEEDED}=true'"
-										class="w3-button w3-indigo w3-round-large">Edit</button>
-								</td>
-								<td>
-									<button
-										onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.REMOVE_PROJECT}&${ProjectParams.PROJECT_ID}=${project.id}'"
-										class="w3-button w3-red w3-round-large">Delete</button>
-								</td>
+								<%--<th>Id</th>--%>
+								<th>Name</th>
+								<th>Short Name</th>
+								<th>Description</th>
+								<th colspan="2"></th>
 							</tr>
-						</c:forEach>
-					</table>
+							<c:forEach
+								items="${projects}"
+								var="project">
+								<tr>
+									<input type="hidden" name="${ProjectParams.PROJECT_ID}"
+										value="${project.id}">
+									<%--<td>${project.id}</td>--%>
+									<td>${project.name}</td>
+									<td>${project.shortName}</td>
+									<td>${project.description}</td>
+									<td>
+										<button
+											onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=${project.id}&${UtilParams.IS_ADD_FORM}=0&${UtilParams.IS_CLEAN_SESSION_NEEDED}=true'"
+											class="w3-button w3-indigo w3-round-large">Edit</button>
+									</td>
+									<td>
+										<button
+											onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.REMOVE_PROJECT}&${ProjectParams.PROJECT_ID}=${project.id}'"
+											class="w3-button w3-red w3-round-large">Delete</button>
+									</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</div>
 				</c:when>
 				<c:otherwise>
 					<div

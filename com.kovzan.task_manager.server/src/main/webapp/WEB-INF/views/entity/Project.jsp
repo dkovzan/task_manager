@@ -40,6 +40,7 @@
 						<div class="w3-container w3-center w3-green">
 							<h2>ADD PROJECT</h2>
 						</div>
+						<br>
 					</c:when>
 					<c:otherwise>
 						<input type="hidden" value="${CommandEnum.UPDATE_PROJECT}"
@@ -47,16 +48,16 @@
 						<div class="w3-container w3-center w3-green">
 							<h2>EDIT PROJECT</h2>
 						</div>
-						<label>ID: <input readonly id="${ProjectParams.PROJECT_ID}"
+						<%--<label>ID:</label>--%>
+						<input readonly type="hidden" id="${ProjectParams.PROJECT_ID}"
 							name="${ProjectParams.PROJECT_ID}"
 							value="${project.id}"
 							class="w3-input w3-border w3-round-large"
 							style="width: 30%">
-						</label>
 						<br>
 					</c:otherwise>
 				</c:choose>
-				<label>Name: <input id="${ProjectParams.PROJECT_NAME}" placeholder="Write name" type="text"
+				<label>Name: <input id="${ProjectParams.PROJECT_NAME}" placeholder="Enter name" type="text"
 					name="${ProjectParams.PROJECT_NAME}"
 					value="${project.name}"
 					class="w3-input w3-border w3-round-large"
@@ -66,7 +67,7 @@
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br> <label>Short name: <input id="${ProjectParams.PROJECT_SHORTNAME}"
-					placeholder="Write short name" type="text"
+					placeholder="Enter short name" type="text"
 					name="${ProjectParams.PROJECT_SHORTNAME}"
 					value="${project.shortName}"
 					class="w3-input w3-border w3-round-large"
@@ -79,7 +80,7 @@
 					<span style="color:red"><c:out value="${ProjectParams.PROJECT_SHORTNAME_NOT_UNIQUE_MESSAGE}"></c:out></span>
 				</c:if>
 				<br> <label>Description: <textarea id="${ProjectParams.PROJECT_DESCRIPTION}"
-						placeholder="Write description"
+						placeholder="Enter description"
 						name="${ProjectParams.PROJECT_DESCRIPTION}"
 						class="w3-input w3-border w3-round-large"
 						style="width: 30%; resize: none">${project.description}</textarea>
@@ -118,18 +119,18 @@
 							test="${runtime_tasks != null && !runtime_tasks.isEmpty()}">
 						<table class="w3-table w3-bordered w3-border">
 							<tr>
-								<th>Id</th>
+								<%--<th>Id</th>--%>
 								<th>Name</th>
 								<th>Begin Date</th>
 								<th>End Date</th>
 								<th>Assignee</th>
-								<th colspan="2">Actions</th>
+								<th colspan="2"></th>
 							</tr>
 							<c:forEach
 									items="${runtime_tasks}"
 									var="task">
 								<tr>
-									<td>${task.id}</td>
+									<%--<td>${task.id}</td>--%>
 									<td>${task.name}</td>
 									<td>${task.beginDate}</td>
 									<td>${task.endDate}</td>

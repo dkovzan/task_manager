@@ -37,6 +37,7 @@
                     <div class="w3-container w3-center w3-green">
                         <h2>ADD TASK</h2>
                     </div>
+                    <br>
                 </c:when>
                 <c:otherwise>
                     <input type="hidden" value="${CommandEnum.UPDATE_RUNTIME_TASK}"
@@ -44,82 +45,83 @@
                     <div class="w3-container w3-center w3-green">
                         <h2>EDIT TASK</h2>
                     </div>
-                    <label>ID: <input readonly
-                                      name="${TaskParams.TASK_ID}"
-                                      value="${task.id}"
-                                      class="w3-input w3-animate-input w3-border w3-round-large"
-                                      style="width: 30%">
-                    </label>
+                    <%--<label>ID:</label>--%>
+                    <input readonly type="hidden" name="${TaskParams.TASK_ID}"
+                           value="${task.id}"
+                           class="w3-input w3-animate-input w3-border w3-round-large"
+                           style="width: 30%">
                     <br>
                 </c:otherwise>
             </c:choose>
 
-            <label>Project:</label><br> <select
-                class="w3-select w3-margin-bottom"
-                name="${TaskParams.TASK_PROJECT_ID}" style="width: 30%">
-            <option value="${project.id}">${project.shortName}</option>
-        </select>
-        <br> <label>Name: <input placeholder="Write name"
-                                          type="text" name="${TaskParams.TASK_NAME}"
-                                          value="${task.name}"
-                                          class="w3-input w3-border w3-round-large"
-                                          style="width: 30%">
-        </label>
+            <label>Project:</label>
+            <br>
+            <select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_PROJECT_ID}"
+                    style="width: 30%">
+                <option value="${project.id}">${project.shortName}</option>
+            </select>
+            <br>
+            <label>Name:
+                <input placeholder="Enter name" type="text" name="${TaskParams.TASK_NAME}"
+                       value="${task.name}" class="w3-input w3-border w3-round-large"
+                       style="width: 30%">
+            </label>
             <c:if test="${invalidFields.containsKey(TaskParams.TASK_NAME)}">
                 <span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
             </c:if>
-            <br> <label>Work: <input
-                placeholder="Write work (natural number)" type="text"
-                name="${TaskParams.TASK_WORK}"
-                value="${task.work}"
-                class="w3-input w3-border w3-round-large"
-                style="width: 30%">
-        </label>
+            <br>
+            <label>Work:
+                <input placeholder="Enter work (natural number)" type="text"
+                name="${TaskParams.TASK_WORK}" value="${task.work}"
+                class="w3-input w3-border w3-round-large" style="width: 30%">
+            </label>
             <c:if test="${invalidFields.containsKey(TaskParams.TASK_WORK)}">
                 <span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
             </c:if>
-            <br> <label>Begin Date: <input type="text" placeholder="Enter begin date (format: yyyy-mm-dd)"
-                                           name="${TaskParams.TASK_BEGINDATE}"
-                                           value="${task.beginDate}"
-                                           class="w3-input w3-border w3-round-large" style="width: 30%">
-        </label>
+            <br>
+            <label>Begin Date:
+                <input type="text" placeholder="Enter begin date (format: yyyy-mm-dd)"
+                       name="${TaskParams.TASK_BEGINDATE}" value="${task.beginDate}"
+                       class="w3-input w3-border w3-round-large" style="width: 30%">
+            </label>
             <c:if test="${invalidFields.containsKey(TaskParams.TASK_BEGINDATE)}">
                 <span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
             </c:if>
             <c:if test="${invalidFields.containsKey(TaskParams.TASK_INVALID_DATE_RANGE)}">
                 <span style="color:red"><c:out value="${TaskParams.VALUE_INVALID_DATE_RANGE}"></c:out></span>
             </c:if>
-            <br> <label>End Date: <input type="text" placeholder="Enter end date (format: yyyy-mm-dd)"
-                                         name="${TaskParams.TASK_ENDDATE}"
-                                         value="${task.endDate}"
-                                         class="w3-input w3-border w3-round-large" style="width: 30%">
-        </label>
+            <br>
+            <label>End Date:
+                <input type="text" placeholder="Enter end date (format: yyyy-mm-dd)"
+                       name="${TaskParams.TASK_ENDDATE}"
+                       value="${task.endDate}"
+                       class="w3-input w3-border w3-round-large" style="width: 30%">
+            </label>
             <c:if test="${invalidFields.containsKey(TaskParams.TASK_ENDDATE)}">
                 <span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
             </c:if>
-            <br> <label>Assignee:</label><br> <select
-                class="w3-select w3-margin-bottom"
-                name="${TaskParams.TASK_EMPLOYEE_ID}" style="width: 30%">
-            <c:forEach
-                    items="${requestScope.get(EmployeeParams.PRINTED_EMPLOYEES)}"
-                    var="employee">
+            <br>
+            <label>Assignee:</label>
+            <br>
+            <select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_EMPLOYEE_ID}"
+                    style="width: 30%">
+            <c:forEach items="${requestScope.get(EmployeeParams.PRINTED_EMPLOYEES)}" var="employee">
                 <c:choose>
                     <c:when test="${task.employeeId == employee.id}">
-                        <option selected value="${employee.id}">${employee.firstName}
-                                ${employee.lastName}</option>
+                        <option selected value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
                     </c:when>
                     <c:otherwise>
-                        <option value="${employee.id}">${employee.firstName}
-                                ${employee.lastName}</option>
+                        <option value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
-        </select><br> <label>Status:</label><br> <select
-                class="w3-select w3-margin-bottom"
-                name="${TaskParams.TASK_STATUS}" style="width: 30%">
-            <c:forEach
-                    items="${requestScope.get(TaskParams.PRINTED_STATUSES)}"
-                    var="status">
+            </select>
+            <br>
+            <label>Status:</label>
+            <br>
+            <select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_STATUS}"
+                    style="width: 30%">
+            <c:forEach items="${requestScope.get(TaskParams.PRINTED_STATUSES)}" var="status">
                 <c:choose>
                     <c:when test="${task.getStatus().equals(status)}">
                         <option selected value="${status}">${status.getStatusName()}</option>
@@ -129,7 +131,8 @@
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
-        </select><br>
+            </select>
+            <br>
             <button type="submit"
                     class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
             <a href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).id}&${ProjectParams.PROJECT_NAME}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).name}&${ProjectParams.PROJECT_SHORTNAME}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).shortName}&${ProjectParams.PROJECT_DESCRIPTION}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).description}'

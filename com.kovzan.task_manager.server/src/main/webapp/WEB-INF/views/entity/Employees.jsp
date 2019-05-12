@@ -18,8 +18,7 @@
 				<h2>Employees overview</h2>
 			</div>
 			<div class="w3-bar w3-padding-large w3-padding-24">
-				<button
-					class="w3-button w3-hover-grey w3-round-large w3-large w3-green"
+				<button class="w3-button w3-hover-grey w3-round-large w3-large w3-green"
 					onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&${UtilParams.IS_ADD_FORM}=1'">Add
 					employee</button>
 			</div>
@@ -33,45 +32,41 @@
 			</c:if>
 
 			<c:choose>
-				<c:when
-					test="${employees != null && !employees.isEmpty()}">
-					<table class="w3-table w3-bordered w3-border">
-						<tr>
-							<th>Id</th>
-							<th>Last Name</th>
-							<th>First Name</th>
-							<th>Middle Name</th>
-							<th>Position</th>
-							<th colspan="2">Actions</th>
-						</tr>
-						<c:forEach
-							items="${employees}"
-							var="employee">
+				<c:when test="${employees != null && !employees.isEmpty()}">
+					<div class="w3-padding">
+						<table class="w3-table w3-bordered w3-border">
 							<tr>
-								<input type="hidden" name="${EmployeeParams.EMPLOYEE_ID}"
-									value="${employee.id}">
-								<td>${employee.id}</td>
-								<td>${employee.lastName}</td>
-								<td>${employee.firstName}</td>
-								<td>${employee.middleName}</td>
-								<td>${employee.position}</td>
-								<td>
-									<button
-										onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&${EmployeeParams.EMPLOYEE_ID}=${employee.id}&${UtilParams.IS_ADD_FORM}=0'"
-										class="w3-button w3-indigo w3-round-large">Edit</button>
-								</td>
-								<td>
-									<button
-										onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.REMOVE_EMPLOYEE}&${EmployeeParams.EMPLOYEE_ID}=${employee.id}'"
-										class="w3-button w3-red w3-round-large">Delete</button>
-								</td>
+								<%--<th>Id</th>--%>
+								<th>Last Name</th>
+								<th>First Name</th>
+								<th>Middle Name</th>
+								<th>Position</th>
+								<th colspan="2"></th>
 							</tr>
-						</c:forEach>
-					</table>
+							<c:forEach items="${employees}" var="employee">
+								<tr>
+									<input type="hidden" name="${EmployeeParams.EMPLOYEE_ID}"
+										value="${employee.id}">
+									<%--<td>${employee.id}</td>--%>
+									<td>${employee.lastName}</td>
+									<td>${employee.firstName}</td>
+									<td>${employee.middleName}</td>
+									<td>${employee.position}</td>
+									<td>
+										<button onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&${EmployeeParams.EMPLOYEE_ID}=${employee.id}&${UtilParams.IS_ADD_FORM}=0'"
+											class="w3-button w3-indigo w3-round-large">Edit</button>
+									</td>
+									<td>
+										<button onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.REMOVE_EMPLOYEE}&${EmployeeParams.EMPLOYEE_ID}=${employee.id}'"
+											class="w3-button w3-red w3-round-large">Delete</button>
+									</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</div>
 				</c:when>
 				<c:otherwise>
-					<div
-						class="w3-panel w3-blue w3-display-container w3-card-4 w3-round">
+					<div class="w3-panel w3-blue w3-display-container w3-card-4 w3-round">
 						<h5>There are no employees yet!</h5>
 					</div>
 				</c:otherwise>
@@ -79,8 +74,7 @@
 		</div>
 	</div>
 	<div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
-		<button class="w3-btn w3-round-large" onclick="location.href='../../../'">Back
-			to main</button>
+		<button class="w3-btn w3-round-large" onclick="location.href='../../../'">Back to main</button>
 	</div>
 </body>
 </html>

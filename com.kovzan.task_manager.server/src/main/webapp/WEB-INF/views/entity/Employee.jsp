@@ -34,6 +34,7 @@
 						<div class="w3-container w3-center w3-green">
 							<h2>ADD EMPLOYEE</h2>
 						</div>
+						<br>
 					</c:when>
 					<c:otherwise>
 						<input type="hidden" value="${CommandEnum.UPDATE_EMPLOYEE}"
@@ -41,17 +42,15 @@
 						<div class="w3-container w3-center w3-green">
 							<h2>EDIT EMPLOYEE</h2>
 						</div>
-						<label>ID: <input readonly
-							name="${EmployeeParams.EMPLOYEE_ID}"
-							value="${employee.id}"
-							class="w3-input w3-border w3-round-large"
+						<%--<label>ID: </label>--%>
+						<input readonly type="hidden" name="${EmployeeParams.EMPLOYEE_ID}"
+							value="${employee.id}" class="w3-input w3-border w3-round-large"
 							style="width: 30%">
-						</label>
 						<br>
 					</c:otherwise>
 				</c:choose>
 				<label>First name: 
-				<input placeholder="Write first name"
+				<input placeholder="Enter first name"
 					type="text"
 					name="${EmployeeParams.EMPLOYEE_FIRSTNAME}"
 					value="${employee.firstName}"
@@ -61,30 +60,29 @@
 				<c:if test="${invalidFields.containsKey(EmployeeParams.EMPLOYEE_FIRSTNAME)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
-				<br> <label>Last name: <input
-					placeholder="Write last name" type="text"
-					name="${EmployeeParams.EMPLOYEE_LASTNAME}"
-					value="${employee.lastName}"
-					class="w3-input w3-border w3-round-large"
+				<br>
+				<label>Last name:
+					<input placeholder="Enter last name" type="text" name="${EmployeeParams.EMPLOYEE_LASTNAME}"
+					value="${employee.lastName}" class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
 				<c:if test="${invalidFields.containsKey(EmployeeParams.EMPLOYEE_LASTNAME)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
-				<br> <label>Middle name: <input
-					placeholder="Write middle name (optional)" type="text"
-					name="${EmployeeParams.EMPLOYEE_MIDDLENAME}"
-					value="${employee.middleName}"
+				<br>
+				<label>Middle name:
+					<input placeholder="Enter middle name (optional)" type="text"
+					name="${EmployeeParams.EMPLOYEE_MIDDLENAME}" value="${employee.middleName}"
 					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
 				<c:if test="${invalidFields.containsKey(EmployeeParams.EMPLOYEE_MIDDLENAME)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
-				<br> <label>Position: <input
-					placeholder="Write position" type="text"
-					name="${EmployeeParams.EMPLOYEE_POSITION}"
-					value="${employee.position}"
+				<br>
+				<label>Position:
+					<input placeholder="Enter position" type="text"
+					name="${EmployeeParams.EMPLOYEE_POSITION}" value="${employee.position}"
 					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>

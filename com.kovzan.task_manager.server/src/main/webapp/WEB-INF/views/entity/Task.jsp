@@ -16,8 +16,7 @@
 	</div>
 	<div class="w3-container w3-padding">
 		<div class="w3-card-4">
-			<form action="controller" method="post"
-				class="w3-selection w3-light-grey w3-padding">
+			<form action="controller" method="post" class="w3-selection w3-light-grey w3-padding">
 				<c:set var="valid_error" value="${requestScope.get(UtilParams.VALIDATION_EXCEPTION)}"></c:set>
 				<c:choose>
 					<c:when test="${valid_error != null}">
@@ -29,13 +28,12 @@
 					</c:otherwise>
 				</c:choose>
 				<c:choose>
-					<c:when
-						test="${requestScope.get(UtilParams.IS_ADD_FORM) == 1}">
-						<input type="hidden" value="${CommandEnum.ADD_TASK}"
-							name="command">
+					<c:when test="${requestScope.get(UtilParams.IS_ADD_FORM) == 1}">
+						<input type="hidden" value="${CommandEnum.ADD_TASK}" name="command">
 						<div class="w3-container w3-center w3-green">
 							<h2>ADD TASK</h2>
 						</div>
+						<br>
 					</c:when>
 					<c:otherwise>
 						<input type="hidden" value="${CommandEnum.UPDATE_TASK}"
@@ -43,21 +41,19 @@
 						<div class="w3-container w3-center w3-green">
 							<h2>EDIT TASK</h2>
 						</div>
-						<label>ID: <input readonly
-							name="${TaskParams.TASK_ID}"
-							value="${task.id}"
-							class="w3-input w3-border w3-round-large"
-							style="width: 30%">
-						</label>
+						<%--<label>ID:</label>--%>
+						<input readonly type="hidden" name="${TaskParams.TASK_ID}"
+							   value="${task.id}" class="w3-input w3-border w3-round-large"
+							   style="width: 30%">
 						<br>
 					</c:otherwise>
 				</c:choose>
 
-				<label>Project:</label><br> <select
-					class="w3-select w3-margin-bottom"
-					name="${TaskParams.TASK_PROJECT_ID}" style="width: 30%">
-					<c:forEach
-						items="${requestScope.get(ProjectParams.PRINTED_PROJECTS)}"
+				<label>Project:</label>
+				<br>
+				<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_PROJECT_ID}"
+						style="width: 30%">
+					<c:forEach items="${requestScope.get(ProjectParams.PRINTED_PROJECTS)}"
 						var="projectInDropdown">
 						<c:choose>
 							<c:when test="${task.projectId == projectInDropdown.id}">
@@ -68,29 +64,30 @@
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
-				</select><br> <label>Name: <input placeholder="Write name"
-					type="text" name="${TaskParams.TASK_NAME}"
-					value="${task.name}"
-					class="w3-input w3-border w3-round-large"
-					style="width: 30%">
+				</select>
+				<br>
+				<label>Name:
+					<input placeholder="Enter name" type="text" name="${TaskParams.TASK_NAME}"
+						   value="${task.name}" class="w3-input w3-border w3-round-large"
+						   style="width: 30%">
 				</label>
 				<c:if test="${invalidFields.containsKey(TaskParams.TASK_NAME)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
-				<br> <label>Work: <input
-					placeholder="Write work (natural number)" type="text"
-					name="${TaskParams.TASK_WORK}"
-					value="${task.work}"
-					class="w3-input w3-border w3-round-large"
-					style="width: 30%">
+				<br>
+				<label>Work:
+					<input placeholder="Enter work (natural number)" type="text"
+					name="${TaskParams.TASK_WORK}" value="${task.work}"
+					class="w3-input w3-border w3-round-large" style="width: 30%">
 				</label>
 				<c:if test="${invalidFields.containsKey(TaskParams.TASK_WORK)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
-				<br> <label>Begin Date: <input type="text" placeholder="Enter begin date (format: yyyy-mm-dd)"
-					name="${TaskParams.TASK_BEGINDATE}"
-					value="${task.beginDate}"
-					class="w3-input w3-border w3-round-large" style="width: 30%">
+				<br>
+				<label>Begin Date:
+					<input type="text" placeholder="Enter begin date (format: yyyy-mm-dd)"
+						   name="${TaskParams.TASK_BEGINDATE}" value="${task.beginDate}"
+						   class="w3-input w3-border w3-round-large" style="width: 30%">
 				</label>
 				<c:if test="${invalidFields.containsKey(TaskParams.TASK_BEGINDATE)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
@@ -98,37 +95,38 @@
 				<c:if test="${invalidFields.containsKey(TaskParams.TASK_INVALID_DATE_RANGE)}">
 					<span style="color:red"><c:out value="${TaskParams.VALUE_INVALID_DATE_RANGE}"></c:out></span>
 				</c:if>
-				<br> <label>End Date: <input type="text" placeholder="Enter end date (format: yyyy-mm-dd)"
-					name="${TaskParams.TASK_ENDDATE}"
-					value="${task.endDate}"
-					class="w3-input w3-border w3-round-large" style="width: 30%">
+				<br>
+				<label>End Date:
+					<input type="text" placeholder="Enter end date (format: yyyy-mm-dd)"
+						   name="${TaskParams.TASK_ENDDATE}" value="${task.endDate}"
+						   class="w3-input w3-border w3-round-large" style="width: 30%">
 				</label>
 				<c:if test="${invalidFields.containsKey(TaskParams.TASK_ENDDATE)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
-				<br> <label>Assignee:</label><br> <select
-					class="w3-select w3-margin-bottom"
-					name="${TaskParams.TASK_EMPLOYEE_ID}" style="width: 30%">
-					<c:forEach
-						items="${requestScope.get(EmployeeParams.PRINTED_EMPLOYEES)}"
+				<br>
+				<label>Assignee:</label>
+				<br>
+				<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_EMPLOYEE_ID}"
+						style="width: 30%">
+					<c:forEach items="${requestScope.get(EmployeeParams.PRINTED_EMPLOYEES)}"
 						var="employee">
 						<c:choose>
 							<c:when test="${task.employeeId == employee.id}">
-								<option selected value="${employee.id}">${employee.firstName}
-									${employee.lastName}</option>
+								<option selected value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
 							</c:when>
 							<c:otherwise>
-								<option value="${employee.id}">${employee.firstName}
-									${employee.lastName}</option>
+								<option value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
-				</select><br> <label>Status:</label><br> <select
-					class="w3-select w3-margin-bottom"
-					name="${TaskParams.TASK_STATUS}" style="width: 30%">
-					<c:forEach
-						items="${requestScope.get(TaskParams.PRINTED_STATUSES)}"
-						var="status">
+				</select>
+				<br>
+				<label>Status:</label>
+				<br>
+				<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_STATUS}"
+						style="width: 30%">
+					<c:forEach items="${requestScope.get(TaskParams.PRINTED_STATUSES)}" var="status">
 						<c:choose>
 							<c:when test="${task.getStatus().equals(status)}">
 								<option selected value="${status}">${status.getStatusName()}</option>
@@ -138,7 +136,8 @@
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
-				</select><br>
+				</select>
+				<br>
 				<button type="submit"
 					class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
 				<a href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_TASKS}'

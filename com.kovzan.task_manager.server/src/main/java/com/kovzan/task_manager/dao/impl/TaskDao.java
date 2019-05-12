@@ -82,7 +82,7 @@ public class TaskDao implements DaoBase<Task> {
 			statement.setDate(3, Date.valueOf(task.getBeginDate()));
 			statement.setDate(4, Date.valueOf(task.getEndDate()));
 			statement.setInt(5, task.getProjectId());
-			statement.setInt(6, task.getEmployeeId());
+		statement.setInt(6, task.getEmployeeId());
 			statement.setString(7, task.getStatus().toString());
 			statement.setInt(8, task.getId());
 			statement.executeUpdate();
