@@ -38,7 +38,7 @@ public class PrintEditRuntimeTask implements Command {
 			request.getSession().setAttribute(ProjectParams.PRINTED_EDIT_PROJECT, ProjectUtils.buildProject(request));
 			request.setAttribute(EmployeeParams.PRINTED_EMPLOYEES, employees);
 			request.setAttribute(TaskParams.PRINTED_STATUSES, Arrays.asList(TaskStatus.values()));
-			setAttributesForCurrentMode(request, Integer.parseInt(request.getParameter(UtilParams.IS_ADD_FORM)));
+			setAttributesForCurrentMode(request, Boolean.parseBoolean(request.getParameter(UtilParams.IS_ADD_FORM)));
 		} catch (ValidationException e) {
 			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);
 			request.getSession().setAttribute(ProjectParams.PRINTED_EDIT_PROJECT, e.getEntity());
@@ -47,9 +47,9 @@ public class PrintEditRuntimeTask implements Command {
 		return PageConstant.EDIT_RUNTIME_TASK_PAGE;
 	}
 	
-	private void setAttributesForCurrentMode(HttpServletRequest request, int mode) {
-		if (mode == 1) {
-			request.setAttribute(UtilParams.IS_ADD_FORM, 1);
+	private void setAttributesForCurrentMode(HttpServletRequest request, boolean isAddForm) {
+		if (isAddForm) {
+			request.setAttribute(UtilParams.IS_ADD_FORM, true);
 		} else {
 			List<Task> runtimeTasks = new ArrayList<>();
 			if (request.getSession().getAttribute(TaskParams.PRINTED_RUNTIME_TASKS) != null) {
@@ -57,7 +57,7 @@ public class PrintEditRuntimeTask implements Command {
 			}
 			int taskId = Integer.parseInt(request.getParameter(TaskParams.TASK_ID));
 			Task runtimeTask = RuntimeTasksUtils.findRuntimeTaskById(runtimeTasks, taskId);
-			request.setAttribute(UtilParams.IS_ADD_FORM, 0);
+			request.setAttribute(UtilParams.IS_ADD_FORM, false);
 			request.setAttribute(TaskParams.PRINTED_EDIT_RUNTIME_TASK, runtimeTask);
 		}
 	}

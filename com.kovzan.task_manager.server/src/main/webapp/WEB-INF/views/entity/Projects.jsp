@@ -18,7 +18,7 @@
 			</div>
 			<div class="w3-bar w3-padding-large w3-padding-24">
 				<button class="w3-button w3-hover-grey w3-round-large w3-large w3-green"
-					onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=-1&${UtilParams.IS_ADD_FORM}=1&${UtilParams.IS_CLEAN_SESSION_NEEDED}=true'">Add
+					onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=-1&${UtilParams.IS_ADD_FORM}=true&${UtilParams.IS_CLEAN_SESSION_NEEDED}=true'">Add
 					project</button>
 			</div>
 			<c:choose>
@@ -44,7 +44,7 @@
 									<td>${project.description}</td>
 									<td>
 										<button
-											onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=${project.id}&${UtilParams.IS_ADD_FORM}=0&${UtilParams.IS_CLEAN_SESSION_NEEDED}=true'"
+											onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=${project.id}&${UtilParams.IS_ADD_FORM}=false&${UtilParams.IS_CLEAN_SESSION_NEEDED}=true'"
 											class="w3-button w3-indigo w3-round-large">Edit</button>
 									</td>
 									<td>

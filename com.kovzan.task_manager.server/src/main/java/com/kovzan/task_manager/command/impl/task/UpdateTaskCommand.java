@@ -37,7 +37,7 @@ public class UpdateTaskCommand implements Command {
 			request.setAttribute(TaskParams.PRINTED_STATUSES, Arrays.asList(TaskStatus.values()));
 			
 			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);
-			request.setAttribute(UtilParams.IS_ADD_FORM, 0);
+			request.setAttribute(UtilParams.IS_ADD_FORM, false);
 			return PageConstant.EDIT_TASK_PAGE;
 		}
 		taskDao.update(taskFromRequest);

@@ -28,7 +28,7 @@
 					</c:otherwise>
 				</c:choose>
 				<c:choose>
-					<c:when test="${requestScope.get(UtilParams.IS_ADD_FORM) == 1}">
+					<c:when test="${requestScope.get(UtilParams.IS_ADD_FORM)}">
 						<input type="hidden" value="${CommandEnum.ADD_TASK}" name="command">
 						<div class="w3-container w3-center w3-green">
 							<h2>ADD TASK</h2>

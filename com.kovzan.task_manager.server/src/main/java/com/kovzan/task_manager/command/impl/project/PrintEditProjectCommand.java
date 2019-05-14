@@ -23,8 +23,8 @@ public class PrintEditProjectCommand implements Command {
 		boolean isCleanSessionNeeded = Boolean.parseBoolean(request.getParameter(UtilParams.IS_CLEAN_SESSION_NEEDED));
 		cleanSession(isCleanSessionNeeded, request);
 		Project projectFromRequest = ProjectUtils.createProjectFromRequest(request);
-		int currentMode = getEditMode(projectFromRequest.getId());
-		setAttributesForCurrentMode(request, currentMode, projectFromRequest);
+		boolean isAddProjectFrom = getEditMode(projectFromRequest.getId());
+		setAttributesForCurrentMode(request, isAddProjectFrom, projectFromRequest);
 		return PageConstant.EDIT_PROJECT_PAGE;
 	}
 	
@@ -34,18 +34,18 @@ public class PrintEditProjectCommand implements Command {
 		}
 	}
 	
-	private int getEditMode(int projectId) {
+	private boolean getEditMode(int projectId) {
 		if (projectId == -1) {
-			return 1;
+			return true;
 		} else {
-			return 0;
+			return false;
 		}
 	}
 	
-	private void setAttributesForCurrentMode(HttpServletRequest request, int mode, Project project) throws SQLException {
-		if (mode == 1) {
+	private void setAttributesForCurrentMode(HttpServletRequest request, boolean isAddForm, Project project) throws SQLException {
+		if (isAddForm) {
 			request.setAttribute(ProjectParams.PRINTED_EDIT_PROJECT, project);
-			request.getSession().setAttribute(UtilParams.IS_ADD_FORM, 1);
+			request.getSession().setAttribute(UtilParams.IS_ADD_FORM, true);
 		} else {
 			
 			if (request.getSession().getAttribute(TaskParams.PRINTED_RUNTIME_TASKS) == null) {
@@ -60,7 +60,7 @@ public class PrintEditProjectCommand implements Command {
 				Project projectFromDB = projectDao.findById(project.getId());
 				request.getSession().setAttribute(ProjectParams.PRINTED_EDIT_PROJECT, projectFromDB);
 			}
-			request.getSession().setAttribute(UtilParams.IS_ADD_FORM, 0);
+			request.getSession().setAttribute(UtilParams.IS_ADD_FORM, false);
 		}
 	}
 }

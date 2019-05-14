@@ -19,7 +19,7 @@
 			</div>
 			<div class="w3-bar w3-padding-large w3-padding-24">
 				<button class="w3-button w3-hover-grey w3-round-large w3-large w3-green"
-					onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&${UtilParams.IS_ADD_FORM}=1'">Add
+					onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&${UtilParams.IS_ADD_FORM}=true'">Add
 					employee</button>
 			</div>
 
@@ -53,7 +53,7 @@
 									<td>${employee.middleName}</td>
 									<td>${employee.position}</td>
 									<td>
-										<button onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&${EmployeeParams.EMPLOYEE_ID}=${employee.id}&${UtilParams.IS_ADD_FORM}=0'"
+										<button onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&${EmployeeParams.EMPLOYEE_ID}=${employee.id}&${UtilParams.IS_ADD_FORM}=false'"
 											class="w3-button w3-indigo w3-round-large">Edit</button>
 									</td>
 									<td>

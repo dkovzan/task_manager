@@ -21,7 +21,7 @@ public class UpdateEmployeeCommand implements Command {
 			employee = EmployeeUtils.buildEmployee(request);
 		} catch (ValidationException e) {
 			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);
-			request.setAttribute(UtilParams.IS_ADD_FORM, 0);
+			request.setAttribute(UtilParams.IS_ADD_FORM, false);
 			return PageConstant.EDIT_EMPLOYEE_PAGE;
 		}
 		EmployeeDao employeeDao = new EmployeeDao();
