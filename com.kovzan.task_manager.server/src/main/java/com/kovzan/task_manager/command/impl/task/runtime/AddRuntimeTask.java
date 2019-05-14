@@ -22,6 +22,7 @@ public class AddRuntimeTask implements Command {
 	
 	@Override
 	public String execute(HttpServletRequest request) throws SQLException {
+
 		try {
 			List<Task> runtimeTasks = RuntimeTasksUtils.getRuntimeTasks(request);
 			Task taskFromRequest = TaskUtils.buildTask(request);
@@ -30,7 +31,6 @@ public class AddRuntimeTask implements Command {
 			}
 			RuntimeTasksUtils.addRuntimeTask(runtimeTasks, taskFromRequest);
 			request.getSession().setAttribute(TaskParams.PRINTED_RUNTIME_TASKS, runtimeTasks);
-//			CommandService.setEditProjectModeByProjectId(request, taskFromRequest.getProjectId());
 		} catch (ValidationException e) {
 			EmployeeDao employeeDao = new EmployeeDao();
 			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);

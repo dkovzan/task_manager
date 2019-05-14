@@ -7,7 +7,6 @@ import com.kovzan.task_manager.command.impl.parameters.ProjectParams;
 import com.kovzan.task_manager.command.impl.parameters.TaskParams;
 import com.kovzan.task_manager.command.impl.parameters.UtilParams;
 import com.kovzan.task_manager.command.impl.project.ProjectUtils;
-import com.kovzan.task_manager.command.impl.service.CommandService;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.entity.Task;
 
@@ -29,9 +28,7 @@ public class RemoveRuntimeTask implements Command {
 			request.getSession().setAttribute(ProjectParams.PRINTED_EDIT_PROJECT, project);
 		} catch (ValidationException e) {
 			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);
-//			project = (Project) e.getEntity();
 		}
-//		CommandService.setEditProjectModeByProjectId(request, project.getId());
 		return PageConstant.EDIT_PROJECT_PAGE;
 	}
 }

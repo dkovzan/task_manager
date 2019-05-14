@@ -5,7 +5,6 @@ import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.impl.parameters.ProjectParams;
 import com.kovzan.task_manager.command.impl.parameters.TaskParams;
 import com.kovzan.task_manager.command.impl.parameters.UtilParams;
-import com.kovzan.task_manager.command.impl.service.CommandService;
 import com.kovzan.task_manager.dao.impl.ProjectDao;
 import com.kovzan.task_manager.dao.impl.TaskDao;
 import com.kovzan.task_manager.entity.Project;
@@ -30,7 +29,7 @@ public class PrintEditProjectCommand implements Command {
 	
 	private void cleanSession(boolean isCleanSessionNeeded, HttpServletRequest request) {
 		if (isCleanSessionNeeded) {
-			CommandService.cleanSession(request);
+			request.getSession().invalidate();
 		}
 	}
 	

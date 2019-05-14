@@ -25,7 +25,6 @@ public class UpdateRuntimeTask implements Command {
 			Task taskFromRequest = TaskUtils.buildTask(request);
 			RuntimeTasksUtils.updateRuntimeTask(runtimeTasks, taskFromRequest);
 			request.getSession().setAttribute(TaskParams.PRINTED_RUNTIME_TASKS, runtimeTasks);
-//			CommandService.setEditProjectModeByProjectId(request, taskFromRequest.getProjectId());
 		} catch (ValidationException e) {
 			EmployeeDao employeeDao = new EmployeeDao();
 			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);
