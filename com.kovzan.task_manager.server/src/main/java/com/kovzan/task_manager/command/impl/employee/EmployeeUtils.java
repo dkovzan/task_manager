@@ -24,25 +24,25 @@ public class EmployeeUtils {
 			id = Integer.parseInt(request.getParameter(EmployeeParams.EMPLOYEE_ID));
 			employee.setId(id);
 		}
-		String firstName = request.getParameter(EmployeeParams.EMPLOYEE_FIRSTNAME);
+		String firstName = request.getParameter(EmployeeParams.EMPLOYEE_FIRSTNAME).trim();
 		if (EmployeeValidator.isEmployeeFirstNameValid(firstName)) {
 			employee.setFirstName(firstName);
 		} else {
 			invalidFields.put(EmployeeParams.EMPLOYEE_FIRSTNAME, firstName);
 		}
-		String lastName = request.getParameter(EmployeeParams.EMPLOYEE_LASTNAME);
+		String lastName = request.getParameter(EmployeeParams.EMPLOYEE_LASTNAME).trim();
 		if (EmployeeValidator.isEmployeeLastNameValid(lastName)) {
 			employee.setLastName(lastName);
 		} else {
 			invalidFields.put(EmployeeParams.EMPLOYEE_LASTNAME, lastName);
 		}
-		String middleName = request.getParameter(EmployeeParams.EMPLOYEE_MIDDLENAME);
+		String middleName = request.getParameter(EmployeeParams.EMPLOYEE_MIDDLENAME).trim();
 		if (EmployeeValidator.isEmployeeMiddleNameValid(middleName)) {
 			employee.setMiddleName(middleName);
 		} else {
 			invalidFields.put(EmployeeParams.EMPLOYEE_MIDDLENAME, middleName);
 		}
-		String position = request.getParameter(EmployeeParams.EMPLOYEE_POSITION);
+		String position = request.getParameter(EmployeeParams.EMPLOYEE_POSITION).trim();
 		if (EmployeeValidator.isEmployeePositionValid(position)) {
 			employee.setPosition(position);
 		} else {

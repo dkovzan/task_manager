@@ -31,19 +31,19 @@ public class TaskUtils {
 			id = Integer.parseInt(request.getParameter(TaskParams.TASK_ID));
 			task.setId(id);
 		}
-		String name = request.getParameter(TaskParams.TASK_NAME);
+		String name = request.getParameter(TaskParams.TASK_NAME).trim();
 		if (TaskValidator.isTaskNameValid(name)) {
 			task.setName(name);
 		} else {
 			invalidFields.put(TaskParams.TASK_NAME, name);
 		}
-		String work = request.getParameter(TaskParams.TASK_WORK);
+		String work = request.getParameter(TaskParams.TASK_WORK).trim();
 		if (TaskValidator.isTaskWorkValid(work)) {
 			task.setWork(Integer.parseInt(work));
 		} else {
 			invalidFields.put(TaskParams.TASK_WORK, String.valueOf(work));
 		}
-		String beginDate = request.getParameter(TaskParams.TASK_BEGINDATE);
+		String beginDate = request.getParameter(TaskParams.TASK_BEGINDATE).trim();
 		boolean isBeginDateValid = true;
 		if (TaskValidator.isTaskDateValid(beginDate) && TaskValidator.isTaskDateInRange(beginDate)) {
 			task.setBeginDate(LocalDate.parse(beginDate));
@@ -51,7 +51,7 @@ public class TaskUtils {
 			invalidFields.put(TaskParams.TASK_BEGINDATE, beginDate);
 			isBeginDateValid = false;
 		}
-		String endDate = request.getParameter(TaskParams.TASK_ENDDATE);
+		String endDate = request.getParameter(TaskParams.TASK_ENDDATE).trim();
 		boolean isEndDateValid = true;
 		if (TaskValidator.isTaskDateValid(endDate) && TaskValidator.isTaskDateInRange(endDate)) {
 			task.setEndDate(LocalDate.parse(endDate));

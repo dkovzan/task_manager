@@ -33,13 +33,13 @@ public class ProjectUtils {
 		Project project = new Project();
 		HashMap<String, String> invalidFields = new HashMap<>();
 		project.setId(Integer.parseInt(request.getParameter(ProjectParams.PROJECT_ID)));
-		String name = request.getParameter(ProjectParams.PROJECT_NAME);
+		String name = request.getParameter(ProjectParams.PROJECT_NAME).trim();
 		if (ProjectValidator.isProjectNameValid(name)) {
 			project.setName(name);
 		} else {
 			invalidFields.put(ProjectParams.PROJECT_NAME, name);
 		}
-		String shortName = request.getParameter(ProjectParams.PROJECT_SHORTNAME);
+		String shortName = request.getParameter(ProjectParams.PROJECT_SHORTNAME).trim();
 		if (ProjectDao.isProjectShortNameUnique(project.getId(), shortName)) {
 			if (ProjectValidator.isProjectShortNameValid(shortName)) {
 				project.setShortName(shortName);
@@ -51,7 +51,7 @@ public class ProjectUtils {
 			invalidFields.put(ProjectParams.PROJECT_SHORTNAME, shortName);
 			invalidFields.put(ProjectParams.PROJECT_SHORTNAME_NOT_UNIQUE, shortName);
 		}
-		String description = request.getParameter(ProjectParams.PROJECT_DESCRIPTION);
+		String description = request.getParameter(ProjectParams.PROJECT_DESCRIPTION).trim();
 		if (ProjectValidator.isProjectDescriptionValid(description)) {
 			project.setDescription(description);
 		} else {
