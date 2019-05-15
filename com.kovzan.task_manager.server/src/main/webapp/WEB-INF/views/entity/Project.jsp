@@ -57,7 +57,7 @@
 						<br>
 					</c:otherwise>
 				</c:choose>
-				<label>Name: <input id="${ProjectParams.PROJECT_NAME}" placeholder="Enter name" type="text"
+				<label>Name:* <input id="${ProjectParams.PROJECT_NAME}" placeholder="Enter name" type="text"
 					name="${ProjectParams.PROJECT_NAME}"
 					value="${project.name}"
 					class="w3-input w3-border w3-round-large"
@@ -66,7 +66,7 @@
 				<c:if test="${invalidFields.containsKey(ProjectParams.PROJECT_NAME)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
-				<br> <label>Short name: <input id="${ProjectParams.PROJECT_SHORTNAME}"
+				<br> <label>Short name:* <input id="${ProjectParams.PROJECT_SHORTNAME}"
 					placeholder="Enter short name" type="text"
 					name="${ProjectParams.PROJECT_SHORTNAME}"
 					value="${project.shortName}"

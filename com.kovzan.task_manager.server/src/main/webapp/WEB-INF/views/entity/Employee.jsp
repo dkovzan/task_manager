@@ -49,7 +49,7 @@
 						<br>
 					</c:otherwise>
 				</c:choose>
-				<label>First name: 
+				<label>First name:*
 				<input placeholder="Enter first name"
 					type="text"
 					name="${EmployeeParams.EMPLOYEE_FIRSTNAME}"
@@ -61,7 +61,7 @@
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br>
-				<label>Last name:
+				<label>Last name:*
 					<input placeholder="Enter last name" type="text" name="${EmployeeParams.EMPLOYEE_LASTNAME}"
 					value="${employee.lastName}" class="w3-input w3-border w3-round-large"
 					style="width: 30%">
@@ -80,7 +80,7 @@
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br>
-				<label>Position:
+				<label>Position:*
 					<input placeholder="Enter position" type="text"
 					name="${EmployeeParams.EMPLOYEE_POSITION}" value="${employee.position}"
 					class="w3-input w3-border w3-round-large"

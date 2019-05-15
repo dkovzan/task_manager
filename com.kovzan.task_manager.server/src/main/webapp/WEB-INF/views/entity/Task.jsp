@@ -49,7 +49,7 @@
 					</c:otherwise>
 				</c:choose>
 
-				<label>Project:</label>
+				<label>Project:*</label>
 				<br>
 				<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_PROJECT_ID}"
 						style="width: 30%">
@@ -66,7 +66,7 @@
 					</c:forEach>
 				</select>
 				<br>
-				<label>Name:
+				<label>Name:*
 					<input placeholder="Enter name" type="text" name="${TaskParams.TASK_NAME}"
 						   value="${task.name}" class="w3-input w3-border w3-round-large"
 						   style="width: 30%">
@@ -75,7 +75,7 @@
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br>
-				<label>Work:
+				<label>Work:*
 					<input placeholder="Enter work (natural number)" type="text"
 					name="${TaskParams.TASK_WORK}" value="${task.work}"
 					class="w3-input w3-border w3-round-large" style="width: 30%">
@@ -84,7 +84,7 @@
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br>
-				<label>Begin Date:
+				<label>Begin Date:*
 					<input type="text" placeholder="Enter begin date (format: yyyy-mm-dd)"
 						   name="${TaskParams.TASK_BEGINDATE}" value="${task.beginDate}"
 						   class="w3-input w3-border w3-round-large" style="width: 30%">
@@ -96,7 +96,7 @@
 					<span style="color:red"><c:out value="${TaskParams.VALUE_INVALID_DATE_RANGE}"></c:out></span>
 				</c:if>
 				<br>
-				<label>End Date:
+				<label>End Date:*
 					<input type="text" placeholder="Enter end date (format: yyyy-mm-dd)"
 						   name="${TaskParams.TASK_ENDDATE}" value="${task.endDate}"
 						   class="w3-input w3-border w3-round-large" style="width: 30%">
@@ -105,7 +105,7 @@
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br>
-				<label>Assignee:</label>
+				<label>Assignee:*</label>
 				<br>
 				<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_EMPLOYEE_ID}"
 						style="width: 30%">
@@ -122,7 +122,7 @@
 					</c:forEach>
 				</select>
 				<br>
-				<label>Status:</label>
+				<label>Status:*</label>
 				<br>
 				<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_STATUS}"
 						style="width: 30%">
