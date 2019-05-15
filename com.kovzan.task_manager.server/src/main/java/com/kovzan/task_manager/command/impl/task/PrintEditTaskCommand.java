@@ -35,9 +35,9 @@ public class PrintEditTaskCommand implements Command {
 			request.setAttribute(UtilParams.ERROR, TASK_CANNOT_BE_ADDED);
 			return CommandEnum.PRINT_TASKS.getCommand().execute(request);
 		} else {
-			int isAddForm = Integer.parseInt(request.getParameter(UtilParams.IS_ADD_FORM));
-			if (isAddForm == 1) {
-				request.setAttribute(UtilParams.IS_ADD_FORM, 1);
+			boolean isAddForm = Boolean.parseBoolean(request.getParameter(UtilParams.IS_ADD_FORM));
+			if (isAddForm) {
+				request.setAttribute(UtilParams.IS_ADD_FORM, true);
 				request.setAttribute(ProjectParams.PRINTED_PROJECTS, projectDao.findAll());
 				request.setAttribute(EmployeeParams.PRINTED_EMPLOYEES, employeeDao.findAll());
 				request.setAttribute(TaskParams.PRINTED_STATUSES, Arrays.asList(TaskStatus.values()));
@@ -46,7 +46,7 @@ public class PrintEditTaskCommand implements Command {
 				int taskId = Integer.parseInt(request.getParameter(TaskParams.TASK_ID));
 				task = taskDao.findById(taskId);
 				request.setAttribute(TaskParams.PRINTED_EDIT_TASK, task);
-				request.setAttribute(UtilParams.IS_ADD_FORM, 0);
+				request.setAttribute(UtilParams.IS_ADD_FORM, false);
 				
 				request.setAttribute(ProjectParams.PRINTED_PROJECTS, projectDao.findAll());
 				request.setAttribute(EmployeeParams.PRINTED_EMPLOYEES, employeeDao.findAll());

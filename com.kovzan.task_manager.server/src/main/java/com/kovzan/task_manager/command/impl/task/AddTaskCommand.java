@@ -36,7 +36,7 @@ public class AddTaskCommand implements Command {
 			request.setAttribute(TaskParams.PRINTED_STATUSES, Arrays.asList(TaskStatus.values()));
 			
 			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);
-			request.setAttribute(UtilParams.IS_ADD_FORM, 1);
+			request.setAttribute(UtilParams.IS_ADD_FORM, true);
 			return PageConstant.EDIT_TASK_PAGE;
 		}
 		TaskDao taskDao = new TaskDao();

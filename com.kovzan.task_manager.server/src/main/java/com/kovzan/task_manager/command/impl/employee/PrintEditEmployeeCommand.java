@@ -15,15 +15,15 @@ public class PrintEditEmployeeCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request) throws SQLException {
 		
-		int isAddForm = Integer.parseInt(request.getParameter(UtilParams.IS_ADD_FORM));
-		if (isAddForm == 1) {
-			request.setAttribute(UtilParams.IS_ADD_FORM, 1);
+		boolean isAddForm = Boolean.parseBoolean(request.getParameter(UtilParams.IS_ADD_FORM));
+		if (isAddForm) {
+			request.setAttribute(UtilParams.IS_ADD_FORM, true);
 		} else {
 			EmployeeDao employeeDao = new EmployeeDao();
 			int employeeId = Integer.parseInt(request.getParameter(EmployeeParams.EMPLOYEE_ID));
 			Employee employee = employeeDao.findById(employeeId);
 			request.setAttribute(EmployeeParams.PRINTED_EDIT_EMPLOYEE, employee);
-			request.setAttribute(UtilParams.IS_ADD_FORM, 0);
+			request.setAttribute(UtilParams.IS_ADD_FORM, false);
 		}
 		return PageConstant.EDIT_EMPLOYEE_PAGE;
 	}

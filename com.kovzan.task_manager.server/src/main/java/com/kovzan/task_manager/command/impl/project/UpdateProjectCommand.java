@@ -6,7 +6,6 @@ import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.ValidationException;
 import com.kovzan.task_manager.command.impl.parameters.TaskParams;
 import com.kovzan.task_manager.command.impl.parameters.UtilParams;
-import com.kovzan.task_manager.command.impl.service.CommandService;
 import com.kovzan.task_manager.command.impl.task.runtime.RuntimeTasksUtils;
 import com.kovzan.task_manager.dao.impl.ProjectDao;
 import com.kovzan.task_manager.entity.Project;
@@ -24,10 +23,9 @@ public class UpdateProjectCommand implements Command {
 		
 		try {
 			updateProject(request);
-			CommandService.cleanSession(request);
+			request.getSession().invalidate();
 		} catch (ValidationException e) {
 			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);
-//			request.setAttribute(UtilParams.IS_ADD_FORM, 0);
 			return PageConstant.EDIT_PROJECT_PAGE;
 		}
 		return CommandEnum.PRINT_PROJECTS.getCommand().execute(request);

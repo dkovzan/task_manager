@@ -22,7 +22,7 @@ public class AddEmployeeCommand implements Command {
 			employee = EmployeeUtils.buildEmployee(request);
 		} catch (ValidationException e) {
 			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);
-			request.setAttribute(UtilParams.IS_ADD_FORM, 1);
+			request.setAttribute(UtilParams.IS_ADD_FORM, true);
 			return PageConstant.EDIT_EMPLOYEE_PAGE;
 		}
 		employeeDao.add(employee);

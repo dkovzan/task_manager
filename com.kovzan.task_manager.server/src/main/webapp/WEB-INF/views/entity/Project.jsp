@@ -31,7 +31,7 @@
 				</c:choose>
 				<c:choose>
 					<c:when
-						test="${is_add_project_form == '1'}">
+						test="${is_add_project_form}">
 						<input type="hidden" value="${CommandEnum.ADD_PROJECT}"
 							name="command">
 						<input type="hidden" id="${ProjectParams.PROJECT_ID}"
@@ -110,7 +110,7 @@
 			<div class="tasksBlock w3-card-4 w3-padding">
 				<a id="addTask"
 				   href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_RUNTIME_TASK}
-				&${UtilParams.IS_ADD_FORM}=1'
+				&${UtilParams.IS_ADD_FORM}=true'
 				   onclick="getParams(this.id)"
 				   class="w3-btn w3-yellow w3-round-large w3-margin-bottom">Add task</a>
 
@@ -137,7 +137,7 @@
 									<td>${task.employeeFullName}</td>
 									<td>
 										<a id="updateTask${task.id}"
-										   href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_RUNTIME_TASK}&${TaskParams.TASK_ID}=${task.id}&${UtilParams.IS_ADD_FORM}=0'
+										   href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_RUNTIME_TASK}&${TaskParams.TASK_ID}=${task.id}&${UtilParams.IS_ADD_FORM}=false'
 										   onclick="getParams(this.id)"
 										   class="w3-button w3-indigo w3-round-large">Edit</a>
 									</td>
