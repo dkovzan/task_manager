@@ -17,7 +17,7 @@
 		<div class="page-header">
 			<h2>Projects overview</h2>
 			<button class="btn btn-add"
-					onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=-1&${UtilParams.IS_ADD_FORM}=1&${UtilParams.IS_CLEAN_SESSION_NEEDED}=true'">
+					onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=-1&${UtilParams.IS_ADD_FORM}=true&${UtilParams.IS_CLEAN_SESSION_NEEDED}=true'">
 				Add
 				project
 			</button>

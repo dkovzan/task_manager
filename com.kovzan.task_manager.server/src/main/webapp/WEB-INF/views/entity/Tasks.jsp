@@ -18,7 +18,7 @@
 		<div class="page-header">
 			<h2>Tasks overview</h2>
 			<button class="btn btn-add"
-					onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_TASK}&${UtilParams.IS_ADD_FORM}=1'">
+					onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_TASK}&${UtilParams.IS_ADD_FORM}=true'">
 				Add
 				task
 			</button>
