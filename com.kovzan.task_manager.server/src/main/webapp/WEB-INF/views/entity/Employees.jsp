@@ -1,80 +1,83 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page contentType="text/html;charset=UTF-8"%>
-<%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
-<%@ page import="com.kovzan.task_manager.command.impl.parameters.EmployeeParams"%>
-<%@ page import="com.kovzan.task_manager.command.impl.parameters.UtilParams"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.kovzan.task_manager.command.CommandEnum" %>
+<%@ page import="com.kovzan.task_manager.command.impl.parameters.EmployeeParams" %>
+<%@ page import="com.kovzan.task_manager.command.impl.parameters.UtilParams" %>
 <html>
 <head>
-<title>Employees</title>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<title>Employees</title>
+	<link rel="stylesheet" href="style/style.css" type="text/css">
 </head>
-<body class="w3-light-grey">
-	<jsp:include page="/WEB-INF/views/common/Header.jsp"></jsp:include>
-	<c:set var="error" value="${requestScope.get(UtilParams.ERROR)}"></c:set>
-	<c:set var="employees" value="${requestScope.get(EmployeeParams.PRINTED_EMPLOYEES)}"></c:set>
-	<div class="w3-container w3-center w3-margin-bottom w3-padding">
-		<div class="w3-card-4">
-			<div class="w3-container w3-light-blue">
-				<h2>Employees overview</h2>
-			</div>
-			<div class="w3-bar w3-padding-large w3-padding-24">
-				<button class="w3-button w3-hover-grey w3-round-large w3-large w3-green"
-					onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&${UtilParams.IS_ADD_FORM}=1'">Add
-					employee</button>
-			</div>
-
-			<c:if test="${error != null}">
-				<div class="w3-panel w3-red w3-display-container w3-card-4 w3-round">
-					<span onclick="this.parentElement.style.display='none'" class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border w3-border-red w3-hover-border-grey">X
-					</span>
-					<h5>${error}</h5>
-				</div>
-			</c:if>
-
-			<c:choose>
-				<c:when test="${employees != null && !employees.isEmpty()}">
-					<div class="w3-padding">
-						<table class="w3-table w3-bordered w3-border">
-							<tr>
-								<%--<th>Id</th>--%>
-								<th>Last Name</th>
-								<th>First Name</th>
-								<th>Middle Name</th>
-								<th>Position</th>
-								<th colspan="2"></th>
-							</tr>
-							<c:forEach items="${employees}" var="employee">
-								<tr>
-									<input type="hidden" name="${EmployeeParams.EMPLOYEE_ID}"
-										value="${employee.id}">
-									<%--<td>${employee.id}</td>--%>
-									<td>${employee.lastName}</td>
-									<td>${employee.firstName}</td>
-									<td>${employee.middleName}</td>
-									<td>${employee.position}</td>
-									<td>
-										<button onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&${EmployeeParams.EMPLOYEE_ID}=${employee.id}&${UtilParams.IS_ADD_FORM}=0'"
-											class="w3-button w3-indigo w3-round-large">Edit</button>
-									</td>
-									<td>
-										<button onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.REMOVE_EMPLOYEE}&${EmployeeParams.EMPLOYEE_ID}=${employee.id}'"
-											class="w3-button w3-red w3-round-large">Delete</button>
-									</td>
-								</tr>
-							</c:forEach>
-						</table>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<div class="w3-panel w3-blue w3-display-container w3-card-4 w3-round">
-						<h5>There are no employees yet!</h5>
-					</div>
-				</c:otherwise>
-			</c:choose>
+<body class>
+<jsp:include page="/WEB-INF/views/common/Header.jsp"></jsp:include>
+<c:set var="error" value="${requestScope.get(UtilParams.ERROR)}"></c:set>
+<c:set var="employees" value="${requestScope.get(EmployeeParams.PRINTED_EMPLOYEES)}"></c:set>
+<div class="container">
+	<div class="card">
+		<div class="page-header">
+			<h2>Employees overview</h2>
+			<button class="btn btn-add"
+					onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&${UtilParams.IS_ADD_FORM}=1'">
+				Add
+				employee
+			</button>
 		</div>
+
+		<c:if test="${error != null}">
+			<div class="msg err-msg-list">
+				<span onclick="this.parentElement.style.display='none'" class="btn">X
+				</span>
+				<h5>${error}</h5>
+			</div>
+		</c:if>
+
+		<c:choose>
+			<c:when test="${employees != null && !employees.isEmpty()}">
+				<div class="container">
+					<table class="content-table">
+						<tr>
+								<%--<th>Id</th>--%>
+							<th style="width: 20%">Last Name</th>
+							<th style="width: 20%">First Name</th>
+							<th style="width: 20%">Middle Name</th>
+							<th style="width: 20%">Position</th>
+							<th style="width: 20%" colspan="2"></th>
+						</tr>
+						<c:forEach items="${employees}" var="employee">
+							<tr>
+								<input type="hidden" name="${EmployeeParams.EMPLOYEE_ID}"
+									   value="${fn:escapeXml(employee.id)}">
+									<%--<td>${employee.id}</td>--%>
+								<td style="width: 20%">${fn:escapeXml(employee.lastName)}</td>
+								<td style="width: 20%">${fn:escapeXml(employee.firstName)}</td>
+								<td style="width: 20%">${fn:escapeXml(employee.middleName)}</td>
+								<td style="width: 20%">${fn:escapeXml(employee.position)}</td>
+								<td>
+									<button onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_EMPLOYEE}&${EmployeeParams.EMPLOYEE_ID}=${employee.id}&${UtilParams.IS_ADD_FORM}=0'"
+											class="btn btn-edit">Edit
+									</button>
+								</td>
+								<td>
+									<button onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.REMOVE_EMPLOYEE}&${EmployeeParams.EMPLOYEE_ID}=${employee.id}'"
+											class="btn btn-del">Delete
+									</button>
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="msg empty-list-msg">
+					<h5>There are no employees yet!</h5>
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</div>
-	<div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
-		<button class="w3-btn w3-round-large" onclick="location.href='../../../'">Back to main</button>
-	</div>
+</div>
+<div class="container footer">
+	<button class="btn" onclick="location.href='../../../'">Back to main</button>
+</div>
 </body>
 </html>

@@ -1,0 +1,140 @@
+html {
+    box-sizing: border-box
+}
+
+*,*:before,*:after {
+    box-sizing: inherit;
+}
+
+html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%
+}
+
+body {
+    margin: 0;
+    color: #000!important;
+    background-color: #f1f1f1!important
+}
+
+textarea {
+    overflow: auto
+}
+
+html,body {
+    font-family: Verdana,sans-serif;
+    font-size: 15px;
+    line-height: 1.5
+}
+
+html {
+    overflow-x: hidden
+}
+
+.content-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    display: table;
+    overflow-x: auto;
+    padding: 8px 16px!important;
+    border: 1px solid #ccc!important
+}
+
+.content-table th, .content-table td {
+    padding: 8px 8px;
+    display: table-cell;
+    text-align: left;
+    vertical-align: top;
+    word-break: break-all
+}
+
+.content-table tr {
+    border-bottom: 1px solid #ddd
+}
+
+.container {
+    padding: 8px 16px!important;
+    margin-bottom: 16px!important;
+    text-align: center;
+}
+
+.card {
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19)
+}
+
+.container::before, .container::after, .msg::before, .msg::after {
+    content: "";
+    display: table;
+    clear: both
+}
+
+.page-header h2 {
+    color: #000!important;
+    background-color: #87CEEB!important;
+    padding: 8px 16px
+}
+
+.footer {
+    color: #000!important;
+    background-color: #9e9e9e!important;
+    opacity: 0.6;
+    padding: 8px 16px;
+    text-align: right!important
+}
+
+.btn {
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+    padding: 8px 16px;
+    vertical-align: middle;
+    text-align: center;
+    color: inherit;
+    background-color: inherit;
+    border-radius: 8px
+}
+
+.btn-add {
+    color: #fff!important;
+    background-color: #4CAF50!important;
+    font-size: 18px;
+    margin-bottom: 16px;
+    margin-top: 8px
+}
+
+.btn-edit {
+    color: #fff!important;
+    background-color: #3f51b5!important
+}
+
+.btn-del {
+    color: #fff!important;
+    background-color: #f44336!important
+}
+
+.btn-back {
+    text-align: right;
+}
+
+.btn:hover {
+    color: #000!important;
+    background-color: #179d9e !important
+}
+
+.msg {
+    position: relative;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+}
+
+.err-msg-list {
+    color: #fff!important;
+    background-color: #f44336!important
+}
+
+.empty-list-msg {
+    color: #fff!important;
+    background-color: #0909f4 !important
+}
