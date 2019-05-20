@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.ProjectParams"%>
@@ -51,7 +52,7 @@
 						<%--<label>ID:</label>--%>
 						<input readonly type="hidden" id="${ProjectParams.PROJECT_ID}"
 							name="${ProjectParams.PROJECT_ID}"
-							value="${project.id}"
+							value="${fn:escapeXml(project.id)}"
 							class="w3-input w3-border w3-round-large"
 							style="width: 30%">
 						<br>
@@ -59,7 +60,7 @@
 				</c:choose>
 				<label>Name:* <input id="${ProjectParams.PROJECT_NAME}" placeholder="Enter name" type="text"
 					name="${ProjectParams.PROJECT_NAME}"
-					value="${project.name}"
+					value="${fn:escapeXml(project.name)}"
 					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
@@ -69,7 +70,7 @@
 				<br> <label>Short name:* <input id="${ProjectParams.PROJECT_SHORTNAME}"
 					placeholder="Enter short name" type="text"
 					name="${ProjectParams.PROJECT_SHORTNAME}"
-					value="${project.shortName}"
+					value="${fn:escapeXml(project.shortName)}"
 					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
@@ -83,7 +84,7 @@
 						placeholder="Enter description"
 						name="${ProjectParams.PROJECT_DESCRIPTION}"
 						class="w3-input w3-border w3-round-large"
-						style="width: 30%; resize: none">${project.description}</textarea>
+						style="width: 30%; resize: none">${fn:escapeXml(project.description)}</textarea>
 				</label>
 				<c:if test="${invalidFields.containsKey(ProjectParams.PROJECT_DESCRIPTION)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
@@ -131,10 +132,10 @@
 									var="task">
 								<tr>
 									<%--<td>${task.id}</td>--%>
-									<td>${task.name}</td>
-									<td>${task.beginDate}</td>
-									<td>${task.endDate}</td>
-									<td>${task.employeeFullName}</td>
+									<td>${fn:escapeXml(task.name)}</td>
+									<td>${fn:escapeXml(task.beginDate)}</td>
+									<td>${fn:escapeXml(task.endDate)}</td>
+									<td>${fn:escapeXml(task.employeeFullName)}</td>
 									<td>
 										<a id="updateTask${task.id}"
 										   href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_RUNTIME_TASK}&${TaskParams.TASK_ID}=${task.id}&${UtilParams.IS_ADD_FORM}=false'

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.UtilParams"%>
@@ -44,7 +45,7 @@
 						</div>
 						<%--<label>ID: </label>--%>
 						<input readonly type="hidden" name="${EmployeeParams.EMPLOYEE_ID}"
-							value="${employee.id}" class="w3-input w3-border w3-round-large"
+							value="${fn:escapeXml(employee.id)}" class="w3-input w3-border w3-round-large"
 							style="width: 30%">
 						<br>
 					</c:otherwise>
@@ -53,7 +54,7 @@
 				<input placeholder="Enter first name"
 					type="text"
 					name="${EmployeeParams.EMPLOYEE_FIRSTNAME}"
-					value="${employee.firstName}"
+					value="${fn:escapeXml(employee.firstName)}"
 					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
@@ -63,7 +64,7 @@
 				<br>
 				<label>Last name:*
 					<input placeholder="Enter last name" type="text" name="${EmployeeParams.EMPLOYEE_LASTNAME}"
-					value="${employee.lastName}" class="w3-input w3-border w3-round-large"
+					value="${fn:escapeXml(employee.lastName)}" class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
 				<c:if test="${invalidFields.containsKey(EmployeeParams.EMPLOYEE_LASTNAME)}">
@@ -72,7 +73,7 @@
 				<br>
 				<label>Middle name:
 					<input placeholder="Enter middle name (optional)" type="text"
-					name="${EmployeeParams.EMPLOYEE_MIDDLENAME}" value="${employee.middleName}"
+					name="${EmployeeParams.EMPLOYEE_MIDDLENAME}" value="${fn:escapeXml(employee.middleName)}"
 					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>
@@ -82,7 +83,7 @@
 				<br>
 				<label>Position:*
 					<input placeholder="Enter position" type="text"
-					name="${EmployeeParams.EMPLOYEE_POSITION}" value="${employee.position}"
+					name="${EmployeeParams.EMPLOYEE_POSITION}" value="${fn:escapeXml(employee.position)}"
 					class="w3-input w3-border w3-round-large"
 					style="width: 30%">
 				</label>

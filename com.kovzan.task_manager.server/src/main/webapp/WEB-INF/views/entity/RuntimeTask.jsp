@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.EmployeeParams"%>
@@ -47,7 +48,7 @@
                     </div>
                     <%--<label>ID:</label>--%>
                     <input readonly type="hidden" name="${TaskParams.TASK_ID}"
-                           value="${task.id}"
+                           value="${fn:escapeXml(task.id)}"
                            class="w3-input w3-animate-input w3-border w3-round-large"
                            style="width: 30%">
                     <br>
@@ -58,12 +59,12 @@
             <br>
             <select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_PROJECT_ID}"
                     style="width: 30%">
-                <option value="${project.id}">${project.shortName}</option>
+                <option value="${project.id}">${fn:escapeXml(project.shortName)}</option>
             </select>
             <br>
             <label>Name:
                 <input placeholder="Enter name" type="text" name="${TaskParams.TASK_NAME}"
-                       value="${task.name}" class="w3-input w3-border w3-round-large"
+                       value="${fn:escapeXml(task.name)}" class="w3-input w3-border w3-round-large"
                        style="width: 30%">
             </label>
             <c:if test="${invalidFields.containsKey(TaskParams.TASK_NAME)}">
@@ -72,7 +73,7 @@
             <br>
             <label>Work:*
                 <input placeholder="Enter work (natural number)" type="text"
-                name="${TaskParams.TASK_WORK}" value="${task.work}"
+                name="${TaskParams.TASK_WORK}" value="${fn:escapeXml(task.work)}"
                 class="w3-input w3-border w3-round-large" style="width: 30%">
             </label>
             <c:if test="${invalidFields.containsKey(TaskParams.TASK_WORK)}">
@@ -81,7 +82,7 @@
             <br>
             <label>Begin Date:*
                 <input type="text" placeholder="Enter begin date (format: yyyy-mm-dd)"
-                       name="${TaskParams.TASK_BEGINDATE}" value="${task.beginDate}"
+                       name="${TaskParams.TASK_BEGINDATE}" value="${fn:escapeXml(task.beginDate)}"
                        class="w3-input w3-border w3-round-large" style="width: 30%">
             </label>
             <c:if test="${invalidFields.containsKey(TaskParams.TASK_BEGINDATE)}">
@@ -94,7 +95,7 @@
             <label>End Date:*
                 <input type="text" placeholder="Enter end date (format: yyyy-mm-dd)"
                        name="${TaskParams.TASK_ENDDATE}"
-                       value="${task.endDate}"
+                       value="${fn:escapeXml(task.endDate)}"
                        class="w3-input w3-border w3-round-large" style="width: 30%">
             </label>
             <c:if test="${invalidFields.containsKey(TaskParams.TASK_ENDDATE)}">
