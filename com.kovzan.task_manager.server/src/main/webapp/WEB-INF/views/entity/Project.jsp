@@ -176,7 +176,7 @@ function getParams(elemId) {
     var description = document.getElementById('project_description').value;
     var href = element.getAttribute('href');
     var params = '&project_id=' + id + '&project_name=' + name + '&project_shortName=' + shortName+'&project_description=' + description;
-    element.setAttribute('href', href + params);
+    element.setAttribute('href', href + encodeURI(params));
 }
 </script>
 </body>
