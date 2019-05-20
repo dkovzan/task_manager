@@ -4,14 +4,18 @@ import static com.kovzan.task_manager.logger.Log.logger;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.kovzan.task_manager.command.ValidationException;
+import com.kovzan.task_manager.command.impl.parameters.EmployeeParams;
+import com.kovzan.task_manager.command.impl.parameters.ProjectParams;
 import com.kovzan.task_manager.command.impl.parameters.TaskParams;
 import com.kovzan.task_manager.dao.impl.EmployeeDao;
+import com.kovzan.task_manager.dao.impl.ProjectDao;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.entity.Task;
 import com.kovzan.task_manager.entity.TaskStatus;
@@ -82,6 +86,18 @@ public class TaskUtils {
 		EmployeeDao employeeDao = new EmployeeDao();
 		Employee employee = employeeDao.findById(employeeId);
 		return employee.getFirstName() + " " + employee.getLastName();
+	}
+	
+	public static void setTasksStatusesAttribute(HttpServletRequest request) {
+		request.setAttribute(TaskParams.PRINTED_STATUSES, Arrays.asList(TaskStatus.values()));
+	}
+	
+	public static void setProjectsEmployeesTaskStatusesAttributes(HttpServletRequest request) throws SQLException {
+		ProjectDao projectDao = new ProjectDao();
+		EmployeeDao employeeDao = new EmployeeDao();
+		request.setAttribute(ProjectParams.PRINTED_PROJECTS, projectDao.findAll());
+		request.setAttribute(EmployeeParams.PRINTED_EMPLOYEES, employeeDao.findAll());
+		setTasksStatusesAttribute(request);
 	}
 
 }

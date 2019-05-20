@@ -15,16 +15,20 @@ public abstract class DaoBase<T extends Entity> {
 	private static final Logger logger = Logger.getLogger(DaoBase.class.getName());
 
 	public int add(T element, String addQuery) throws SQLException {
-		int result = -1;
 		try (Connection connection = DBConnection.getDBConnection()) {
 			PreparedStatement statement = connection.prepareStatement(addQuery, Statement.RETURN_GENERATED_KEYS);
 			fillPreparedStatementForAdd(element, statement);
 			statement.executeUpdate();
-			ResultSet keys = statement.getGeneratedKeys();
-			if (keys.next()) {
-				result = keys.getInt(1);
-				logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-			}
+			int createdEntityId = getCreatedEntityId(statement);
+			return createdEntityId;
+		}
+	}
+	
+	private int getCreatedEntityId(PreparedStatement statement) throws SQLException {
+		ResultSet generatedKeys = statement.getGeneratedKeys();
+		int result = -1;
+		if (generatedKeys.next()) {
+			result = generatedKeys.getInt(1);
 		}
 		return result;
 	}

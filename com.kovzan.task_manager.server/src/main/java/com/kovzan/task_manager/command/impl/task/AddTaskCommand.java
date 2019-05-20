@@ -28,13 +28,7 @@ public class AddTaskCommand implements Command {
 		try {
 			taskFromRequest = TaskUtils.buildTask(request);
 		} catch (ValidationException e) {
-			
-			ProjectDao projectDao = new ProjectDao();
-			EmployeeDao employeeDao = new EmployeeDao();
-			request.setAttribute(ProjectParams.PRINTED_PROJECTS, projectDao.findAll());
-			request.setAttribute(EmployeeParams.PRINTED_EMPLOYEES, employeeDao.findAll());
-			request.setAttribute(TaskParams.PRINTED_STATUSES, Arrays.asList(TaskStatus.values()));
-			
+			TaskUtils.setProjectsEmployeesTaskStatusesAttributes(request);
 			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);
 			request.setAttribute(UtilParams.IS_ADD_FORM, true);
 			return PageConstant.EDIT_TASK_PAGE;

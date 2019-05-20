@@ -32,10 +32,7 @@ public class UpdateProjectCommand implements Command {
 	}
 	
 	private void updateProject(HttpServletRequest request) throws SQLException, ValidationException {
-		List<Task> runtimeTasks = new ArrayList<>();
-		if (request.getSession().getAttribute(TaskParams.PRINTED_RUNTIME_TASKS) != null) {
-			runtimeTasks = RuntimeTasksUtils.getRuntimeTasks(request);
-		}
+		List<Task> runtimeTasks = RuntimeTasksUtils.getRuntimeTasks(request);
 		Project projectFromRequest = ProjectUtils.buildProject(request);
 		ProjectDao projectDao = new ProjectDao();
 		projectDao.updateProjectWithTasks(projectFromRequest, runtimeTasks);

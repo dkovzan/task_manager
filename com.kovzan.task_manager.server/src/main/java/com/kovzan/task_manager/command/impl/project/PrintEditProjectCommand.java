@@ -18,22 +18,25 @@ public class PrintEditProjectCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request) throws SQLException {
-
 		boolean isCleanSessionNeeded = Boolean.parseBoolean(request.getParameter(UtilParams.IS_CLEAN_SESSION_NEEDED));
-		cleanSession(isCleanSessionNeeded, request);
-		Project projectFromRequest = ProjectUtils.createProjectFromRequest(request);
-		boolean isAddProjectFrom = getEditMode(projectFromRequest.getId());
-		setAttributesForCurrentMode(request, isAddProjectFrom, projectFromRequest);
-		return PageConstant.EDIT_PROJECT_PAGE;
-	}
-	
-	private void cleanSession(boolean isCleanSessionNeeded, HttpServletRequest request) {
 		if (isCleanSessionNeeded) {
 			request.getSession().invalidate();
 		}
+		setAttributesForCurrentMode(request);
+		return PageConstant.EDIT_PROJECT_PAGE;
 	}
 	
-	private boolean getEditMode(int projectId) {
+	private void setAttributesForCurrentMode(HttpServletRequest request) throws SQLException {
+		Project projectFromRequest = ProjectUtils.createProjectFromRequest(request);
+		boolean isAddProjectFrom = getEditModeByProjectId(projectFromRequest.getId());
+		if (isAddProjectFrom) {
+			setAttributesForAddForm(request, projectFromRequest);
+		} else {
+			setAttributesForEditForm(request, projectFromRequest);
+		}
+	}
+	
+	private boolean getEditModeByProjectId(int projectId) {
 		if (projectId == -1) {
 			return true;
 		} else {
@@ -41,25 +44,32 @@ public class PrintEditProjectCommand implements Command {
 		}
 	}
 	
-	private void setAttributesForCurrentMode(HttpServletRequest request, boolean isAddForm, Project project) throws SQLException {
-		if (isAddForm) {
-			request.setAttribute(ProjectParams.PRINTED_EDIT_PROJECT, project);
-			request.getSession().setAttribute(UtilParams.IS_ADD_FORM, true);
-		} else {
-			
-			if (request.getSession().getAttribute(TaskParams.PRINTED_RUNTIME_TASKS) == null) {
-				TaskDao taskDao = new TaskDao();
-				List<Task> tasks = taskDao.findTasksByProjectId(project.getId());
-				if (tasks != null) {
-					request.getSession().setAttribute(TaskParams.PRINTED_RUNTIME_TASKS, tasks);
-				}
+	private void setAttributesForAddForm(HttpServletRequest request, Project buildedProject) throws SQLException {
+		request.setAttribute(ProjectParams.PRINTED_EDIT_PROJECT, buildedProject);
+		request.getSession().setAttribute(UtilParams.IS_ADD_FORM, true);
+	}
+	
+	private void setAttributesForEditForm(HttpServletRequest request, Project buildedProject) throws SQLException {
+		setTasksAttribute(request, buildedProject.getId());
+		setProjectAttribute(request, buildedProject.getId());
+		request.getSession().setAttribute(UtilParams.IS_ADD_FORM, false);
+	}
+	
+	private void setTasksAttribute(HttpServletRequest request, int buildedProjectId) throws SQLException {
+		if (request.getSession().getAttribute(TaskParams.PRINTED_RUNTIME_TASKS) == null) {
+			TaskDao taskDao = new TaskDao();
+			List<Task> tasks = taskDao.findTasksByProjectId(buildedProjectId);
+			if (tasks != null) {
+				request.getSession().setAttribute(TaskParams.PRINTED_RUNTIME_TASKS, tasks);
 			}
-			if (request.getSession().getAttribute(ProjectParams.PRINTED_EDIT_PROJECT) == null) {
-				ProjectDao projectDao = new ProjectDao();
-				Project projectFromDB = projectDao.findById(project.getId());
-				request.getSession().setAttribute(ProjectParams.PRINTED_EDIT_PROJECT, projectFromDB);
-			}
-			request.getSession().setAttribute(UtilParams.IS_ADD_FORM, false);
+		}
+	}
+	
+	private void setProjectAttribute(HttpServletRequest request, int buildedProjectId) throws SQLException {
+		if (request.getSession().getAttribute(ProjectParams.PRINTED_EDIT_PROJECT) == null) {
+			ProjectDao projectDao = new ProjectDao();
+			Project projectFromDB = projectDao.findById(buildedProjectId);
+			request.getSession().setAttribute(ProjectParams.PRINTED_EDIT_PROJECT, projectFromDB);
 		}
 	}
 }

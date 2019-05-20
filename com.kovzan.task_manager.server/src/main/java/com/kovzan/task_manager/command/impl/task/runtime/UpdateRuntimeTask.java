@@ -26,10 +26,8 @@ public class UpdateRuntimeTask implements Command {
 			RuntimeTasksUtils.updateRuntimeTask(runtimeTasks, taskFromRequest);
 			request.getSession().setAttribute(TaskParams.PRINTED_RUNTIME_TASKS, runtimeTasks);
 		} catch (ValidationException e) {
-			EmployeeDao employeeDao = new EmployeeDao();
+			RuntimeTasksUtils.setEmployeesTaskStatusesAttributes(request);
 			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);
-			request.setAttribute(EmployeeParams.PRINTED_EMPLOYEES, employeeDao.findAll());
-			request.setAttribute(TaskParams.PRINTED_STATUSES, Arrays.asList(TaskStatus.values()));
 			request.setAttribute(UtilParams.IS_ADD_FORM, false);
 			return PageConstant.EDIT_RUNTIME_TASK_PAGE;
 		}
