@@ -16,7 +16,10 @@ public class TaskValidator {
 
 	public static boolean isTaskWorkValid(String work) {
 		try {
-			Integer.parseInt(work);
+			int workInt = Integer.parseInt(work);
+			if (workInt <= 0) {
+				return false;
+			}
 		} catch (NumberFormatException e) {
 			return false;
 		}
