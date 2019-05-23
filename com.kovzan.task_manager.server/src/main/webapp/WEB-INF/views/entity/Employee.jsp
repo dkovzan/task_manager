@@ -6,8 +6,9 @@
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.EmployeeParams"%>
 <html>
 <head>
-<title>Edit employee</title>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<title>Edit employee</title>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="style/style.css" type="text/css">
 </head>
 <body class="w3-light-grey">
 	<div class="w3-container w3-blue-grey w3-opacity w3-left-align">
@@ -50,7 +51,7 @@
 						<br>
 					</c:otherwise>
 				</c:choose>
-				<label>First name:*
+				<label>First name:<span class="required-field-mark">*</span>
 				<input placeholder="Enter first name"
 					type="text"
 					name="${EmployeeParams.EMPLOYEE_FIRSTNAME}"
@@ -62,7 +63,7 @@
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br>
-				<label>Last name:*
+				<label>Last name:<span class="required-field-mark">*</span>
 					<input placeholder="Enter last name" type="text" name="${EmployeeParams.EMPLOYEE_LASTNAME}"
 					value="${fn:escapeXml(employee.lastName)}" class="w3-input w3-border w3-round-large"
 					style="width: 30%">
@@ -81,7 +82,7 @@
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br>
-				<label>Position:*
+				<label>Position:<span class="required-field-mark">*</span>
 					<input placeholder="Enter position" type="text"
 					name="${EmployeeParams.EMPLOYEE_POSITION}" value="${fn:escapeXml(employee.position)}"
 					class="w3-input w3-border w3-round-large"

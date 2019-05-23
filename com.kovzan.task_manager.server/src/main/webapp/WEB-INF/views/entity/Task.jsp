@@ -8,8 +8,9 @@
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.UtilParams"%>
 <html>
 <head>
-<title>Edit task</title>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<title>Edit task</title>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="style/style.css" type="text/css">
 </head>
 <body class="w3-light-grey">
 	<div class="w3-container w3-blue-grey w3-opacity w3-left-align">
@@ -50,7 +51,7 @@
 					</c:otherwise>
 				</c:choose>
 
-				<label>Project:*</label>
+				<label>Project:<span class="required-field-mark">*</span></label>
 				<br>
 				<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_PROJECT_ID}"
 						style="width: 30%">
@@ -67,7 +68,7 @@
 					</c:forEach>
 				</select>
 				<br>
-				<label>Name:*
+				<label>Name:<span class="required-field-mark">*</span>
 					<input placeholder="Enter name" type="text" name="${TaskParams.TASK_NAME}"
 						   value="${fn:escapeXml(task.name)}" class="w3-input w3-border w3-round-large"
 						   style="width: 30%">
@@ -76,7 +77,7 @@
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br>
-				<label>Work:*
+				<label>Work:<span class="required-field-mark">*</span>
 					<input placeholder="Enter work (natural number)" type="text"
 					name="${TaskParams.TASK_WORK}" value="${fn:escapeXml(task.work)}"
 					class="w3-input w3-border w3-round-large" style="width: 30%">
@@ -85,7 +86,7 @@
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br>
-				<label>Begin Date:*
+				<label>Begin Date:<span class="required-field-mark">*</span>
 					<input type="text" placeholder="Enter begin date (format: yyyy-mm-dd)"
 						   name="${TaskParams.TASK_BEGINDATE}" value="${fn:escapeXml(task.beginDate)}"
 						   class="w3-input w3-border w3-round-large" style="width: 30%">
@@ -97,7 +98,7 @@
 					<span style="color:red"><c:out value="${TaskParams.VALUE_INVALID_DATE_RANGE}"></c:out></span>
 				</c:if>
 				<br>
-				<label>End Date:*
+				<label>End Date:<span class="required-field-mark">*</span>
 					<input type="text" placeholder="Enter end date (format: yyyy-mm-dd)"
 						   name="${TaskParams.TASK_ENDDATE}" value="${fn:escapeXml(task.endDate)}"
 						   class="w3-input w3-border w3-round-large" style="width: 30%">
@@ -106,7 +107,7 @@
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br>
-				<label>Assignee:*</label>
+				<label>Assignee:<span class="required-field-mark">*</span></label>
 				<br>
 				<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_EMPLOYEE_ID}"
 						style="width: 30%">
@@ -123,7 +124,7 @@
 					</c:forEach>
 				</select>
 				<br>
-				<label>Status:*</label>
+				<label>Status:<span class="required-field-mark">*</span></label>
 				<br>
 				<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_STATUS}"
 						style="width: 30%">

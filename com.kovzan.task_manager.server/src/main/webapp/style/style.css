@@ -138,3 +138,9 @@ html {
     color: #fff!important;
     background-color: #0909f4 !important
 }
+
+.required-field-mark {
+    color: red;
+    font-weight: 700;
+    margin: 0 0 0 2px
+}

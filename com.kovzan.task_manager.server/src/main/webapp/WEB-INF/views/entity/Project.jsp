@@ -7,8 +7,9 @@
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.TaskParams"%>
 <html>
 <head>
-<title>Edit project</title>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<title>Edit project</title>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="style/style.css" type="text/css">
 </head>
 <body class="w3-light-grey">
 	<div class="w3-container w3-blue-grey w3-opacity w3-left-align">
@@ -58,7 +59,7 @@
 						<br>
 					</c:otherwise>
 				</c:choose>
-				<label>Name:* <input id="${ProjectParams.PROJECT_NAME}" placeholder="Enter name" type="text"
+				<label>Name:<span class="required-field-mark">*</span> <input id="${ProjectParams.PROJECT_NAME}" placeholder="Enter name" type="text"
 					name="${ProjectParams.PROJECT_NAME}"
 					value="${fn:escapeXml(project.name)}"
 					class="w3-input w3-border w3-round-large"
@@ -67,7 +68,7 @@
 				<c:if test="${invalidFields.containsKey(ProjectParams.PROJECT_NAME)}">
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
-				<br> <label>Short name:* <input id="${ProjectParams.PROJECT_SHORTNAME}"
+				<br> <label>Short name:<span class="required-field-mark">*</span> <input id="${ProjectParams.PROJECT_SHORTNAME}"
 					placeholder="Enter short name" type="text"
 					name="${ProjectParams.PROJECT_SHORTNAME}"
 					value="${fn:escapeXml(project.shortName)}"
