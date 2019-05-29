@@ -1,0 +1,63 @@
+import groovy.sql.Sql
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    apply plugin: 'groovy'
+}
+
+configurations {
+    database
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    database group: 'org.hsqldb', name: 'hsqldb', version: '2.4.1'
+}
+
+group 'com.kovzan.task_manager'
+
+configurations.database.each { file -> GroovyObject.class.classLoader.addURL(file.toURI().toURL()) }
+
+def executeSql(String sql) {
+    def props = [user: 'sa', password: '', allowMultyQueries: 'true'] as Properties
+    def url = 'jdbc:hsqldb:hsql://localhost:9001/database'
+    def driver = 'org.hsqldb.jdbc.JDBCDriver'
+
+    def connection = Sql.newInstance(url, props, driver)
+    connection.execute(sql)
+    connection.close()
+}
+
+def getFileText(String fileName) {
+    return new File(project.getProjectDir().absolutePath + fileName).text
+}
+
+task createTables {
+    doLast {
+        executeSql(getFileText('/scripts/createTables.sql'))
+    }
+}
+
+task dropTables {
+    doLast {
+        executeSql(getFileText('/scripts/dropTables.sql'))
+    }
+}
+
+task stopDatabase {
+    doLast {
+        executeSql('SHUTDOWN')
+    }
+}
+
+task startDatabase(type: JavaExec) {
+    classpath configurations.database
+    main = 'org.hsqldb.server.Server'
+    args = ['-database.0', 'file:database/database', '-dbname.0', 'database']
+}

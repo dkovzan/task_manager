@@ -1,0 +1,16 @@
+subprojects {
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
+    compileJava.options.encoding="UTF-8"
+
+    tasks.withType(JavaCompile) {
+        options.encoding="UTF-8"
+    }
+}
+
+group 'com.kovzan.task_manager'
+
+//Where to find dependencies of project repositories
+repositories {
+    mavenCentral()
+}
