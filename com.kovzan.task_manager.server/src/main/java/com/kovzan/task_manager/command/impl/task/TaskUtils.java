@@ -45,7 +45,7 @@ public class TaskUtils {
 		if (TaskValidator.isTaskWorkValid(work)) {
 			task.setWork(Integer.parseInt(work));
 		} else {
-			invalidFields.put(TaskParams.TASK_WORK, String.valueOf(work));
+			invalidFields.put(TaskParams.TASK_WORK, work);
 		}
 		String beginDate = request.getParameter(TaskParams.TASK_BEGINDATE).trim();
 		boolean isBeginDateValid = true;
@@ -70,11 +70,30 @@ public class TaskUtils {
 				invalidFields.put(TaskParams.TASK_INVALID_DATE_RANGE, beginDate);
 			}
 		}
-		task.setProjectId(Integer.parseInt(request.getParameter(TaskParams.TASK_PROJECT_ID)));
-		int employeeId = Integer.parseInt(request.getParameter(TaskParams.TASK_EMPLOYEE_ID));
-		task.setEmployeeId(employeeId);
-		task.setEmployeeFullName(getEmployeeFullNameById(employeeId));
-		task.setStatus(TaskStatus.valueOf(request.getParameter(TaskParams.TASK_STATUS)));
+		Integer projectId = null;
+		if (request.getParameter(TaskParams.TASK_PROJECT_ID) != null) {
+			projectId = Integer.parseInt(request.getParameter(TaskParams.TASK_PROJECT_ID));
+			task.setProjectId(projectId);
+		} else {
+			invalidFields.put(TaskParams.TASK_PROJECT_ID, String.valueOf(projectId));
+		}
+		
+		Integer employeeId = null;
+		if (request.getParameter(TaskParams.TASK_EMPLOYEE_ID) != null) {
+			employeeId = Integer.parseInt(request.getParameter(TaskParams.TASK_EMPLOYEE_ID));
+			task.setEmployeeId(employeeId);
+			task.setEmployeeFullName(getEmployeeFullNameById(employeeId));
+		} else {
+			invalidFields.put(TaskParams.TASK_EMPLOYEE_ID, String.valueOf(employeeId));
+		}
+		TaskStatus taskStatus = null;
+		if (request.getParameter(TaskParams.TASK_STATUS) != null) {
+			taskStatus = TaskStatus.valueOf(request.getParameter(TaskParams.TASK_STATUS));
+			task.setStatus(taskStatus);
+		} else {
+			invalidFields.put(TaskParams.TASK_STATUS, String.valueOf(taskStatus));
+		}
+		
 		if(!invalidFields.isEmpty()) {
 			throw new ValidationException(INCORRECT_DATA_MESSAGE, task, invalidFields);
 		}

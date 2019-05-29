@@ -24,31 +24,30 @@ import static com.kovzan.task_manager.logger.Log.logger;
 public class PrintEditTaskCommand implements Command {
 	
 	private static final String TASK_CANNOT_BE_ADDED = "Task cannot be added when projects or employees list is empty.";
-
+	
 	@Override
 	public String execute(HttpServletRequest request) throws SQLException {
 		
 		TaskDao taskDao = new TaskDao();
-
-		if (!canTaskBeCreated()) {
-			request.setAttribute(UtilParams.ERROR, TASK_CANNOT_BE_ADDED);
-			return CommandEnum.PRINT_TASKS.getCommand().execute(request);
-		} else {
-			boolean isAddForm = Boolean.parseBoolean(request.getParameter(UtilParams.IS_ADD_FORM));
-			if (isAddForm) {
-				TaskUtils.setProjectsEmployeesTaskStatusesAttributes(request);
-				request.setAttribute(UtilParams.IS_ADD_FORM, true);
-			} else {
-				Task task;
-				int taskId = Integer.parseInt(request.getParameter(TaskParams.TASK_ID));
-				task = taskDao.findById(taskId);
-				request.setAttribute(TaskParams.PRINTED_EDIT_TASK, task);
-				TaskUtils.setProjectsEmployeesTaskStatusesAttributes(request);
-				request.setAttribute(UtilParams.IS_ADD_FORM, false);
+		
+		boolean isAddForm = Boolean.parseBoolean(request.getParameter(UtilParams.IS_ADD_FORM));
+		if (isAddForm) {
+			if (!canTaskBeCreated()) {
+				request.setAttribute(UtilParams.ERROR, TASK_CANNOT_BE_ADDED);
+				return CommandEnum.PRINT_TASKS.getCommand().execute(request);
 			}
-			logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
-			return PageConstant.EDIT_TASK_PAGE;
+			TaskUtils.setProjectsEmployeesTaskStatusesAttributes(request);
+			request.setAttribute(UtilParams.IS_ADD_FORM, true);
+		} else {
+			Task task;
+			int taskId = Integer.parseInt(request.getParameter(TaskParams.TASK_ID));
+			task = taskDao.findById(taskId);
+			request.setAttribute(TaskParams.PRINTED_EDIT_TASK, task);
+			TaskUtils.setProjectsEmployeesTaskStatusesAttributes(request);
+			request.setAttribute(UtilParams.IS_ADD_FORM, false);
 		}
+		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
+		return PageConstant.EDIT_TASK_PAGE;
 	}
 	
 	private static boolean canTaskBeCreated() throws SQLException {

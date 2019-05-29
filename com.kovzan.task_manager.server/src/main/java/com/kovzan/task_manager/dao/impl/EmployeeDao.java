@@ -13,14 +13,14 @@ public class EmployeeDao extends DaoBase<Employee> {
 			"INSERT INTO employee (lastname, firstname, middlename, position) " +
 			"VALUES (?,?,?,?)";
 	private static final String removeEmployee =
-			"DELETE FROM employee " +
+			"UPDATE employee SET isdeleted = 1 " +
 			"WHERE id = ?";
 	private static final String updateEmployee =
 			"UPDATE employee " +
 			"SET lastname = ?, firstname = ?, middlename = ?, position = ? " +
 			"WHERE id = ?";
 	private static final String selectAllEmployees =
-			"SELECT id, lastname, firstname, middlename, position FROM employee ORDER BY id";
+			"SELECT id, lastname, firstname, middlename, position FROM employee WHERE isdeleted = 0 ORDER BY id";
 	private static final String selectEmployeeById =
 			"SELECT id, lastname, firstname, middlename, position FROM employee " +
 			"WHERE id = ?";

@@ -26,9 +26,7 @@
 
 		<c:if test="${error != null}">
 			<div class="msg err-msg-list">
-				<span onclick="this.parentElement.style.display='none'" class="btn">X
-				</span>
-				<h5>${error}</h5>
+				<h5>${error}<span onclick="this.parentElement.style.display='none'" class="btn">X</span></h5>
 			</div>
 		</c:if>
 

@@ -1,11 +1,11 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ page contentType="text/html;charset=UTF-8"%>
-<%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
-<%@ page import="com.kovzan.task_manager.command.impl.parameters.EmployeeParams"%>
-<%@ page import="com.kovzan.task_manager.command.impl.parameters.ProjectParams"%>
-<%@ page import="com.kovzan.task_manager.command.impl.parameters.TaskParams"%>
-<%@ page import="com.kovzan.task_manager.command.impl.parameters.UtilParams"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.kovzan.task_manager.command.CommandEnum" %>
+<%@ page import="com.kovzan.task_manager.command.impl.parameters.EmployeeParams" %>
+<%@ page import="com.kovzan.task_manager.command.impl.parameters.ProjectParams" %>
+<%@ page import="com.kovzan.task_manager.command.impl.parameters.TaskParams" %>
+<%@ page import="com.kovzan.task_manager.command.impl.parameters.UtilParams" %>
 <html>
 <head>
 	<title>Edit task</title>
@@ -56,12 +56,13 @@
 				</c:otherwise>
 			</c:choose>
 
-			<label>Project:<span class="required-field-mark">*</span></label>
-			<br>
-			<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_PROJECT_ID}"
-					style="width: 30%">
-				<option value="${project.id}">${fn:escapeXml(project.shortName)}</option>
-			</select>
+			<label>Project:<span class="required-field-mark">*</span>
+				<br>
+				<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_PROJECT_ID}"
+						style="width: 30%">
+					<option value="${project.id}">${fn:escapeXml(project.shortName)}</option>
+				</select>
+			</label>
 			<br>
 			<label>Name:<span class="required-field-mark">*</span>
 				<input placeholder="Enter name" type="text" name="${TaskParams.TASK_NAME}"
@@ -74,8 +75,8 @@
 			<br>
 			<label>Work:<span class="required-field-mark">*</span>
 				<input placeholder="Enter work (natural number)" type="text"
-				name="${TaskParams.TASK_WORK}" value="${fn:escapeXml(task.work)}"
-				class="w3-input w3-border w3-round-large" style="width: 30%">
+					   name="${TaskParams.TASK_WORK}" value="${fn:escapeXml(task.work)}"
+					   class="w3-input w3-border w3-round-large" style="width: 30%">
 			</label>
 			<c:if test="${invalidFields.containsKey(TaskParams.TASK_WORK)}">
 				<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
@@ -103,48 +104,56 @@
 				<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 			</c:if>
 			<br>
-			<label>Assignee:<span class="required-field-mark">*</span></label>
+			<label>Assignee:<span class="required-field-mark">*</span>
+				<br>
+				<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_EMPLOYEE_ID}"
+						style="width: 30%">
+					<option hidden disabled selected value style="color: #a9a9a9">Select assignee</option>
+					<c:forEach items="${requestScope.get(EmployeeParams.PRINTED_EMPLOYEES)}" var="employee">
+						<c:choose>
+							<c:when test="${task.employeeId == employee.id}">
+								<option selected
+										value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</select>
+			</label>
+			<c:if test="${invalidFields.containsKey(TaskParams.TASK_EMPLOYEE_ID)}">
+				<span style="color:red; display: block"><c:out value="${valid_error.getMessage()}"></c:out></span>
+			</c:if>
 			<br>
-			<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_EMPLOYEE_ID}"
-					style="width: 30%">
-			<c:forEach items="${requestScope.get(EmployeeParams.PRINTED_EMPLOYEES)}" var="employee">
-				<c:choose>
-					<c:when test="${task.employeeId == employee.id}">
-						<option selected value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
-					</c:when>
-					<c:otherwise>
-						<option value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-			</select>
-			<br>
-			<label>Status:<span class="required-field-mark">*</span></label>
-			<br>
-			<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_STATUS}"
-					style="width: 30%">
-			<c:forEach items="${requestScope.get(TaskParams.PRINTED_STATUSES)}" var="status">
-				<c:choose>
-					<c:when test="${task.getStatus().equals(status)}">
-						<option selected value="${status}">${status.getStatusName()}</option>
-					</c:when>
-					<c:otherwise>
-						<option value="${status}">${status.getStatusName()}</option>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-			</select>
+			<label>Status:<span class="required-field-mark">*</span>
+				<br>
+				<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_STATUS}"
+						style="width: 30%">
+					<option hidden disabled selected value style="color: #a9a9a9">Select status</option>
+					<c:forEach items="${requestScope.get(TaskParams.PRINTED_STATUSES)}" var="status">
+						<c:choose>
+							<c:when test="${task.getStatus().equals(status)}">
+								<option selected value="${status}">${status.getStatusName()}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${status}">${status.getStatusName()}</option>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</select>
+			</label>
+			<c:if test="${invalidFields.containsKey(TaskParams.TASK_STATUS)}">
+				<span style="color:red; display: block"><c:out value="${valid_error.getMessage()}"></c:out></span>
+			</c:if>
 			<br>
 			<button type="submit"
-					class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
+					class="w3-btn w3-green w3-round-large w3-margin-bottom">Save
+			</button>
 			<a href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).id}&${ProjectParams.PROJECT_NAME}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).name}&${ProjectParams.PROJECT_SHORTNAME}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).shortName}&${ProjectParams.PROJECT_DESCRIPTION}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).description}'
 			   class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</a>
 		</form>
 	</div>
 </div>
-<%--<div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">--%>
-	<%--<button class="w3-btn w3-round-large" onclick="location.href='../../../'">Back--%>
-		<%--to main</button>--%>
-<%--</div>--%>
 </body>
 </html>

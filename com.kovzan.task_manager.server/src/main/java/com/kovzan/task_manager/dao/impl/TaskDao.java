@@ -25,13 +25,16 @@ public class TaskDao extends DaoBase<Task> {
 			"SET name = ?, work = ?, begindate = ?, enddate = ?, projectid = ?, employeeid = ?, status = ? " +
 				"WHERE id = ?";
 	private static final String removeTask =
-			"DELETE FROM task " +
+			"UPDATE task SET isdeleted = 1 " +
 				"WHERE id = ?";
+	private static final String removeTasksByProjectId =
+			"UPDATE task SET isdeleted = 1 " +
+				"WHERE projectid = ?";
 	private static final String selectAllTasksWithRefs =
 			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname, t.employeeid, t.projectid " +
 				"FROM task t " +
 				"LEFT JOIN project p ON p.id = t.projectid " +
-				"LEFT JOIN employee e ON e.id = t.employeeid ORDER BY t.id";
+				"LEFT JOIN employee e ON e.id = t.employeeid WHERE t.isdeleted = 0 ORDER BY t.id";
 	private static final String selectTaskById =
 			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname, t.employeeid, t.projectid " +
 					"FROM task t " +
@@ -41,12 +44,12 @@ public class TaskDao extends DaoBase<Task> {
 			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname, t.employeeid, t.projectid FROM task t " +
 				"LEFT JOIN project p ON p.id = t.projectid " +
 				"LEFT JOIN employee e ON e.id = t.employeeid " +
-					"WHERE t.employeeid = ? ORDER BY t.id";
+					"WHERE t.employeeid = ? AND t.isdeleted = 0 ORDER BY t.id";
 	private static final String selectTasksByProjectId =
 			"SELECT t.id, t.name, t.begindate, t.work, p.shortname, t.status, t.enddate, CONCAT(e.firstname, ' ', e.lastname) AS fullname, t.employeeid, t.projectid FROM task t " +
 				"LEFT JOIN project p ON p.id = t.projectid " +
 				"LEFT JOIN employee e ON e.id = t.employeeid " +
-					"WHERE t.projectid = ? ORDER BY t.id";
+					"WHERE t.projectid = ? AND t.isdeleted = 0 ORDER BY t.id";
 
 	public void add(Task task) throws SQLException {
 		add(task, addTask);
@@ -124,6 +127,10 @@ public class TaskDao extends DaoBase<Task> {
 
 	public String getRemoveTaskSQLQuery() {
 		return removeTask;
+	}
+	
+	public String getRemoveTasksByProjectIdQuery() {
+		return removeTasksByProjectId;
 	}
 
 	public List<Task> findTasksBy(Integer id, String selectStatement) throws SQLException {

@@ -26,8 +26,7 @@
 
 		<c:if test="${error != null}">
 			<div class="msg err-msg-list">
-				<span onclick="this.parentElement.style.display='none'" class="btn">X</span>
-				<h5>${error}</h5>
+				<h5>${error}<span onclick="this.parentElement.style.display='none'" class="btn">X</span></h5>
 			</div>
 		</c:if>
 
@@ -55,7 +54,7 @@
 								<td style="width:15%">${fn:escapeXml(task.endDate)}</td>
 								<td style="width:20%">${fn:escapeXml(task.employeeFullName)}</td>
 								<td>
-									<button onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_TASK}&${TaskParams.TASK_ID}=${task.id}&${UtilParams.IS_ADD_FORM}=0'"
+									<button onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_TASK}&${TaskParams.TASK_ID}=${task.id}&${UtilParams.IS_ADD_FORM}=false'"
 											class="btn btn-edit">Edit
 									</button>
 								</td>

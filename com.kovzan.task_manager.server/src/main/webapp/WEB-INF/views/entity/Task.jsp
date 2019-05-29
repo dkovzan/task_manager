@@ -51,22 +51,27 @@
 					</c:otherwise>
 				</c:choose>
 
-				<label>Project:<span class="required-field-mark">*</span></label>
-				<br>
-				<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_PROJECT_ID}"
-						style="width: 30%">
-					<c:forEach items="${requestScope.get(ProjectParams.PRINTED_PROJECTS)}"
-						var="projectInDropdown">
-						<c:choose>
-							<c:when test="${task.projectId == projectInDropdown.id}">
-								<option selected value="${projectInDropdown.id}">${fn:escapeXml(projectInDropdown.shortName)}</option>
-							</c:when>
-							<c:otherwise>
-								<option value="${projectInDropdown.id}">${fn:escapeXml(projectInDropdown.shortName)}</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</select>
+				<label>Project:<span class="required-field-mark">*</span>
+					<br>
+					<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_PROJECT_ID}"
+							style="width: 30%">
+						<option hidden disabled selected value style="color: #a9a9a9">Select project</option>
+						<c:forEach items="${requestScope.get(ProjectParams.PRINTED_PROJECTS)}"
+							var="projectInDropdown">
+							<c:choose>
+								<c:when test="${task.projectId == projectInDropdown.id}">
+									<option selected value="${projectInDropdown.id}">${fn:escapeXml(projectInDropdown.shortName)}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${projectInDropdown.id}">${fn:escapeXml(projectInDropdown.shortName)}</option>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</select>
+				</label>
+				<c:if test="${invalidFields.containsKey(TaskParams.TASK_PROJECT_ID)}">
+					<span style="color:red; display: block"><c:out value="${valid_error.getMessage()}"></c:out></span>
+				</c:if>
 				<br>
 				<label>Name:<span class="required-field-mark">*</span>
 					<input placeholder="Enter name" type="text" name="${TaskParams.TASK_NAME}"
@@ -107,38 +112,48 @@
 					<span style="color:red"><c:out value="${valid_error.getMessage()}"></c:out></span>
 				</c:if>
 				<br>
-				<label>Assignee:<span class="required-field-mark">*</span></label>
+				<label>Assignee:<span class="required-field-mark">*</span>
 				<br>
-				<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_EMPLOYEE_ID}"
-						style="width: 30%">
-					<c:forEach items="${requestScope.get(EmployeeParams.PRINTED_EMPLOYEES)}"
-						var="employee">
-						<c:choose>
-							<c:when test="${task.employeeId == employee.id}">
-								<option selected value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
-							</c:when>
-							<c:otherwise>
-								<option value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</select>
+					<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_EMPLOYEE_ID}"
+							style="width: 30%">
+						<option hidden disabled selected value style="color: #a9a9a9">Select assignee</option>
+						<c:forEach items="${requestScope.get(EmployeeParams.PRINTED_EMPLOYEES)}"
+							var="employee">
+							<c:choose>
+								<c:when test="${task.employeeId == employee.id}">
+									<option selected value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</select>
+				</label>
+				<c:if test="${invalidFields.containsKey(TaskParams.TASK_EMPLOYEE_ID)}">
+					<span style="color:red; display: block"><c:out value="${valid_error.getMessage()}"></c:out></span>
+				</c:if>
 				<br>
-				<label>Status:<span class="required-field-mark">*</span></label>
+				<label>Status:<span class="required-field-mark">*</span>
 				<br>
-				<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_STATUS}"
-						style="width: 30%">
-					<c:forEach items="${requestScope.get(TaskParams.PRINTED_STATUSES)}" var="status">
-						<c:choose>
-							<c:when test="${task.getStatus().equals(status)}">
-								<option selected value="${status}">${status.getStatusName()}</option>
-							</c:when>
-							<c:otherwise>
-								<option value="${status}">${status.getStatusName()}</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</select>
+					<select class="w3-select w3-margin-bottom" name="${TaskParams.TASK_STATUS}"
+							style="width: 30%">
+						<option hidden disabled selected value style="color: #a9a9a9">Select status</option>
+						<c:forEach items="${requestScope.get(TaskParams.PRINTED_STATUSES)}" var="status">
+							<c:choose>
+								<c:when test="${task.getStatus().equals(status)}">
+									<option selected value="${status}">${status.getStatusName()}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${status}">${status.getStatusName()}</option>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</select>
+				</label>
+				<c:if test="${invalidFields.containsKey(TaskParams.TASK_STATUS)}">
+					<span style="color:red; display: block"><c:out value="${valid_error.getMessage()}"></c:out></span>
+				</c:if>
 				<br>
 				<button type="submit"
 					class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>

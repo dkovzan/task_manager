@@ -22,10 +22,10 @@ public class ProjectDao extends DaoBase<Project> {
 			"UPDATE project SET name = ?, shortname = ?, description = ? " +
 			"WHERE id = ?";
 	private static final String removeProject =
-			"DELETE FROM project " +
+			"UPDATE project SET isdeleted = 1 " +
 			"WHERE id = ?";
 	private static final String selectAllProjects =
-			"SELECT id, name, shortname, description FROM project ORDER BY id";
+			"SELECT id, name, shortname, description FROM project WHERE isdeleted = 0 ORDER BY id";
 	private static final String selectProjectById =
 			"SELECT id, name, shortname, description FROM project " +
 			"WHERE id = ?";
@@ -33,9 +33,11 @@ public class ProjectDao extends DaoBase<Project> {
 	public void add(Project project) throws SQLException {
 		add(project, addProject);
 	}
-
+	
 	public void remove(Project project) throws SQLException {
+		TaskDao taskDao = new TaskDao();
 		remove(project, removeProject);
+		remove(project, taskDao.getRemoveTasksByProjectIdQuery());
 	}
 
 	public List<Project> findAll() throws SQLException {
