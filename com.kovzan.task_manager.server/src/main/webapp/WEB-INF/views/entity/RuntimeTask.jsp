@@ -113,10 +113,10 @@
 						<c:choose>
 							<c:when test="${task.employeeId == employee.id}">
 								<option selected
-										value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
+										value="${employee.id}">${fn:escapeXml(employee.firstName)} ${fn:escapeXml(employee.lastName)}</option>
 							</c:when>
 							<c:otherwise>
-								<option value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
+								<option value="${employee.id}">${fn:escapeXml(employee.firstName)} ${fn:escapeXml(employee.lastName)}</option>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
