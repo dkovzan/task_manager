@@ -27,12 +27,20 @@ public class PrintEditProjectCommand implements Command {
 	}
 	
 	private void setAttributesForCurrentMode(HttpServletRequest request) throws SQLException {
-		Project projectFromRequest = ProjectUtils.createProjectFromRequest(request);
+		Project projectFromRequest = getProjectFromUrlOrFromSession(request);
 		boolean isAddProjectFrom = getEditModeByProjectId(projectFromRequest.getId());
 		if (isAddProjectFrom) {
 			setAttributesForAddForm(request, projectFromRequest);
 		} else {
 			setAttributesForEditForm(request, projectFromRequest);
+		}
+	}
+
+	private Project getProjectFromUrlOrFromSession(HttpServletRequest request) {
+		if (request.getSession().getAttribute(ProjectParams.PRINTED_EDIT_PROJECT) != null) {
+			return (Project) request.getSession().getAttribute(ProjectParams.PRINTED_EDIT_PROJECT);
+		} else {
+			return ProjectUtils.createProjectFromRequest(request);
 		}
 	}
 	
