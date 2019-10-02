@@ -1,32 +1,27 @@
 package com.kovzan.task_manager.command.impl.task;
 
 import com.kovzan.task_manager.command.Command;
-import com.kovzan.task_manager.command.CommandEnum;
+import com.kovzan.task_manager.command.Commands;
 import com.kovzan.task_manager.command.PageConstant;
-import com.kovzan.task_manager.command.impl.parameters.EmployeeParams;
-import com.kovzan.task_manager.command.impl.parameters.ProjectParams;
 import com.kovzan.task_manager.command.impl.parameters.TaskParams;
 import com.kovzan.task_manager.command.impl.parameters.UtilParams;
-import com.kovzan.task_manager.dao.impl.EmployeeDao;
-import com.kovzan.task_manager.dao.impl.ProjectDao;
-import com.kovzan.task_manager.dao.impl.TaskDao;
-import com.kovzan.task_manager.entity.TaskStatus;
+import com.kovzan.task_manager.dao.DaoException;
+import com.kovzan.task_manager.dao.EmployeeDao;
+import com.kovzan.task_manager.dao.ProjectDao;
+import com.kovzan.task_manager.dao.TaskDao;
 import com.kovzan.task_manager.entity.Task;
-import com.kovzan.task_manager.logger.LogConstant;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.logging.Level;
-
-import static com.kovzan.task_manager.logger.Log.logger;
+import java.util.logging.Logger;
 
 public class PrintEditTaskCommand implements Command {
+	
+	private static final Logger logger = Logger.getLogger(PrintEditTaskCommand.class.getName());
 	
 	private static final String TASK_CANNOT_BE_ADDED = "Task cannot be added when projects or employees list is empty.";
 	
 	@Override
-	public String execute(HttpServletRequest request) throws SQLException {
+	public String execute(HttpServletRequest request) throws DaoException {
 		
 		TaskDao taskDao = new TaskDao();
 		
@@ -34,7 +29,7 @@ public class PrintEditTaskCommand implements Command {
 		if (isAddForm) {
 			if (!canTaskBeCreated()) {
 				request.setAttribute(UtilParams.ERROR, TASK_CANNOT_BE_ADDED);
-				return CommandEnum.PRINT_TASKS.getCommand().execute(request);
+				return Commands.PRINT_TASKS.getCommand().execute(request);
 			}
 			TaskUtils.setProjectsEmployeesTaskStatusesAttributes(request);
 			request.setAttribute(UtilParams.IS_ADD_FORM, true);
@@ -46,11 +41,10 @@ public class PrintEditTaskCommand implements Command {
 			TaskUtils.setProjectsEmployeesTaskStatusesAttributes(request);
 			request.setAttribute(UtilParams.IS_ADD_FORM, false);
 		}
-		logger.log(Level.INFO, LogConstant.SUCCESSFUL_EXECUTE);
 		return PageConstant.EDIT_TASK_PAGE;
 	}
 	
-	private static boolean canTaskBeCreated() throws SQLException {
+	private boolean canTaskBeCreated() throws DaoException {
 		ProjectDao projectDao = new ProjectDao();
 		EmployeeDao employeeDao = new EmployeeDao();
 		if (projectDao.findAll() == null || employeeDao.findAll() == null) {

@@ -5,19 +5,19 @@ import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.impl.parameters.ProjectParams;
 import com.kovzan.task_manager.command.impl.parameters.TaskParams;
 import com.kovzan.task_manager.command.impl.parameters.UtilParams;
-import com.kovzan.task_manager.dao.impl.ProjectDao;
-import com.kovzan.task_manager.dao.impl.TaskDao;
+import com.kovzan.task_manager.dao.DaoException;
+import com.kovzan.task_manager.dao.ProjectDao;
+import com.kovzan.task_manager.dao.TaskDao;
 import com.kovzan.task_manager.entity.Project;
 import com.kovzan.task_manager.entity.Task;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 import java.util.List;
 
 public class PrintEditProjectCommand implements Command {
 
 	@Override
-	public String execute(HttpServletRequest request) throws SQLException {
+	public String execute(HttpServletRequest request) throws DaoException {
 		boolean isCleanSessionNeeded = Boolean.parseBoolean(request.getParameter(UtilParams.IS_CLEAN_SESSION_NEEDED));
 		if (isCleanSessionNeeded) {
 			request.getSession().invalidate();
@@ -26,7 +26,7 @@ public class PrintEditProjectCommand implements Command {
 		return PageConstant.EDIT_PROJECT_PAGE;
 	}
 	
-	private void setAttributesForCurrentMode(HttpServletRequest request) throws SQLException {
+	private void setAttributesForCurrentMode(HttpServletRequest request) throws DaoException {
 		Project projectFromRequest = getProjectFromUrlOrFromSession(request);
 		boolean isAddProjectFrom = getEditModeByProjectId(projectFromRequest.getId());
 		if (isAddProjectFrom) {
@@ -35,7 +35,7 @@ public class PrintEditProjectCommand implements Command {
 			setAttributesForEditForm(request, projectFromRequest);
 		}
 	}
-
+	
 	private Project getProjectFromUrlOrFromSession(HttpServletRequest request) {
 		if (request.getSession().getAttribute(ProjectParams.PRINTED_EDIT_PROJECT) != null) {
 			return (Project) request.getSession().getAttribute(ProjectParams.PRINTED_EDIT_PROJECT);
@@ -52,18 +52,18 @@ public class PrintEditProjectCommand implements Command {
 		}
 	}
 	
-	private void setAttributesForAddForm(HttpServletRequest request, Project buildedProject) throws SQLException {
+	private void setAttributesForAddForm(HttpServletRequest request, Project buildedProject) throws DaoException {
 		request.setAttribute(ProjectParams.PRINTED_EDIT_PROJECT, buildedProject);
 		request.getSession().setAttribute(UtilParams.IS_ADD_FORM, true);
 	}
 	
-	private void setAttributesForEditForm(HttpServletRequest request, Project buildedProject) throws SQLException {
+	private void setAttributesForEditForm(HttpServletRequest request, Project buildedProject) throws DaoException {
 		setTasksAttribute(request, buildedProject.getId());
 		setProjectAttribute(request, buildedProject.getId());
 		request.getSession().setAttribute(UtilParams.IS_ADD_FORM, false);
 	}
 	
-	private void setTasksAttribute(HttpServletRequest request, int buildedProjectId) throws SQLException {
+	private void setTasksAttribute(HttpServletRequest request, int buildedProjectId) throws DaoException {
 		if (request.getSession().getAttribute(TaskParams.PRINTED_RUNTIME_TASKS) == null) {
 			TaskDao taskDao = new TaskDao();
 			List<Task> tasks = taskDao.findTasksByProjectId(buildedProjectId);
@@ -73,7 +73,7 @@ public class PrintEditProjectCommand implements Command {
 		}
 	}
 	
-	private void setProjectAttribute(HttpServletRequest request, int buildedProjectId) throws SQLException {
+	private void setProjectAttribute(HttpServletRequest request, int buildedProjectId) throws DaoException {
 		if (request.getSession().getAttribute(ProjectParams.PRINTED_EDIT_PROJECT) == null) {
 			ProjectDao projectDao = new ProjectDao();
 			Project projectFromDB = projectDao.findById(buildedProjectId);

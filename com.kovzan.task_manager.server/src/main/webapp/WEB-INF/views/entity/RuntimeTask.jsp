@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="com.kovzan.task_manager.command.CommandEnum" %>
+<%@ page import="com.kovzan.task_manager.command.Commands" %>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.EmployeeParams" %>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.ProjectParams" %>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.TaskParams" %>
@@ -34,7 +34,7 @@
 			<c:choose>
 				<c:when
 						test="${requestScope.get(UtilParams.IS_ADD_FORM)}">
-					<input type="hidden" value="${CommandEnum.ADD_RUNTIME_TASK}"
+					<input type="hidden" value="${Commands.ADD_RUNTIME_TASK}"
 						   name="command">
 					<div class="w3-container w3-center w3-green">
 						<h2>ADD TASK</h2>
@@ -42,7 +42,7 @@
 					<br>
 				</c:when>
 				<c:otherwise>
-					<input type="hidden" value="${CommandEnum.UPDATE_RUNTIME_TASK}"
+					<input type="hidden" value="${Commands.UPDATE_RUNTIME_TASK}"
 						   name="command">
 					<div class="w3-container w3-center w3-green">
 						<h2>EDIT TASK</h2>
@@ -113,10 +113,10 @@
 						<c:choose>
 							<c:when test="${task.employeeId == employee.id}">
 								<option selected
-										value="${employee.id}">${fn:escapeXml(employee.firstName)} ${fn:escapeXml(employee.lastName)}</option>
+										value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
 							</c:when>
 							<c:otherwise>
-								<option value="${employee.id}">${fn:escapeXml(employee.firstName)} ${fn:escapeXml(employee.lastName)}</option>
+								<option value="${employee.id}">${employee.firstName} ${employee.lastName}</option>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -150,7 +150,7 @@
 			<button type="submit"
 					class="w3-btn w3-green w3-round-large w3-margin-bottom">Save
 			</button>
-			<a href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).id}'
+			<a href='${pageContext.request.contextPath}controller?command=${Commands.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).id}&${ProjectParams.PROJECT_NAME}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).name}&${ProjectParams.PROJECT_SHORTNAME}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).shortName}&${ProjectParams.PROJECT_DESCRIPTION}=${sessionScope.get(ProjectParams.PRINTED_EDIT_PROJECT).description}'
 			   class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</a>
 		</form>
 	</div>

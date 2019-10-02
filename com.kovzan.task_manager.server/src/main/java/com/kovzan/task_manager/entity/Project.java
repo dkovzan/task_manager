@@ -14,7 +14,7 @@ public class Project extends Entity implements Serializable {
 				"name='" + name + '\'' +
 				", shortName='" + shortName + '\'' +
 				", description='" + description + '\'' +
-				", id=" + id +
+				", id=" + getId() +
 				'}';
 	}
 
@@ -38,6 +38,14 @@ public class Project extends Entity implements Serializable {
 		return result;
 	}
 
+	public Integer getId() {
+		return super.getId();
+	}
+	
+	public void setId(Integer id) {
+		super.setId(id);
+	}
+	
 	public String getName() {
 		return name;
 	}

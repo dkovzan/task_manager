@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="com.kovzan.task_manager.command.CommandEnum" %>
+<%@ page import="com.kovzan.task_manager.command.Commands" %>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.ProjectParams" %>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.UtilParams" %>
 <html>
@@ -17,7 +17,7 @@
 		<div class="page-header">
 			<h2>Projects overview</h2>
 			<button class="btn btn-add"
-					onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=-1&${UtilParams.IS_ADD_FORM}=true&${UtilParams.IS_CLEAN_SESSION_NEEDED}=true'">
+					onclick="location.href='${pageContext.request.contextPath}controller?command=${Commands.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=-1&${UtilParams.IS_ADD_FORM}=true&${UtilParams.IS_CLEAN_SESSION_NEEDED}=true'">
 				Add
 				project
 			</button>
@@ -45,13 +45,13 @@
 								<td style="width: 40%">${fn:escapeXml(project.description)}</td>
 								<td>
 									<button
-											onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=${project.id}&${UtilParams.IS_ADD_FORM}=0&${UtilParams.IS_CLEAN_SESSION_NEEDED}=true'"
+											onclick="location.href='${pageContext.request.contextPath}controller?command=${Commands.PRINT_EDIT_PROJECT}&${ProjectParams.PROJECT_ID}=${project.id}&${UtilParams.IS_ADD_FORM}=0&${UtilParams.IS_CLEAN_SESSION_NEEDED}=true'"
 											class="btn btn-edit">Edit
 									</button>
 								</td>
 								<td>
 									<button
-											onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.REMOVE_PROJECT}&${ProjectParams.PROJECT_ID}=${project.id}'"
+											onclick="location.href='${pageContext.request.contextPath}controller?command=${Commands.REMOVE_PROJECT}&${ProjectParams.PROJECT_ID}=${project.id}'"
 											class="btn btn-del">Delete
 									</button>
 								</td>

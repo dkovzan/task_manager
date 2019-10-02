@@ -1,12 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: KovzanDS
-  Date: 16-Feb-19
-  Time: 7:32 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
+<%@ page import="com.kovzan.task_manager.command.Commands"%>
 <html>
 <head>
 <title>Task Manager</title>
@@ -19,13 +12,13 @@
 	</div>
 	<div class="w3-bar w3-border w3-light-grey w3-xlarge">
 		<button
-			onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_PROJECTS}'"
+			onclick="location.href='${pageContext.request.contextPath}controller?command=${Commands.PRINT_PROJECTS}'"
 			class="w3-bar-item w3-button w3-hover-teal">Projects</button>
 		<button
-			onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_TASKS}'"
+			onclick="location.href='${pageContext.request.contextPath}controller?command=${Commands.PRINT_TASKS}'"
 			class="w3-bar-item w3-button w3-hover-teal">Tasks</button>
 		<button
-			onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EMPLOYEES}'"
+			onclick="location.href='${pageContext.request.contextPath}controller?command=${Commands.PRINT_EMPLOYEES}'"
 			class="w3-bar-item w3-button w3-hover-teal">Employees</button>
 	</div>
 </body>

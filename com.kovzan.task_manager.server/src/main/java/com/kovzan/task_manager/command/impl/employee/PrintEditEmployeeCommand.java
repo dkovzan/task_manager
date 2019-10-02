@@ -4,16 +4,16 @@ import com.kovzan.task_manager.command.Command;
 import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.impl.parameters.EmployeeParams;
 import com.kovzan.task_manager.command.impl.parameters.UtilParams;
-import com.kovzan.task_manager.dao.impl.EmployeeDao;
+import com.kovzan.task_manager.dao.DaoException;
+import com.kovzan.task_manager.dao.EmployeeDao;
 import com.kovzan.task_manager.entity.Employee;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 
 public class PrintEditEmployeeCommand implements Command {
 
 	@Override
-	public String execute(HttpServletRequest request) throws SQLException {
+	public String execute(HttpServletRequest request) throws DaoException {
 		
 		boolean isAddForm = Boolean.parseBoolean(request.getParameter(UtilParams.IS_ADD_FORM));
 		if (isAddForm) {

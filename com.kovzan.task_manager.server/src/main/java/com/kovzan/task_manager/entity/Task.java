@@ -27,7 +27,7 @@ public class Task extends Entity implements Serializable {
 				", employeeId=" + employeeId +
 				", employeeFullName='" + employeeFullName + '\'' +
 				", status=" + status +
-				", id=" + id +
+				", id=" + getId() +
 				'}';
 	}
 
@@ -65,6 +65,14 @@ public class Task extends Entity implements Serializable {
 		return result;
 	}
 
+	public Integer getId() {
+		return super.getId();
+	}
+	
+	public void setId(Integer id) {
+		super.setId(id);
+	}
+	
 	public String getName() {
 		return name;
 	}

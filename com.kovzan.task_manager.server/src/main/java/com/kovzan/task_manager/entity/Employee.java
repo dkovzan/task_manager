@@ -16,7 +16,7 @@ public class Employee extends Entity implements Serializable {
 				", lastName='" + lastName + '\'' +
 				", middleName='" + middleName + '\'' +
 				", position='" + position + '\'' +
-				", id=" + id +
+				", id=" + getId() +
 				'}';
 	}
 
@@ -42,6 +42,14 @@ public class Employee extends Entity implements Serializable {
 		return result;
 	}
 
+	public Integer getId() {
+		return super.getId();
+	}
+	
+	public void setId(Integer id) {
+		super.setId(id);
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}
