@@ -9,15 +9,12 @@ import com.kovzan.task_manager.command.impl.parameters.TaskParams;
 import com.kovzan.task_manager.command.impl.parameters.UtilParams;
 import com.kovzan.task_manager.command.impl.project.ProjectUtils;
 import com.kovzan.task_manager.command.impl.task.TaskUtils;
-import com.kovzan.task_manager.dao.impl.EmployeeDao;
+import com.kovzan.task_manager.dao.DaoException;
+import com.kovzan.task_manager.dao.EmployeeDao;
 import com.kovzan.task_manager.entity.Employee;
 import com.kovzan.task_manager.entity.Task;
-import com.kovzan.task_manager.entity.TaskStatus;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PrintEditRuntimeTask implements Command {
@@ -25,7 +22,7 @@ public class PrintEditRuntimeTask implements Command {
 	public static final String TASK_CANNOT_BE_CREATED_WITHOUT_EMPLOYEES = "Task cannot be created without employees";
 	
 	@Override
-	public String execute(HttpServletRequest request) throws SQLException {
+	public String execute(HttpServletRequest request) throws DaoException {
 		
 		EmployeeDao employeeDao = new EmployeeDao();
 		List<Employee> employees = employeeDao.findAll();
@@ -37,7 +34,7 @@ public class PrintEditRuntimeTask implements Command {
 		try {
 			request.getSession().setAttribute(ProjectParams.PRINTED_EDIT_PROJECT, ProjectUtils.buildProject(request));
 			request.setAttribute(EmployeeParams.PRINTED_EMPLOYEES, employees);
-			TaskUtils.setTasksStatusesAttribute(request);
+			TaskUtils.setTaskStatusesAttribute(request);
 			setAttributesForCurrentMode(request);
 		} catch (ValidationException e) {
 			request.setAttribute(UtilParams.VALIDATION_EXCEPTION, e);

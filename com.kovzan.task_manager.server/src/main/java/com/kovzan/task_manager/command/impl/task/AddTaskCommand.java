@@ -1,27 +1,20 @@
 package com.kovzan.task_manager.command.impl.task;
 
 import com.kovzan.task_manager.command.Command;
-import com.kovzan.task_manager.command.CommandEnum;
+import com.kovzan.task_manager.command.Commands;
 import com.kovzan.task_manager.command.PageConstant;
 import com.kovzan.task_manager.command.ValidationException;
-import com.kovzan.task_manager.command.impl.parameters.EmployeeParams;
-import com.kovzan.task_manager.command.impl.parameters.ProjectParams;
-import com.kovzan.task_manager.command.impl.parameters.TaskParams;
 import com.kovzan.task_manager.command.impl.parameters.UtilParams;
-import com.kovzan.task_manager.dao.impl.EmployeeDao;
-import com.kovzan.task_manager.dao.impl.ProjectDao;
-import com.kovzan.task_manager.dao.impl.TaskDao;
-import com.kovzan.task_manager.entity.TaskStatus;
+import com.kovzan.task_manager.dao.DaoException;
+import com.kovzan.task_manager.dao.TaskDao;
 import com.kovzan.task_manager.entity.Task;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
-import java.util.Arrays;
 
 public class AddTaskCommand implements Command {
 	
 	@Override
-	public String execute(HttpServletRequest request) throws SQLException {
+	public String execute(HttpServletRequest request) throws DaoException {
 
 		Task taskFromRequest;
 		
@@ -35,7 +28,7 @@ public class AddTaskCommand implements Command {
 		}
 		TaskDao taskDao = new TaskDao();
 		taskDao.add(taskFromRequest);
-		return CommandEnum.PRINT_TASKS.getCommand().execute(request);
+		return Commands.PRINT_TASKS.getCommand().execute(request);
 	}
 	
 }

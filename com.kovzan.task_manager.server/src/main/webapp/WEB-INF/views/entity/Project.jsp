@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
+<%@ page import="com.kovzan.task_manager.command.Commands"%>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.ProjectParams"%>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.UtilParams"%>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.TaskParams"%>
@@ -34,7 +34,7 @@
 				<c:choose>
 					<c:when
 						test="${is_add_project_form}">
-						<input type="hidden" value="${CommandEnum.ADD_PROJECT}"
+						<input type="hidden" value="${Commands.ADD_PROJECT}"
 							name="command">
 						<input type="hidden" id="${ProjectParams.PROJECT_ID}"
 							   name="${ProjectParams.PROJECT_ID}"
@@ -45,7 +45,7 @@
 						<br>
 					</c:when>
 					<c:otherwise>
-						<input type="hidden" value="${CommandEnum.UPDATE_PROJECT}"
+						<input type="hidden" value="${Commands.UPDATE_PROJECT}"
 							name="command">
 						<div class="w3-container w3-center w3-green">
 							<h2>EDIT PROJECT</h2>
@@ -93,7 +93,7 @@
 				<br>
 				<button type="submit"
 						class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
-				<a href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_PROJECTS}'
+				<a href='${pageContext.request.contextPath}controller?command=${Commands.PRINT_PROJECTS}'
 				   class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</a>
 			</form>
 				
@@ -112,7 +112,7 @@
 	<div class="w3-container w3-padding">
 			<div class="tasksBlock w3-card-4 w3-padding">
 				<a id="addTask"
-				   href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_RUNTIME_TASK}
+				   href='${pageContext.request.contextPath}controller?command=${Commands.PRINT_EDIT_RUNTIME_TASK}
 				&${UtilParams.IS_ADD_FORM}=true'
 				   onclick="getParams(this.id)"
 				   class="w3-btn w3-yellow w3-round-large w3-margin-bottom">Add task</a>
@@ -140,13 +140,13 @@
 									<td>${fn:escapeXml(task.employeeFullName)}</td>
 									<td>
 										<a id="updateTask${task.id}"
-										   href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_RUNTIME_TASK}&${TaskParams.TASK_ID}=${task.id}&${UtilParams.IS_ADD_FORM}=false'
+										   href='${pageContext.request.contextPath}controller?command=${Commands.PRINT_EDIT_RUNTIME_TASK}&${TaskParams.TASK_ID}=${task.id}&${UtilParams.IS_ADD_FORM}=false'
 										   onclick="getParams(this.id)"
 										   class="w3-button w3-indigo w3-round-large">Edit</a>
 									</td>
 									<td>
 										<a id="deleteTask${task.id}"
-										   href='${pageContext.request.contextPath}controller?command=${CommandEnum.REMOVE_RUNTIME_TASK}&${TaskParams.TASK_ID}=${task.id}'
+										   href='${pageContext.request.contextPath}controller?command=${Commands.REMOVE_RUNTIME_TASK}&${TaskParams.TASK_ID}=${task.id}'
 										   onclick="getParams(this.id)"
 										   class="w3-button w3-red w3-round-large">Delete</a>
 									</td>

@@ -8,7 +8,7 @@ import com.kovzan.task_manager.command.impl.task.runtime.PrintEditRuntimeTask;
 import com.kovzan.task_manager.command.impl.task.runtime.RemoveRuntimeTask;
 import com.kovzan.task_manager.command.impl.task.runtime.UpdateRuntimeTask;
 
-public enum CommandEnum {
+public enum Commands {
 
 	ADD_PROJECT(new AddProjectCommand()),
 	UPDATE_PROJECT(new UpdateProjectCommand()),
@@ -35,11 +35,21 @@ public enum CommandEnum {
 
 	private Command commandType;
 
-	CommandEnum (Command commandType) {
+	Commands(Command commandType) {
 		this.commandType = commandType;
 	}
 
 	public Command getCommand() {
 		return commandType;
+	}
+	
+	public static boolean contains(String givenCommand) {
+		
+		for (Commands c : Commands.values()) {
+			if (c.name().equals(givenCommand)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

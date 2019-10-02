@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@ page import="com.kovzan.task_manager.command.CommandEnum"%>
+<%@ page import="com.kovzan.task_manager.command.Commands"%>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.UtilParams"%>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.EmployeeParams"%>
 <html>
@@ -31,7 +31,7 @@
 				<c:choose>
 					<c:when
 						test="${requestScope.get(UtilParams.IS_ADD_FORM)}">
-						<input type="hidden" value="${CommandEnum.ADD_EMPLOYEE}"
+						<input type="hidden" value="${Commands.ADD_EMPLOYEE}"
 							name="command">
 						<div class="w3-container w3-center w3-green">
 							<h2>ADD EMPLOYEE</h2>
@@ -39,7 +39,7 @@
 						<br>
 					</c:when>
 					<c:otherwise>
-						<input type="hidden" value="${CommandEnum.UPDATE_EMPLOYEE}"
+						<input type="hidden" value="${Commands.UPDATE_EMPLOYEE}"
 							name="command">
 						<div class="w3-container w3-center w3-green">
 							<h2>EDIT EMPLOYEE</h2>
@@ -94,7 +94,7 @@
 				<br>
 				<button type="submit"
 					class="w3-btn w3-green w3-round-large w3-margin-bottom">Save</button>
-				<a href='${pageContext.request.contextPath}/controller?command=${CommandEnum.PRINT_EMPLOYEES}'
+				<a href='${pageContext.request.contextPath}/controller?command=${Commands.PRINT_EMPLOYEES}'
 					class="w3-btn w3-red w3-round-large w3-margin-bottom">Cancel</a>
 			</form>
 		</div>

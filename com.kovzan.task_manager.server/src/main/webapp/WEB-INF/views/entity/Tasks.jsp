@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="com.kovzan.task_manager.command.CommandEnum" %>
+<%@ page import="com.kovzan.task_manager.command.Commands" %>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.TaskParams" %>
 <%@ page import="com.kovzan.task_manager.command.impl.parameters.UtilParams" %>
 <html>
@@ -18,7 +18,7 @@
 		<div class="page-header">
 			<h2>Tasks overview</h2>
 			<button class="btn btn-add"
-					onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_TASK}&${UtilParams.IS_ADD_FORM}=true'">
+					onclick="location.href='${pageContext.request.contextPath}controller?command=${Commands.PRINT_EDIT_TASK}&${UtilParams.IS_ADD_FORM}=true'">
 				Add
 				task
 			</button>
@@ -54,12 +54,12 @@
 								<td style="width:15%">${fn:escapeXml(task.endDate)}</td>
 								<td style="width:20%">${fn:escapeXml(task.employeeFullName)}</td>
 								<td>
-									<button onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.PRINT_EDIT_TASK}&${TaskParams.TASK_ID}=${task.id}&${UtilParams.IS_ADD_FORM}=false'"
+									<button onclick="location.href='${pageContext.request.contextPath}controller?command=${Commands.PRINT_EDIT_TASK}&${TaskParams.TASK_ID}=${task.id}&${UtilParams.IS_ADD_FORM}=false'"
 											class="btn btn-edit">Edit
 									</button>
 								</td>
 								<td>
-									<button onclick="location.href='${pageContext.request.contextPath}controller?command=${CommandEnum.REMOVE_TASK}&${TaskParams.TASK_ID}=${task.id}'"
+									<button onclick="location.href='${pageContext.request.contextPath}controller?command=${Commands.REMOVE_TASK}&${TaskParams.TASK_ID}=${task.id}'"
 											class="btn btn-del">Delete
 									</button>
 								</td>
