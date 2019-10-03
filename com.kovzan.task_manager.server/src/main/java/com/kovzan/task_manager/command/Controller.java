@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kovzan.task_manager.command.impl.parameters.UtilParams;
+import com.kovzan.task_manager.connection.ConnectionService;
 import com.kovzan.task_manager.dao.DaoException;
 
 import java.io.IOException;
@@ -23,6 +24,11 @@ public class Controller extends HttpServlet {
 	private static final String COMMAND = "command";
 	
 	private static final String SQL_ERROR_MESSAGE = "Oops... Database error has occured.";
+	
+	@Override
+	public void init() {
+		ConnectionService.getInstance();
+	}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

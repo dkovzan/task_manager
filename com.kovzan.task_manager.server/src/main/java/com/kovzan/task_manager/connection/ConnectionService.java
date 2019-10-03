@@ -23,7 +23,11 @@ public class ConnectionService {
 	
 	public static ConnectionService getInstance() {
 		if (instance == null) {
-			instance = new ConnectionService();
+			synchronized (ConnectionService.class) {
+				if (instance == null) {
+					instance = new ConnectionService();
+				}
+			}
 		}
 		return instance;
 	}
